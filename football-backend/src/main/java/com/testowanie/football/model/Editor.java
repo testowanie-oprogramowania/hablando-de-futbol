@@ -8,8 +8,8 @@ import org.springframework.lang.NonNull;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Editor {
 
     @Id

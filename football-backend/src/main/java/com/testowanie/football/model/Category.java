@@ -10,8 +10,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
 
     @Id
@@ -19,7 +19,7 @@ public class Category {
     private Long id;
 
     @NonNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NonNull

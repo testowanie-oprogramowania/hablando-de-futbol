@@ -8,8 +8,8 @@ import org.springframework.lang.NonNull;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
 
     @Id
@@ -26,10 +26,10 @@ public class Comment {
 
     @NonNull
     @Column(nullable = false)
-    private int thumbsUp;
+    private Integer thumbsUp;
 
     @NonNull
     @Column(nullable = false)
-    private int thumbsDown;
+    private Integer thumbsDown;
 
 }
