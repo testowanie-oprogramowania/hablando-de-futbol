@@ -1,0 +1,36 @@
+$font-color: #dcdcdc;
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+  background-color: #4b4b4b;
+  border-right: 1px solid #484848;
+  -webkit-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+  -moz-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+
+  .mat-toolbar {
+    background: inherit;
+    background-color: #5b5b5b;
+    border-bottom: 1px solid #484848;
+    -webkit-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+    -moz-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+  }
+
+  ::ng-deep .navbar-text, ::ng-deep .navbar-text span span {
+    color: $font-color;
+    font-family: 'Bebas Neue', sans-serif;
+  }
+}
+
+.navbar-header {
+  font-family: 'Kdam Thmor Pro', sans-serif;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
