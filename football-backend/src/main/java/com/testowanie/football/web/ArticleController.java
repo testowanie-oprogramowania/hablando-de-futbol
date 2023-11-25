@@ -4,7 +4,6 @@ import com.testowanie.football.model.Article;
 import com.testowanie.football.model.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleController {
 
     @GetMapping
-    public ResponseEntity<Page<Article>> getArticles(@PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<Article>> getArticles(Pageable pageable) {
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable long id) {
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/category/{id}")
-    public ResponseEntity<Page<Article>> getArticlesByCategory(@PathVariable long id, @PageableDefault Pageable pageable) {
         return ResponseEntity.ok().build();
     }
 
@@ -54,8 +48,13 @@ public class ArticleController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/{id}/comments/{commentId}")
+    public ResponseEntity<Void> updateComment(@PathVariable long id, @PathVariable long commentId, @RequestBody Comment comment) {
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/search/{query}")
-    public ResponseEntity<Page<Article>> searchArticles(@PathVariable String query, @PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<Article>> searchArticles(@PathVariable String query, Pageable pageable) {
         return ResponseEntity.ok().build();
     }
 }

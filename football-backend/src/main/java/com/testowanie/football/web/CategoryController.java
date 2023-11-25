@@ -16,6 +16,11 @@ public class CategoryController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
     public ResponseEntity<Void> createCategory(@RequestBody Category category) {
         return ResponseEntity.created(null).build();
