@@ -1,0 +1,11 @@
+<app-navbar></app-navbar>
+<div class="article-list">
+    <mat-paginator #paginator
+                   class="demo-paginator"
+                   (page)="handlePageEvent($event)"
+                   [length]="paginatorLength"
+                   [pageSize]="paginatorPageSize"
+                   [pageIndex]="paginatorPageIndex"
+                   aria-label="Select page">
+    </mat-paginator>
+</div>
