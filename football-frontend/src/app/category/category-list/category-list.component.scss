@@ -1,0 +1,23 @@
+.mat-list-item {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.category-name {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-button-container {
+  margin-left: auto;
+}
+

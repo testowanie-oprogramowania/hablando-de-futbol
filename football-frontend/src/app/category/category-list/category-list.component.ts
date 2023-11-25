@@ -26,7 +26,7 @@ import { CategoryDeleteDialogComponent } from '../category-delete-dialog/categor
 })
 export class CategoryListComponent {
   categories: Category[] = [
-    { id: 1, name: 'Kategoria 1', articles: [] },
+    { id: 1, name: 'Kata 1', articles: [] },
     { id: 3, name: 'Kategoria 2', articles: [] },
   ];
   constructor(public dialog: MatDialog) {}
