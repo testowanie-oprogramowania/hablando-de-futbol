@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { CategoryListComponent } from '../category/category-list/category-list.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -24,6 +25,7 @@ import { CategoryListComponent } from '../category/category-list/category-list.c
     AsyncPipe,
     NgIf,
     CategoryListComponent,
+    RouterLink,
   ],
 })
 export class NavbarComponent {

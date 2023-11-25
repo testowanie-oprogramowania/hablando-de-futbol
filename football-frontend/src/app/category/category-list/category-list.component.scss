@@ -1,3 +1,4 @@
+$font-color: #dcdcdc;
 .mat-list-item {
   margin: 0;
   padding: 0;
@@ -17,7 +18,15 @@
   text-overflow: ellipsis;
 }
 
-.menu-button-container {
+.menu-button {
   margin-left: auto;
+  padding: 0;
 }
 
+
+
+.expansion-panel {
+  color: $font-color;
+  font-family: 'Bebas Neue', sans-serif;
+  background-color: #4b4b4b;
+}

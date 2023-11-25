@@ -17,11 +17,15 @@ $font-color: #dcdcdc;
     border-bottom: 1px solid #484848;
     -webkit-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
     -moz-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+
   }
 
   ::ng-deep .navbar-text, ::ng-deep .navbar-text span span {
     color: $font-color;
     font-family: 'Bebas Neue', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
   }
 }
 

@@ -30,6 +30,7 @@ export class CategoryListComponent {
     { id: 3, name: 'Kategoria 2', articles: [] },
   ];
   constructor(public dialog: MatDialog) {}
+
   openEditDialog(category: Category) {
     const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
       data: category,
