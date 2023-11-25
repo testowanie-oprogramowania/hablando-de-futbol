@@ -1,23 +1,18 @@
 package com.testowanie.football.web;
 
 import com.testowanie.football.model.Category;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
+import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
 
     @GetMapping
-    public ResponseEntity<Pageable> getCategories(@PageableDefault Pageable pageable) {
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
+    public ResponseEntity<List<Category>> getCategories() {
         return ResponseEntity.ok().build();
     }
 
