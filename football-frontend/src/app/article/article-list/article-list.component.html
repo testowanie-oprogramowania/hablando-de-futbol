@@ -1,0 +1,38 @@
+<div class="article-list">
+    <div class="article-list__container">
+        <mat-card
+            class="article-list__card"
+            *ngFor="let article of articles$ | async as articles">
+            <div class="article-list__image-container">
+                <img mat-card-image class="article-list__image" src="{{ article.photoUrl }}" />
+                <div class="article-list__image-label">{{article.category.name}}</div>
+            </div>
+
+            <mat-card-header>
+                <img
+                    mat-card-avatar
+                    src="{{ article.editor.photoUrl }}"
+                    alt="Zdjęcie autora" />
+                <mat-card-title>{{ article.title }}</mat-card-title>
+                <mat-card-subtitle>{{article.editor.name}} {{article.editor.surname}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{ article.content }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button (click)="onReadArticle(article.id!)">
+                    Czytaj dalej
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-paginator
+            #paginator
+            class="mat-mdc-card"
+            (page)="handlePageEvent($event)"
+            [length]="paginatorLength"
+            [pageSize]="paginatorPageSize"
+            [pageIndex]="paginatorPageIndex"
+            aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>
