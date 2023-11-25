@@ -12,14 +12,16 @@ spring:
     activate:
       on-profile: dev
 
-  datasource:
-    url: jdbc:postgresql://db:5432/backend
-    username: postgres
-    password: postgres
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+    show-sql: true
+
+  datasource:
+    url: jdbc:postgresql://db:5432/backend
+    username: postgres
+    password: postgres
 
 ---
 
@@ -37,3 +39,4 @@ spring:
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
