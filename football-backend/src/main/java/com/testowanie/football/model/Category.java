@@ -23,6 +23,6 @@ public class Category {
     private String name;
 
     @NonNull
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private Set<Article> articles;
 }
