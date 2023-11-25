@@ -55,7 +55,7 @@ public class ArticleController {
     }
 
     @GetMapping("/search/{query}")
-    public ResponseEntity<Pageable> searchArticles(@PathVariable String query, @PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<Article>> searchArticles(@PathVariable String query, @PageableDefault Pageable pageable) {
         return ResponseEntity.ok().build();
     }
 }

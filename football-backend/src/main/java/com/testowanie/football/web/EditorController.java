@@ -1,6 +1,7 @@
 package com.testowanie.football.web;
 
 import com.testowanie.football.model.Editor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class EditorController {
 
     @GetMapping
-    public ResponseEntity<Pageable> getEditors(@PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<Editor>> getEditors(@PageableDefault Pageable pageable) {
         return ResponseEntity.ok().build();
     }
 
