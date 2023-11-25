@@ -5,7 +5,7 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar class="navbar-text">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item class="navbar-text" href="#">Link 1</a>
+      <a mat-list-item class="navbar-text" routerLink="">Strona główna</a>
       <a mat-list-item class="navbar-text" href="#">Link 2</a>
       <a class="navbar-text"><app-category-list></app-category-list></a>
     </mat-nav-list>
@@ -22,9 +22,10 @@
         </button>
       </ng-container>
       <div class="navbar-strip">
-        <img src="../../assets/icons/logo.svg" alt="logo" style="height:100%">
+        <img src="../../assets/icons/logo.svg" alt="logo" class="navbar-image">
         <span class="navbar-header">football-frontend</span>
       </div>
     </mat-toolbar>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
