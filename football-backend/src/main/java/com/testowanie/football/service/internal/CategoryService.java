@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -64,12 +63,9 @@ public class CategoryService implements CategoryUseCases {
     @Override
     @Transactional
     public void deleteCategory(Long id) {
-        final Optional<Category> category = categoryRepository.findById(id);
-        if (category.isPresent()) {
-            categoryRepository.delete(category.get());
-        } else {
-            throw new EntityNotFoundException(CATEGORY_NOT_FOUND);
-        }
+        final Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(CATEGORY_NOT_FOUND));
+        categoryRepository.delete(category);
     }
 
     private CategoryArticlesResource buildCategoryArticlesResource(Category category) {
