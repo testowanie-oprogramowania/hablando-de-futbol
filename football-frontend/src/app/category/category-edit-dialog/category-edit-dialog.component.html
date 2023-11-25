@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Edit Category</h2>
+<mat-dialog-content>
+  <!-- Formularz edycji -->
+  <form>
+    <mat-form-field>
+      <mat-label>Category Name</mat-label>
+      <input matInput [(ngModel)]="data.name">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onSaveClick()">Save</button>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+</mat-dialog-actions>

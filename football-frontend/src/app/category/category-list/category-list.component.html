@@ -1,0 +1,16 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header> Categories </mat-expansion-panel-header>
+  <mat-list>
+    <mat-list-item *ngFor="let category of categories">
+      {{ category.name }}
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openEditDialog(category)">Edit</button>
+        <button mat-menu-item (click)="openDeleteDialog(category)">Delete</button>
+      </mat-menu>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-button>Add Category</button>
+    </mat-list-item>
+  </mat-list>
+</mat-expansion-panel>
