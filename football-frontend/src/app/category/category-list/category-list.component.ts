@@ -36,9 +36,11 @@ export class CategoryListComponent {
       data: category,
     });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // HTTP PUT
+      }
+    });
   }
 
   openDeleteDialog(category: Category) {
@@ -46,6 +48,22 @@ export class CategoryListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // HTTP DELETE
+      }
+    });
+  }
+
+  openAddDialog() {
+    const newCategory: Category = {
+      name: '',
+      articles: [],
+    };
+    const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
+      data: newCategory,
+    });
+
+    dialogRef.afterClosed().subscribe(newCategory => {
+      if (newCategory) {
+        // HTTP POST
       }
     });
   }

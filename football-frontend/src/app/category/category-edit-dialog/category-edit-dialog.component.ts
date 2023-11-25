@@ -6,6 +6,7 @@ import {
   MatDialogClose,
   MatDialogContent,
   MatDialogRef,
+  MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +24,7 @@ import { Category } from '../../models/category';
     MatDialogClose,
     MatButtonModule,
     MatDialogActions,
+    MatDialogTitle,
   ],
   templateUrl: './category-edit-dialog.component.html',
   styleUrl: './category-edit-dialog.component.scss',
@@ -38,7 +40,6 @@ export class CategoryEditDialogComponent {
   }
 
   onSaveClick(): void {
-    // HTTP PUT
     this.dialogRef.close(this.data);
   }
 }
