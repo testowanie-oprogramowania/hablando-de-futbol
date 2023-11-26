@@ -11,60 +11,60 @@ import { CategoryEditDialogComponent } from '../category-edit-dialog/category-ed
 import { CategoryDeleteDialogComponent } from '../category-delete-dialog/category-delete-dialog.component';
 
 @Component({
-  selector: 'app-category-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatExpansionModule,
-    MatListModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-  ],
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.scss',
+    selector: 'app-category-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatExpansionModule,
+        MatListModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+    ],
+    templateUrl: './category-list.component.html',
+    styleUrl: './category-list.component.scss',
 })
 export class CategoryListComponent {
-  categories: Category[] = [
-    { id: 1, name: 'Kata 1', articles: [] },
-    { id: 3, name: 'Kategoria 2', articles: [] },
-  ];
-  constructor(public dialog: MatDialog) {}
+    categories: Category[] = [
+        { id: 1, name: 'Kata 1', articles: [] },
+        { id: 3, name: 'Kategoria 2', articles: [] },
+    ];
+    constructor(public dialog: MatDialog) {}
 
-  openEditDialog(category: Category) {
-    const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
-      data: category,
-    });
+    openEditDialog(category: Category) {
+        const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
+            data: category,
+        });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // HTTP PUT
-      }
-    });
-  }
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // HTTP PUT
+            }
+        });
+    }
 
-  openDeleteDialog(category: Category) {
-    const dialogRef = this.dialog.open(CategoryDeleteDialogComponent, {});
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // HTTP DELETE
-      }
-    });
-  }
+    openDeleteDialog(category: Category) {
+        const dialogRef = this.dialog.open(CategoryDeleteDialogComponent, {});
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // HTTP DELETE
+            }
+        });
+    }
 
-  openAddDialog() {
-    const newCategory: Category = {
-      name: '',
-      articles: [],
-    };
-    const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
-      data: newCategory,
-    });
+    openAddDialog() {
+        const newCategory: Category = {
+            name: '',
+            articles: [],
+        };
+        const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
+            data: newCategory,
+        });
 
-    dialogRef.afterClosed().subscribe(newCategory => {
-      if (newCategory) {
-        // HTTP POST
-      }
-    });
-  }
+        dialogRef.afterClosed().subscribe(newCategory => {
+            if (newCategory) {
+                // HTTP POST
+            }
+        });
+    }
 }
