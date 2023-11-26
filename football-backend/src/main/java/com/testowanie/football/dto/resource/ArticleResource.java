@@ -3,7 +3,7 @@ package com.testowanie.football.dto.resource;
 import lombok.Builder;
 import lombok.extern.jackson.Jacksonized;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @Builder
@@ -12,7 +12,8 @@ public record ArticleResource(
         Long id,
         String title,
         EditorResource editor,
-        LocalDateTime publicationDate,
+        Instant createdDate,
+        Instant lastModifiedDate,
         String content,
         String image,
         CategoryResource category,
