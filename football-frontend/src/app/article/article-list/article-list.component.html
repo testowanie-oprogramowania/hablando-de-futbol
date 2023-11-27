@@ -1,16 +1,20 @@
 <div class="article-list">
+    <div class="article-list__buttons">
+        <button mat-fab color="accent" aria-label="Add article" (click)="onAddArticle($event)">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
     <div class="article-list__container">
-        <div class="article-list-buttons"></div>
         <mat-card
             class="article-list__card"
-            *ngFor="let article of articles$ | async">
+            *ngFor="let article of (articles$ | async); let index = index;">
             <div class="article-list__image-container">
+
                 <img
                     mat-card-image
                     class="article-list__image"
-                    [ngSrc]="article.photoUrl"
-                    alt="Article photo"
-                    fill=""/>
+                    src="{{ article.photoUrl }}"
+                    alt="Article photo" />
                 <div class="article-list__image-label">
                     {{ article.category.name }}
                 </div>
@@ -18,9 +22,9 @@
 
             <mat-card-header>
                 <img
-                  mat-card-avatar
-                  [ngSrc]="article.editor.photoUrl"
-                  alt="Author's photo" fill=""/>
+                    mat-card-avatar
+                    src="{{ article.editor.photoUrl }}"
+                    alt="Author's photo" />
                 <mat-card-title>{{ article.title }}</mat-card-title>
                 <mat-card-subtitle
                     >{{ article.editor.name }}

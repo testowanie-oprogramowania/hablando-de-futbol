@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { Observable, of, tap } from 'rxjs';
 import { Article } from '../../models/article';
@@ -9,11 +9,12 @@ import {
     PageEvent,
 } from '@angular/material/paginator';
 import { ArticleService } from '../../services/article.service';
-import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Editor } from '../../models/editor';
 import { Category } from '../../models/category';
+import { MatIconModule } from '@angular/material/icon';
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-article-list',
@@ -25,6 +26,7 @@ import { Category } from '../../models/category';
         MatCardModule,
         MatButtonModule,
         NgOptimizedImage,
+        MatIconModule,
     ],
     templateUrl: './article-list.component.html',
     styleUrl: './article-list.component.scss',
@@ -38,7 +40,7 @@ export class ArticleListComponent {
     paginatorPageSize = 10;
     paginatorPageIndex = 0;
 
-    constructor(private readonly articleService: ArticleService) {
+    constructor(private readonly articleService: ArticleService, private readonly router: Router) {
         // this.articles$ = this.getData();
         this.articles$ = of(
             Array(10).fill(
@@ -82,4 +84,8 @@ export class ArticleListComponent {
     }
 
     onReadArticle(id: number) {}
+
+    onAddArticle($event: MouseEvent) {
+        this.router.navigate(['articles/add']).then(r => {});
+    }
 }
