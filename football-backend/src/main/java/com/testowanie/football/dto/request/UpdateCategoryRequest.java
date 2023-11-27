@@ -7,9 +7,10 @@ import lombok.extern.jackson.Jacksonized;
 
 @Builder
 @Jacksonized
-public record CreateCategoryRequest(
+public record UpdateCategoryRequest(
         @NotBlank
         @Size(min = 3, max = 200)
         String name
 ) {
 }
+
