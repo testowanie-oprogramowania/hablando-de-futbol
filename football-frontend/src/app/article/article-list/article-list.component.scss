@@ -1,5 +1,7 @@
+@import "../../styles/variables";
+
 .article-list {
-    margin: 20px;
+    margin: $article-padding;
 
     &__buttons {
         padding: 15px 0 35px 15px;

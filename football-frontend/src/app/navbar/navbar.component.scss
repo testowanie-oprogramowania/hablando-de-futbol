@@ -1,4 +1,6 @@
-$font-color: #dcdcdc;
+@import "../styles/colors";
+
+$font-color: $light-silver;
 $font-size: 1rem;
 
 .sidenav-container {
@@ -6,12 +8,12 @@ $font-size: 1rem;
 
     .sidenav {
         width: 200px;
-        background-color: #4b4b4b;
+        background-color: $dark-charcoal;
         @extend %navbar-border;
 
         .mat-toolbar {
             background: inherit;
-            background-color: #5b5b5b;
+            background-color: $dark-charcoal;
             @extend %navbar-border;
 
             .mat-primary {
@@ -65,7 +67,7 @@ $font-size: 1rem;
 }
 
 %navbar-border {
-    border-bottom: 1px solid #484848;
+    border-bottom: 1px solid $deep-charcoal;
     -webkit-box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
 }

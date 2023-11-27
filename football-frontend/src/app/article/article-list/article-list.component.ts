@@ -86,6 +86,6 @@ export class ArticleListComponent {
     onReadArticle(id: number) {}
 
     onAddArticle($event: MouseEvent) {
-        this.router.navigate(['articles/add']).then(r => {});
+        this.router.navigate(['articles/create']).then(r => {});
     }
 }

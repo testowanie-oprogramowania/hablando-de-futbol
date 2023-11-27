@@ -1,4 +1,6 @@
-$font-color: #dcdcdc;
+@import "../../styles/colors";
+
+$font-color: $light-silver;
 .mat-list-item {
     margin: 0;
     padding: 0;
@@ -28,7 +30,7 @@ $font-color: #dcdcdc;
 .expansion-panel {
     color: $font-color;
     font-family: 'Bebas Neue', sans-serif;
-    background-color: #4b4b4b;
+    background-color: $dark-charcoal;
     width: 199px;
     text-overflow: ellipsis;
     font-size: 16px;
@@ -36,7 +38,7 @@ $font-color: #dcdcdc;
     .expansion-panel-header {
         color: $font-color;
         font-family: 'Bebas Neue', sans-serif;
-        background-color: #4b4b4b;
+        background-color: $dark-charcoal;
         ::ng-deep span {
           font-size: 1rem;
           color: $font-color;
