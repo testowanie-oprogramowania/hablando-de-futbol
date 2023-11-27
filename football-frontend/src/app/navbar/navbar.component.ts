@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AsyncPipe, NgIf } from '@angular/common';
+import {AsyncPipe, NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -12,30 +12,32 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { CategoryListComponent } from '../category/category-list/category-list.component';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
-  standalone: true,
-  imports: [
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    AsyncPipe,
-    NgIf,
-    RouterLink,
-    RouterOutlet,
-    CategoryListComponent,
-  ],
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    standalone: true,
+    imports: [
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        AsyncPipe,
+        NgIf,
+        RouterLink,
+        RouterOutlet,
+        CategoryListComponent,
+        NgClass,
+        NgOptimizedImage,
+    ],
 })
 export class NavbarComponent {
-  private breakpointObserver = inject(BreakpointObserver);
+    private breakpointObserver = inject(BreakpointObserver);
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+    isHandset$: Observable<boolean> = this.breakpointObserver
+        .observe(Breakpoints.Handset)
+        .pipe(
+            map(result => result.matches),
+            shareReplay()
+        );
 }

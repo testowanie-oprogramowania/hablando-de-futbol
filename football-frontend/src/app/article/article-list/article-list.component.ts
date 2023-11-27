@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { Observable, of, tap } from 'rxjs';
 import { Article } from '../../models/article';
@@ -24,6 +24,7 @@ import { Category } from '../../models/category';
         MatPaginatorModule,
         MatCardModule,
         MatButtonModule,
+        NgOptimizedImage,
     ],
     templateUrl: './article-list.component.html',
     styleUrl: './article-list.component.scss',
@@ -39,25 +40,24 @@ export class ArticleListComponent {
 
     constructor(private readonly articleService: ArticleService) {
         // this.articles$ = this.getData();
-        this.articles$ = of(Array(10).fill(
-            new Article(
-                'tytul',
-                new Editor(
-                    'Jan',
-                    'Kowalski',
-                    'https://avatars.githubusercontent.com/u/22162049?v=4'
-                ),
-                new Date('25-11-2023'),
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an',
-                'https://material.angular.io/assets/img/examples/shiba2.jpg',
-                new Category(
-                    'Kategoria',
-                    []
-                ),
-                [],
-                1
-            ),
-        ));
+        this.articles$ = of(
+            Array(10).fill(
+                new Article(
+                    'tytul',
+                    new Editor(
+                        'Jan',
+                        'Kowalski',
+                        'https://avatars.githubusercontent.com/u/22162049?v=4'
+                    ),
+                    new Date('25-11-2023'),
+                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an",
+                    'https://material.angular.io/assets/img/examples/shiba2.jpg',
+                    new Category('Kategoria', []),
+                    [],
+                    1
+                )
+            )
+        );
     }
 
     handlePageEvent(event: PageEvent): void {
