@@ -1,0 +1,19 @@
+@import "../../styles/variables";
+
+.create-article-form {
+    margin: $article-padding;
+    display: flex;
+    justify-content: center;
+
+    &__card {
+        display: flex;
+        justify-content: center;
+        width: 50%;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}
