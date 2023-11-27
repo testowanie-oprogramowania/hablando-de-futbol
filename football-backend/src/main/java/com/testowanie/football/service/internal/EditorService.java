@@ -9,9 +9,7 @@ import com.testowanie.football.repository.EditorRepository;
 import com.testowanie.football.service.EditorUseCases;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +23,7 @@ public class EditorService implements EditorUseCases {
     @Override
     @Transactional(readOnly = true)
     public Page<EditorResource> getEditors(Pageable pageable) {
-        return editorRepository.findAll(
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by("surname").ascending())
-                )
-        ).map(editorMapper::toEditorResource);
+        return editorRepository.findAll(pageable).map(editorMapper::toEditorResource);
     }
 
     @Override
