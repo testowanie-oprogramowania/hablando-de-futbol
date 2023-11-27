@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService implements CategoryUseCases {
+class CategoryService implements CategoryUseCases {
     private final String CATEGORY_NOT_FOUND = "Category not found";
     private final String CATEGORY_ALREADY_EXISTS = "Category with the given name already exists";
     private final CategoryRepository categoryRepository;
