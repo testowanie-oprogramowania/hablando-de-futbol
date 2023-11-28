@@ -7,12 +7,18 @@
         padding: 15px 0 35px 15px;
     }
 
-    &__container {
+    &__cards {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
         align-items: center;
         gap: 30px;
+    }
+
+    &__card {
+        cursor: pointer;
+        max-width: 400px;
+        margin-bottom: 8px;
     }
 
     &__image-container {
@@ -33,9 +39,37 @@
         color: white;
         padding: 5px;
     }
+}
 
-    &__card {
-        max-width: 400px;
-        margin-bottom: 8px;
+
+
+.expanded-button {
+
+    width: auto !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px !important;
+
+    :nth-child(2) {
+        margin: 15px !important;
+    }
+    ::ng-deep :nth-child(3) {
+        margin: 15px 15px 15px 0 !important;
+    }
+
+    & > *[role=img] {
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    ::ng-deep & > .mat-mdc-button-persistent-ripple {
+        border-radius: 100px !important;
     }
 }

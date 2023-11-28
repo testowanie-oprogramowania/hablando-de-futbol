@@ -88,4 +88,8 @@ export class ArticleListComponent {
     onAddArticle($event: MouseEvent) {
         this.router.navigate(['articles/create']).then(r => {});
     }
+
+    navigateToArticle(id: number) {
+        this.router.navigate([`articles/${id}`]).then(r => {});
+    }
 }

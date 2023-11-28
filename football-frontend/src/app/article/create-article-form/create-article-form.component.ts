@@ -83,4 +83,8 @@ export class CreateArticleFormComponent {
             },
         });
     }
+
+    goBack() {
+        this.router.navigate(['/articles']).then(r => {});
+    }
 }
