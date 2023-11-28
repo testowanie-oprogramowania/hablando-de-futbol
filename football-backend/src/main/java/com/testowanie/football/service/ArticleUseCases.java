@@ -30,4 +30,6 @@ public interface ArticleUseCases {
     void removeLikeFromComment(Long id, Long commentId);
 
     void removeDislikeFromComment(Long id, Long commentId);
+
+    Page<ArticleResource> searchByQuery(String query, Pageable pageable);
 }

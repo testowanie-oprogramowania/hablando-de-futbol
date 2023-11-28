@@ -4,7 +4,6 @@ import com.testowanie.football.dto.request.CreateArticleRequest;
 import com.testowanie.football.dto.request.CreateCommentRequest;
 import com.testowanie.football.dto.request.UpdateArticleRequest;
 import com.testowanie.football.dto.resource.ArticleResource;
-import com.testowanie.football.model.Article;
 import com.testowanie.football.service.ArticleUseCases;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -90,7 +89,8 @@ public class ArticleController {
     }
 
     @GetMapping("/search/{query}")
-    public ResponseEntity<Page<Article>> searchArticles(@PathVariable String query, Pageable pageable) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Page<ArticleResource>> searchArticles(@PathVariable String query, Pageable pageable) {
+        final Page<ArticleResource> articles = articleUseCases.searchByQuery(query, pageable);
+        return ResponseEntity.ok(articles);
     }
 }

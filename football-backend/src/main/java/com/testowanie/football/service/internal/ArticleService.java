@@ -126,6 +126,13 @@ class ArticleService implements ArticleUseCases {
         articleRepository.save(article);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ArticleResource> searchByQuery(String query, Pageable pageable) {
+        return articleRepository.findAllByTitleContainingIgnoreCase(query, pageable)
+                .map(articleMapper::toArticleResource);
+    }
+
     private Article getArticleOrElseThrow(Long id) {
         return articleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ARTICLE_NOT_FOUND));
     }
