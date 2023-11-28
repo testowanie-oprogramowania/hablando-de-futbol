@@ -1,9 +1,9 @@
 package com.testowanie.football.web;
 
 import com.testowanie.football.dto.request.CreateCategoryRequest;
+import com.testowanie.football.dto.request.UpdateCategoryRequest;
 import com.testowanie.football.dto.resource.CategoryArticlesResource;
 import com.testowanie.football.dto.resource.CategoryResource;
-import com.testowanie.football.model.Category;
 import com.testowanie.football.service.CategoryUseCases;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryArticlesResource> getCategoryById(@PathVariable long id) {
+    public ResponseEntity<CategoryArticlesResource> getCategoryById(@PathVariable Long id) {
         final CategoryArticlesResource category = categoryUseCases.findCategoryById(id);
         return ResponseEntity.ok(category);
     }
@@ -39,13 +39,13 @@ public class CategoryController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateCategory(@PathVariable long id, @RequestBody Category category) {
-        categoryUseCases.updateCategory(id, category);
+    public ResponseEntity<Void> updateCategory(@PathVariable Long id, @RequestBody @Valid UpdateCategoryRequest categoryRequest) {
+        categoryUseCases.updateCategory(id, categoryRequest);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryUseCases.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }

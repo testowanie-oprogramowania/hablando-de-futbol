@@ -1,6 +1,7 @@
 package com.testowanie.football.service.internal;
 
 import com.testowanie.football.dto.request.CreateCategoryRequest;
+import com.testowanie.football.dto.request.UpdateCategoryRequest;
 import com.testowanie.football.dto.resource.CategoryArticlesResource;
 import com.testowanie.football.dto.resource.CategoryResource;
 import com.testowanie.football.exception.EntityNotFoundException;
@@ -14,13 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService implements CategoryUseCases {
-    private final String CATEGORY_NOT_FOUND = "Category not found";
-    private final String CATEGORY_ALREADY_EXISTS = "Category with the given name already exists";
+class CategoryService implements CategoryUseCases {
+    private static final String CATEGORY_NOT_FOUND = "Category not found";
+    private static final String CATEGORY_ALREADY_EXISTS = "Category with the given name already exists";
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
     private final ArticleMapper articleMapper;
@@ -47,7 +47,7 @@ public class CategoryService implements CategoryUseCases {
     @Transactional
     public void createCategory(CreateCategoryRequest categoryRequest) {
         try {
-            Category category = new Category(null, categoryRequest.name(), Set.of());
+            Category category = categoryMapper.fromCreateCategoryRequest(categoryRequest);
             categoryRepository.save(category);
         } catch (Exception e) {
             throw new IllegalArgumentException(CATEGORY_ALREADY_EXISTS);
@@ -56,8 +56,20 @@ public class CategoryService implements CategoryUseCases {
 
     @Override
     @Transactional
-    public void updateCategory(Long id, Category category) {
-        throw new IllegalArgumentException();
+    public void updateCategory(Long id, UpdateCategoryRequest categoryRequest) {
+        Category categoryToUpdate = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(CATEGORY_NOT_FOUND));
+
+        if (categoryToUpdate.getName().equals(categoryRequest.name())) {
+            return;
+        }
+
+        if (categoryRepository.existsByName(categoryRequest.name())) {
+            throw new IllegalArgumentException(CATEGORY_ALREADY_EXISTS);
+        }
+
+        categoryMapper.updateCategoryFromUpdateCategoryRequest(categoryRequest, categoryToUpdate);
+        categoryRepository.save(categoryToUpdate);
     }
 
     @Override
