@@ -4,8 +4,6 @@ import com.testowanie.football.dto.request.CreateArticleRequest;
 import com.testowanie.football.dto.request.CreateCommentRequest;
 import com.testowanie.football.dto.request.UpdateArticleRequest;
 import com.testowanie.football.dto.resource.ArticleResource;
-import com.testowanie.football.model.Article;
-import com.testowanie.football.model.Comment;
 import com.testowanie.football.service.ArticleUseCases;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -55,24 +53,44 @@ public class ArticleController {
     }
 
     @PostMapping("/{id}/comments")
-    public ResponseEntity<Void> createComment(@PathVariable long id, @RequestBody CreateCommentRequest commentRequest) {
+    public ResponseEntity<Void> createComment(@PathVariable Long id, @RequestBody @Valid CreateCommentRequest commentRequest) {
         articleUseCases.createComment(id, commentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}/comments/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable long id, @PathVariable long commentId) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id, @PathVariable long commentId) {
         articleUseCases.deleteComment(id, commentId);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/comments/{commentId}")
-    public ResponseEntity<Void> updateComment(@PathVariable Long id, @PathVariable Long commentId, @RequestBody Comment comment) {
+    @PostMapping("/{id}/comments/{commentId}/like/add")
+    public ResponseEntity<Void> likeComment(@PathVariable Long id, @PathVariable Long commentId) {
+        articleUseCases.likeComment(id, commentId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/comments/{commentId}/like/remove")
+    public ResponseEntity<Void> removeLikeFromComment(@PathVariable Long id, @PathVariable Long commentId) {
+        articleUseCases.removeLikeFromComment(id, commentId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/comments/{commentId}/dislike/add")
+    public ResponseEntity<Void> dislikeComment(@PathVariable Long id, @PathVariable Long commentId) {
+        articleUseCases.dislikeComment(id, commentId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/comments/{commentId}/dislike/remove")
+    public ResponseEntity<Void> removeDislikeFromComment(@PathVariable Long id, @PathVariable Long commentId) {
+        articleUseCases.removeDislikeFromComment(id, commentId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search/{query}")
-    public ResponseEntity<Page<Article>> searchArticles(@PathVariable String query, Pageable pageable) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Page<ArticleResource>> searchArticles(@PathVariable String query, Pageable pageable) {
+        final Page<ArticleResource> articles = articleUseCases.searchByQuery(query, pageable);
+        return ResponseEntity.ok(articles);
     }
 }
