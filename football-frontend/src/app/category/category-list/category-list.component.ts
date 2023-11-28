@@ -11,6 +11,7 @@ import { CategoryEditDialogComponent } from '../category-edit-dialog/category-ed
 import { CategoryDeleteDialogComponent } from '../category-delete-dialog/category-delete-dialog.component';
 import { Observable, tap } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-category-list',
@@ -31,7 +32,8 @@ export class CategoryListComponent {
 
     constructor(
         public dialog: MatDialog,
-        private readonly categoryService: CategoryService
+        private readonly categoryService: CategoryService,
+        private readonly router: Router
     ) {
         this.categories$ = categoryService.getAllCategories();
     }
@@ -89,5 +91,9 @@ export class CategoryListComponent {
                 });
             }
         });
+    }
+
+    onCategoryClick(category: Category) {
+        this.router.navigate(['/categories', category.id]);
     }
 }
