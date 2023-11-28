@@ -1,0 +1,16 @@
+<mat-form-field class="date-picker-field">
+    <mat-label> {{ label }}</mat-label>
+    <input matInput [matDatepicker]="datepicker" [formControl]="control" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle
+        matIconSuffix
+        [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>
+                Apply
+            </button>
+        </mat-datepicker-actions>
+    </mat-datepicker>
+</mat-form-field>
