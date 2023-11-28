@@ -1,5 +1,6 @@
 package com.testowanie.football.web;
 
+import com.testowanie.football.dto.request.CreateCommentRequest;
 import com.testowanie.football.dto.resource.ArticleResource;
 import com.testowanie.football.model.Article;
 import com.testowanie.football.model.Comment;
@@ -7,6 +8,7 @@ import com.testowanie.football.service.ArticleUseCases;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,12 +47,14 @@ public class ArticleController {
     }
 
     @PostMapping("/{id}/comments")
-    public ResponseEntity<Void> createComment(@PathVariable long id, @RequestBody Comment comment) {
-        return ResponseEntity.created(null).build();
+    public ResponseEntity<Void> createComment(@PathVariable long id, @RequestBody CreateCommentRequest commentRequest) {
+        articleUseCases.createComment(id, commentRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable long id, @PathVariable long commentId) {
+        articleUseCases.deleteComment(id, commentId);
         return ResponseEntity.noContent().build();
     }
 
