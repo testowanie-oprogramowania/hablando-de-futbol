@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class EditorService implements EditorUseCases {
+class EditorService implements EditorUseCases {
     private final String EDITOR_NOT_FOUND = "Editor not found";
     private final EditorMapper editorMapper;
     private final EditorRepository editorRepository;

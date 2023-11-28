@@ -1,7 +1,10 @@
 package com.testowanie.football.web;
 
+import com.testowanie.football.dto.resource.ArticleResource;
 import com.testowanie.football.model.Article;
 import com.testowanie.football.model.Comment;
+import com.testowanie.football.service.ArticleUseCases;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/articles")
 public class ArticleController {
+
+    private final ArticleUseCases articleUseCases;
 
     @GetMapping
     public ResponseEntity<Page<Article>> getArticles(Pageable pageable) {
@@ -19,8 +25,8 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getArticleById(@PathVariable long id) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ArticleResource> getArticleById(@PathVariable long id) {
+        return ResponseEntity.ok(articleUseCases.getArticle(id));
     }
 
     @PostMapping
