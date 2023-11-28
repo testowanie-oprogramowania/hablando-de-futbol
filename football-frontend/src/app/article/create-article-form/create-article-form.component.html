@@ -1,14 +1,12 @@
 <div class="create-article-form">
     <mat-card class="create-article-form__card">
-        <mat-card-header class="create-article-form__header">
-            <mat-card-title>
-                <h1>Create article</h1>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <form
-                [formGroup]="articleForm"
-                (ngSubmit)="submitForm()">
+        <form [formGroup]="articleForm" (ngSubmit)="submitForm()">
+            <mat-card-header class="create-article-form__header">
+                <mat-card-title>
+                    <h1>Create article</h1>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
                 <app-text-input-field
                     label="Title"
                     [control]="articleForm.controls.title">
@@ -28,7 +26,8 @@
 
                 <app-text-area-field
                     label="Article content"
-                    [control]="articleForm.controls.content">
+                    [control]="articleForm.controls.content"
+                    [rowsNumber]="articleContentRowsNumber">
                 </app-text-area-field>
 
                 <app-text-input-field
@@ -42,10 +41,15 @@
                     [data$]="categories$"
                     [dataFormToShow]="categoryFormToShow">
                 </app-select-field>
-            </form>
-        </mat-card-content>
-        <mat-card-actions class="create-article-form__actions">
-            <button mat-stroked-button>Create</button>
-        </mat-card-actions>
+            </mat-card-content>
+            <mat-card-actions class="create-article-form__actions">
+                <button
+                    mat-stroked-button
+                    type="submit"
+                    [disabled]="articleForm.invalid">
+                    Create
+                </button>
+            </mat-card-actions>
+        </form>
     </mat-card>
 </div>

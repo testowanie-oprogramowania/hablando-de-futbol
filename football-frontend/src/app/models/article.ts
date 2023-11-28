@@ -3,54 +3,37 @@ import { Category } from './category';
 import { Comment } from './comment';
 
 export class Article {
-  id?: number;
-  title: string;
-  editor: Editor;
-  publicationDate: Date;
-  content: string;
-  photoUrl: string;
-  category: Category;
-  comments: Comment[];
+    constructor(
+        public title: string,
+        public editor: Editor,
+        public publicationDate: Date,
+        public content: string,
+        public photoUrl: string,
+        public category: Category,
+        public comments: Comment[],
+        public id?: number
+    ) {}
 
-  constructor(
-    title: string,
-    editor: Editor,
-    publicationDate: Date,
-    content: string,
-    photoUrl: string,
-    category: Category,
-    comments: Comment[],
-    id?: number
-  ) {
-    this.id = id;
-    this.title = title;
-    this.editor = editor;
-    this.publicationDate = publicationDate;
-    this.content = content;
-    this.photoUrl = photoUrl;
-    this.category = category;
-    this.comments = comments;
-  }
-
-  public static fromForms(articleRawFormValue: ArticleRawFormValue): Article {
-    return new Article(
-      articleRawFormValue.title,
-      articleRawFormValue.editor,
-      articleRawFormValue.publicationDate,
-      articleRawFormValue.content,
-      articleRawFormValue.photoUrl,
-      articleRawFormValue.category,
-      [],
-      undefined
-    );
-  }
+    public static fromForm(articleRawFormValue: ArticleRawFormValue): Article {
+        return new Article(
+            articleRawFormValue.title,
+            articleRawFormValue.editor,
+            articleRawFormValue.publicationDate,
+            articleRawFormValue.content,
+            articleRawFormValue.photoUrl,
+            articleRawFormValue.category,
+            [],
+            articleRawFormValue.id ?? undefined
+        );
+    }
 }
 
 export interface ArticleRawFormValue {
-  title: string;
-  editor: Editor;
-  publicationDate: Date;
-  content: string;
-  photoUrl: string;
-  category: Category;
+    title: string;
+    editor: Editor;
+    publicationDate: Date;
+    content: string;
+    photoUrl: string;
+    category: Category;
+    id?: number;
 }

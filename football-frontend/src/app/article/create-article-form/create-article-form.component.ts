@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     FormBuilder,
+    FormControl,
     FormGroup,
     FormsModule,
     ReactiveFormsModule,
+    Validators,
 } from '@angular/forms';
 import { Editor } from '../../models/editor';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +22,9 @@ import { TextInputFieldComponent } from '../../shared/text-input-field/text-inpu
 import { TextAreaFieldComponent } from '../../shared/text-area-field/text-area-field.component';
 import { DatePickerFieldComponent } from '../../shared/date-picker-field/date-picker-field.component';
 import { SelectFieldComponent } from '../../shared/select-field/select-field.component';
+import { Article, ArticleRawFormValue } from '../../models/article';
+import { ArticleService } from '../../services/article.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-create-article-form',
@@ -46,12 +51,12 @@ import { SelectFieldComponent } from '../../shared/select-field/select-field.com
 })
 export class CreateArticleFormComponent {
     articleForm = this.formBuilder.group({
-        title: [''],
-        editor: [''],
-        publicationDate: [''],
-        content: [''],
-        photoUrl: [''],
-        category: [''],
+        title: ['', Validators.required],
+        editor: [undefined as Editor | undefined, Validators.required],
+        publicationDate: [undefined as Date | undefined, Validators.required],
+        content: ['', Validators.required],
+        photoUrl: ['', Validators.required],
+        category: [undefined as Category | undefined, Validators.required],
     });
 
     categories$: Observable<Category[]> = of();
@@ -60,7 +65,22 @@ export class CreateArticleFormComponent {
     editors$: Observable<Editor[]> = of();
     editorFormToShow = (editor: Editor) => editor.name;
 
-    constructor(private readonly formBuilder: FormBuilder) {}
+    articleContentRowsNumber = 15;
 
-    submitForm() {}
+    constructor(
+        private readonly articleService: ArticleService,
+        private readonly formBuilder: FormBuilder,
+        private readonly router: Router
+    ) {}
+
+    submitForm() {
+        const article = Article.fromForm(
+            this.articleForm.value as ArticleRawFormValue
+        );
+        this.articleService.createArticle(article).subscribe({
+            next: () => {
+                this.router.navigate(['/articles']).then(r => {});
+            },
+        });
+    }
 }
