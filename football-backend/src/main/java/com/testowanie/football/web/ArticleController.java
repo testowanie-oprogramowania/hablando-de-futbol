@@ -53,13 +53,13 @@ public class ArticleController {
     }
 
     @PostMapping("/{id}/comments")
-    public ResponseEntity<Void> createComment(@PathVariable long id, @RequestBody @Valid CreateCommentRequest commentRequest) {
+    public ResponseEntity<Void> createComment(@PathVariable Long id, @RequestBody @Valid CreateCommentRequest commentRequest) {
         articleUseCases.createComment(id, commentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}/comments/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable long id, @PathVariable long commentId) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id, @PathVariable long commentId) {
         articleUseCases.deleteComment(id, commentId);
         return ResponseEntity.noContent().build();
     }
