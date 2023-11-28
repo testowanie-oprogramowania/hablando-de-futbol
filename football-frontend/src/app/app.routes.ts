@@ -1,13 +1,27 @@
 import { Routes } from '@angular/router';
-import {ArticleListComponent} from "./article/article-list/article-list.component";
+import { ArticleListComponent } from './article/article-list/article-list.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  {
-    path: 'home',
-    loadComponent: () =>
-      import('./article/article-list/article-list.component').then(
-        c => c.ArticleListComponent
-      ),
-  },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    {
+        path: 'home',
+        loadComponent: () =>
+            import('./article/article-list/article-list.component').then(
+                c => c.ArticleListComponent
+            ),
+    },
+    {
+        path: 'articles',
+        loadComponent: () =>
+            import('./article/article-list/article-list.component').then(
+                c => c.ArticleListComponent
+            ),
+    },
+    {
+        path: 'articles/create',
+        loadComponent: () =>
+            import('./article/create-article-form/create-article-form.component').then(
+                c => c.CreateArticleFormComponent
+            ),
+    },
 ];

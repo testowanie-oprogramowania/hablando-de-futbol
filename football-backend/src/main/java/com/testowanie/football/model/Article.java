@@ -20,7 +20,7 @@ public class Article extends Auditable {
     private Long id;
 
     @NonNull
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String title;
 
     @NonNull
