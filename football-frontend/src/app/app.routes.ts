@@ -20,8 +20,15 @@ export const routes: Routes = [
     {
         path: 'articles/create',
         loadComponent: () =>
-            import('./article/create-article-form/create-article-form.component').then(
-                c => c.CreateArticleFormComponent
+            import(
+                './article/create-article-form/create-article-form.component'
+            ).then(c => c.CreateArticleFormComponent),
+    },
+    {
+        path: 'categories/:id',
+        loadComponent: () =>
+            import('./article/article-list/article-list.component').then(
+                c => c.ArticleListComponent
             ),
     },
 ];

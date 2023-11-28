@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
@@ -9,6 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryEditDialogComponent } from '../category-edit-dialog/category-edit-dialog.component';
 import { CategoryDeleteDialogComponent } from '../category-delete-dialog/category-delete-dialog.component';
+import { Observable, tap } from 'rxjs';
+import { CategoryService } from '../../services/category.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-category-list',
@@ -25,20 +28,32 @@ import { CategoryDeleteDialogComponent } from '../category-delete-dialog/categor
     styleUrl: './category-list.component.scss',
 })
 export class CategoryListComponent {
-    categories: Category[] = [
-        { id: 1, name: 'Kata 1', articles: [] },
-        { id: 3, name: 'Kategoria 2', articles: [] },
-    ];
-    constructor(public dialog: MatDialog) {}
+    categories$: Observable<Category[]>;
+
+    constructor(
+        public dialog: MatDialog,
+        private readonly categoryService: CategoryService,
+        private readonly router: Router
+    ) {
+        this.categories$ = categoryService.getAllCategories();
+    }
 
     openEditDialog(category: Category) {
+        const categoryCopy = { ...category };
         const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
-            data: category,
+            data: categoryCopy,
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // HTTP PUT
+                this.categoryService.updateCategory(result).subscribe({
+                    next: () => {
+                        this.categories$ =
+                            this.categoryService.getAllCategories();
+                    },
+                });
+            } else {
+                this.categories$ = this.categoryService.getAllCategories();
             }
         });
     }
@@ -47,7 +62,12 @@ export class CategoryListComponent {
         const dialogRef = this.dialog.open(CategoryDeleteDialogComponent, {});
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // HTTP DELETE
+                this.categoryService.deleteCategory(category).subscribe({
+                    next: () => {
+                        this.categories$ =
+                            this.categoryService.getAllCategories();
+                    },
+                });
             }
         });
     }
@@ -63,8 +83,17 @@ export class CategoryListComponent {
 
         dialogRef.afterClosed().subscribe(newCategory => {
             if (newCategory) {
-                // HTTP POST
+                this.categoryService.addCategory(newCategory).subscribe({
+                    next: () => {
+                        this.categories$ =
+                            this.categoryService.getAllCategories();
+                    },
+                });
             }
         });
+    }
+
+    onCategoryClick(category: Category) {
+        this.router.navigate(['/categories', category.id]);
     }
 }

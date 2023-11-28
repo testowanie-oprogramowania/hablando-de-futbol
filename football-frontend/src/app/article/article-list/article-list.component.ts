@@ -14,7 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { Editor } from '../../models/editor';
 import { Category } from '../../models/category';
 import { MatIconModule } from '@angular/material/icon';
-import {Router, RouterLink} from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
     selector: 'app-article-list',
@@ -36,30 +37,35 @@ export class ArticleListComponent {
     dataLength = 0;
 
     @ViewChild(MatPaginator) readonly paginator!: MatPaginator;
-    paginatorLength = 100;
-    paginatorPageSize = 10;
+    paginatorLength = 10;
+    paginatorPageSize = 5;
     paginatorPageIndex = 0;
 
-    constructor(private readonly articleService: ArticleService, private readonly router: Router) {
-        // this.articles$ = this.getData();
-        this.articles$ = of(
-            Array(10).fill(
-                new Article(
-                    'tytul',
-                    new Editor(
-                        'Jan',
-                        'Kowalski',
-                        'https://avatars.githubusercontent.com/u/22162049?v=4'
-                    ),
-                    new Date('25-11-2023'),
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an",
-                    'https://material.angular.io/assets/img/examples/shiba2.jpg',
-                    new Category('Kategoria', []),
-                    [],
-                    1
-                )
-            )
-        );
+    constructor(
+        private readonly articleService: ArticleService,
+        private readonly categoryService: CategoryService,
+        private readonly router: Router,
+        private readonly route: ActivatedRoute
+    ) {
+        this.articles$ = this.getData();
+        // this.articles$ = of(
+        //     Array(10).fill(
+        //         new Article(
+        //             'tytul',
+        //             new Editor(
+        //                 'Jan',
+        //                 'Kowalski',
+        //                 'https://avatars.githubusercontent.com/u/22162049?v=4'
+        //             ),
+        //             new Date('25-11-2023'),
+        //             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an",
+        //             'https://material.angular.io/assets/img/examples/shiba2.jpg',
+        //             new Category('Kategoria', []),
+        //             [],
+        //             1
+        //         )
+        //     )
+        // );
     }
 
     handlePageEvent(event: PageEvent): void {
