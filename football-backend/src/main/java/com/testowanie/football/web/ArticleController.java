@@ -5,7 +5,6 @@ import com.testowanie.football.dto.request.CreateCommentRequest;
 import com.testowanie.football.dto.request.UpdateArticleRequest;
 import com.testowanie.football.dto.resource.ArticleResource;
 import com.testowanie.football.model.Article;
-import com.testowanie.football.model.Comment;
 import com.testowanie.football.service.ArticleUseCases;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +54,7 @@ public class ArticleController {
     }
 
     @PostMapping("/{id}/comments")
-    public ResponseEntity<Void> createComment(@PathVariable long id, @RequestBody CreateCommentRequest commentRequest) {
+    public ResponseEntity<Void> createComment(@PathVariable long id, @RequestBody @Valid CreateCommentRequest commentRequest) {
         articleUseCases.createComment(id, commentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -66,8 +65,23 @@ public class ArticleController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/comments/{commentId}")
-    public ResponseEntity<Void> updateComment(@PathVariable Long id, @PathVariable Long commentId, @RequestBody Comment comment) {
+    @PostMapping("/{id}/comments/{commentId}/like/add")
+    public ResponseEntity<Void> likeComment(@PathVariable Long id, @PathVariable Long commentId) {
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/comments/{commentId}/like/remove")
+    public ResponseEntity<Void> removeLikeFromComment(@PathVariable Long id, @PathVariable Long commentId) {
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/comments/{commentId}/dislike/add")
+    public ResponseEntity<Void> dislikeComment(@PathVariable Long id, @PathVariable Long commentId) {
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/comments/{commentId}/dislike/remove")
+    public ResponseEntity<Void> removeDislikeFromComment(@PathVariable Long id, @PathVariable Long commentId) {
         return ResponseEntity.noContent().build();
     }
 
