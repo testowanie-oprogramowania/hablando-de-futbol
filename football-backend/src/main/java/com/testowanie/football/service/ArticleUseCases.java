@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ArticleUseCases {
 
-    Page<ArticleResource> getArticles(Pageable pageable);
+    Page<ArticleResource> getArticles(Pageable pageable, Long categoryId);
 
     ArticleResource getArticle(Long id);
 

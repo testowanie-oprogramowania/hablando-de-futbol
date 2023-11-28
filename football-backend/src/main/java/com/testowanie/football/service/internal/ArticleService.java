@@ -8,8 +8,10 @@ import com.testowanie.football.exception.EntityNotFoundException;
 import com.testowanie.football.mapper.ArticleMapper;
 import com.testowanie.football.mapper.CommentMapper;
 import com.testowanie.football.model.Article;
+import com.testowanie.football.model.Category;
 import com.testowanie.football.model.Comment;
 import com.testowanie.football.repository.ArticleRepository;
+import com.testowanie.football.repository.CategoryRepository;
 import com.testowanie.football.service.ArticleUseCases;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,13 +24,20 @@ import org.springframework.transaction.annotation.Transactional;
 class ArticleService implements ArticleUseCases {
     private static final String ARTICLE_NOT_FOUND = "Article not found";
     private static final String COMMENT_NOT_FOUND = "Comment not found";
+    private static final String CATEGORY_NOT_FOUND = "Category not found";
     private final ArticleRepository articleRepository;
+    private final CategoryRepository categoryRepository;
     private final ArticleMapper articleMapper;
     private final CommentMapper commentMapper;
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ArticleResource> getArticles(Pageable pageable) {
+    public Page<ArticleResource> getArticles(Pageable pageable, Long categoryId) {
+        if (categoryId != null) {
+            final Category category = getCategoryOrElseThrow(categoryId);
+            return articleRepository.findAllByCategory(category, pageable)
+                    .map(articleMapper::toArticleResource);
+        }
         return articleRepository.findAll(pageable).map(articleMapper::toArticleResource);
     }
 
@@ -140,5 +149,9 @@ class ArticleService implements ArticleUseCases {
     private Comment getCommentOrElseThrow(Article article, Long commentId) {
         return article.getComments().stream().filter(comment -> comment.getId().equals(commentId))
                 .findFirst().orElseThrow(() -> new EntityNotFoundException(COMMENT_NOT_FOUND));
+    }
+
+    private Category getCategoryOrElseThrow(Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(CATEGORY_NOT_FOUND));
     }
 }

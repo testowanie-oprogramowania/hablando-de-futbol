@@ -25,8 +25,11 @@ public class ArticleController {
     private final ArticleUseCases articleUseCases;
 
     @GetMapping
-    public ResponseEntity<Page<ArticleResource>> getArticles(@SortDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable) {
-        return ResponseEntity.ok(articleUseCases.getArticles(pageable));
+    public ResponseEntity<Page<ArticleResource>> getArticles(
+            @SortDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(required = false, name = "category") Long id
+    ) {
+        return ResponseEntity.ok(articleUseCases.getArticles(pageable, id));
     }
 
     @GetMapping("/{id}")
