@@ -1,11 +1,12 @@
 <div class="create-article-form">
     <mat-card class="create-article-form__card">
-        <mat-card-header>
-            <mat-card-title>Create article</mat-card-title>
+        <mat-card-header class="create-article-form__header">
+            <mat-card-title>
+                <h1>Create article</h1>
+            </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <form
-                class="create-article-form__form"
                 [formGroup]="articleForm"
                 (ngSubmit)="submitForm()">
                 <app-text-input-field
@@ -43,9 +44,8 @@
                 </app-select-field>
             </form>
         </mat-card-content>
-        <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
+        <mat-card-actions class="create-article-form__actions">
+            <button mat-stroked-button>Create</button>
         </mat-card-actions>
     </mat-card>
 </div>

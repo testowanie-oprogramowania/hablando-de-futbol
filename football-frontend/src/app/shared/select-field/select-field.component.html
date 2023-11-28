@@ -1,12 +1,8 @@
 <mat-form-field class="select-field">
-    <mat-label>
-        <span> {{label}} </span>
-    </mat-label>
+    <mat-label id="label">{{ label }}</mat-label>
     <mat-select [formControl]="control">
         <mat-option [value]="undefined">-</mat-option>
-        <mat-option
-            *ngFor="let value of data$ | async"
-            [value]="value">
+        <mat-option *ngFor="let value of data$ | async" [value]="value">
             {{ dataFormToShow(value) }}
         </mat-option>
     </mat-select>
