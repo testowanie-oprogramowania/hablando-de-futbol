@@ -11,7 +11,10 @@ import { HttpClient } from '@angular/common/http';
 export class ArticleService {
     articlesUrl = environment.apiBaseUrl + '/articles';
 
-    constructor(private readonly httpClient: HttpClient) {}
+    constructor(private readonly httpClient: HttpClient) {
+        console.log('a');
+        console.log(this.articlesUrl);
+    }
 
     public createArticle(article: Article): Observable<any> {
         return this.httpClient.post<Article>(this.articlesUrl, article);
@@ -21,6 +24,8 @@ export class ArticleService {
         page: number;
         size: number;
     }): Observable<Article[]> {
+        console.log('a');
+        console.log(this.articlesUrl);
         return this.httpClient
             .get<{ content: Article[] }>(this.articlesUrl, { params: request })
             .pipe(map(response => response.content));
