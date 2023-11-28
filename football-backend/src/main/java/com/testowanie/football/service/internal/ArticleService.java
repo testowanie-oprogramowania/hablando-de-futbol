@@ -8,7 +8,10 @@ import com.testowanie.football.exception.EntityNotFoundException;
 import com.testowanie.football.mapper.ArticleMapper;
 import com.testowanie.football.mapper.CommentMapper;
 import com.testowanie.football.model.Article;
+import com.testowanie.football.model.Category;
+import com.testowanie.football.model.Comment;
 import com.testowanie.football.repository.ArticleRepository;
+import com.testowanie.football.repository.CategoryRepository;
 import com.testowanie.football.service.ArticleUseCases;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,13 +24,20 @@ import org.springframework.transaction.annotation.Transactional;
 class ArticleService implements ArticleUseCases {
     private static final String ARTICLE_NOT_FOUND = "Article not found";
     private static final String COMMENT_NOT_FOUND = "Comment not found";
+    private static final String CATEGORY_NOT_FOUND = "Category not found";
     private final ArticleRepository articleRepository;
+    private final CategoryRepository categoryRepository;
     private final ArticleMapper articleMapper;
     private final CommentMapper commentMapper;
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ArticleResource> getArticles(Pageable pageable) {
+    public Page<ArticleResource> getArticles(Pageable pageable, Long categoryId) {
+        if (categoryId != null) {
+            final Category category = getCategoryOrElseThrow(categoryId);
+            return articleRepository.findAllByCategory(category, pageable)
+                    .map(articleMapper::toArticleResource);
+        }
         return articleRepository.findAll(pageable).map(articleMapper::toArticleResource);
     }
 
@@ -41,15 +51,14 @@ class ArticleService implements ArticleUseCases {
     @Override
     @Transactional
     public void createArticle(CreateArticleRequest createArticleRequest) {
-        Article article = articleMapper.fromCreateArticleRequest(createArticleRequest);
+        final Article article = articleMapper.fromCreateArticleRequest(createArticleRequest);
         articleRepository.save(article);
     }
 
     @Override
     @Transactional
     public void updateArticle(Long id, UpdateArticleRequest updateArticleRequest) {
-        Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(ARTICLE_NOT_FOUND));
+        final Article article = getArticleOrElseThrow(id);
         articleMapper.updateArticleFromUpdateArticleRequest(updateArticleRequest, article);
         articleRepository.save(article);
     }
@@ -57,17 +66,14 @@ class ArticleService implements ArticleUseCases {
     @Override
     @Transactional
     public void deleteArticle(Long id) {
-        Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(ARTICLE_NOT_FOUND));
+        final Article article = getArticleOrElseThrow(id);
         articleRepository.delete(article);
     }
 
     @Override
     @Transactional
     public void createComment(Long id, CreateCommentRequest commentRequest) {
-        final Article article = articleRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(ARTICLE_NOT_FOUND)
-        );
+        final Article article = getArticleOrElseThrow(id);
 
         article.getComments().add(commentMapper.fromCreateCommentRequest(commentRequest));
         articleRepository.save(article);
@@ -77,15 +83,75 @@ class ArticleService implements ArticleUseCases {
     @Override
     @Transactional
     public void deleteComment(Long id, Long commentId) {
-        final Article article = articleRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(ARTICLE_NOT_FOUND)
-        );
+        final Article article = getArticleOrElseThrow(id);
+        final Comment comment = getCommentOrElseThrow(article, commentId);
 
-        final boolean commentDeleted = article.getComments().removeIf(comment -> comment.getId().equals(commentId));
-
-        if (!commentDeleted) {
-            throw new EntityNotFoundException(COMMENT_NOT_FOUND);
-        }
+        article.getComments().remove(comment);
+        articleRepository.save(article);
     }
 
+    @Override
+    @Transactional
+    public void likeComment(Long id, Long commentId) {
+        final Article article = getArticleOrElseThrow(id);
+        final Comment comment = getCommentOrElseThrow(article, commentId);
+
+        comment.setThumbsUp(comment.getThumbsUp() + 1);
+        articleRepository.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void dislikeComment(Long id, Long commentId) {
+        final Article article = getArticleOrElseThrow(id);
+        final Comment comment = getCommentOrElseThrow(article, commentId);
+
+        comment.setThumbsDown(comment.getThumbsDown() + 1);
+        articleRepository.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void removeLikeFromComment(Long id, Long commentId) {
+        final Article article = getArticleOrElseThrow(id);
+        final Comment comment = getCommentOrElseThrow(article, commentId);
+
+        // normalnie bysmy usuwali like konkretnemu uzytkownikowi i bym nie musial sprawdzac czy nie mniejsze od 0
+        if (comment.getThumbsUp() > 0) {
+            comment.setThumbsUp(comment.getThumbsUp() - 1);
+        }
+        articleRepository.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void removeDislikeFromComment(Long id, Long commentId) {
+        final Article article = getArticleOrElseThrow(id);
+        final Comment comment = getCommentOrElseThrow(article, commentId);
+
+        if (comment.getThumbsDown() > 0) {
+            comment.setThumbsDown(comment.getThumbsDown() - 1);
+        }
+        articleRepository.save(article);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ArticleResource> searchByQuery(String query, Pageable pageable) {
+        return articleRepository.findAllByTitleContainingIgnoreCase(query, pageable)
+                .map(articleMapper::toArticleResource);
+    }
+
+    private Article getArticleOrElseThrow(Long id) {
+        return articleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ARTICLE_NOT_FOUND));
+    }
+
+    private Comment getCommentOrElseThrow(Article article, Long commentId) {
+        return article.getComments().stream().filter(comment -> comment.getId().equals(commentId))
+                .findFirst().orElseThrow(() -> new EntityNotFoundException(COMMENT_NOT_FOUND));
+    }
+
+    private Category getCategoryOrElseThrow(Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(CATEGORY_NOT_FOUND));
+    }
 }

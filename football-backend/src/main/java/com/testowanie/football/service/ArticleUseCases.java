@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ArticleUseCases {
 
-    Page<ArticleResource> getArticles(Pageable pageable);
+    Page<ArticleResource> getArticles(Pageable pageable, Long categoryId);
 
     ArticleResource getArticle(Long id);
 
@@ -22,4 +22,14 @@ public interface ArticleUseCases {
     void createComment(Long id, CreateCommentRequest commentRequest);
 
     void deleteComment(Long id, Long commentId);
+
+    void likeComment(Long id, Long commentId);
+
+    void dislikeComment(Long id, Long commentId);
+
+    void removeLikeFromComment(Long id, Long commentId);
+
+    void removeDislikeFromComment(Long id, Long commentId);
+
+    Page<ArticleResource> searchByQuery(String query, Pageable pageable);
 }
