@@ -107,9 +107,11 @@ class ArticleService implements ArticleUseCases {
         final Article article = getArticleOrElseThrow(id);
         final Comment comment = getCommentOrElseThrow(article, commentId);
 
-        comment.setThumbsUp(comment.getThumbsUp() - 1);
+        // normalnie bysmy usuwali like konkretnemu uzytkownikowi i bym nie musial sprawdzac czy nie mniejsze od 0
+        if (comment.getThumbsUp() > 0) {
+            comment.setThumbsUp(comment.getThumbsUp() - 1);
+        }
         articleRepository.save(article);
-
     }
 
     @Override
@@ -118,7 +120,9 @@ class ArticleService implements ArticleUseCases {
         final Article article = getArticleOrElseThrow(id);
         final Comment comment = getCommentOrElseThrow(article, commentId);
 
-        comment.setThumbsDown(comment.getThumbsDown() - 1);
+        if (comment.getThumbsDown() > 0) {
+            comment.setThumbsDown(comment.getThumbsDown() - 1);
+        }
         articleRepository.save(article);
     }
 

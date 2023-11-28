@@ -67,21 +67,25 @@ public class ArticleController {
 
     @PostMapping("/{id}/comments/{commentId}/like/add")
     public ResponseEntity<Void> likeComment(@PathVariable Long id, @PathVariable Long commentId) {
+        articleUseCases.likeComment(id, commentId);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/comments/{commentId}/like/remove")
     public ResponseEntity<Void> removeLikeFromComment(@PathVariable Long id, @PathVariable Long commentId) {
+        articleUseCases.removeLikeFromComment(id, commentId);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/comments/{commentId}/dislike/add")
     public ResponseEntity<Void> dislikeComment(@PathVariable Long id, @PathVariable Long commentId) {
+        articleUseCases.dislikeComment(id, commentId);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/comments/{commentId}/dislike/remove")
     public ResponseEntity<Void> removeDislikeFromComment(@PathVariable Long id, @PathVariable Long commentId) {
+        articleUseCases.removeDislikeFromComment(id, commentId);
         return ResponseEntity.noContent().build();
     }
 
