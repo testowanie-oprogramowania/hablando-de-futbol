@@ -25,7 +25,7 @@ export class CategoryService {
     }
 
     updateCategory(category: Category) {
-        return this.httpClient.put<Category>(
+        return this.httpClient.patch<Category>(
             this.baseUrl + '/' + category.id,
             category
         );

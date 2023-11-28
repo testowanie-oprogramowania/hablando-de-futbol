@@ -37,8 +37,9 @@ export class CategoryListComponent {
     }
 
     openEditDialog(category: Category) {
+        const categoryCopy = { ...category };
         const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
-            data: category,
+            data: categoryCopy,
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -49,6 +50,8 @@ export class CategoryListComponent {
                             this.categoryService.getAllCategories();
                     },
                 });
+            } else {
+                this.categories$ = this.categoryService.getAllCategories();
             }
         });
     }
