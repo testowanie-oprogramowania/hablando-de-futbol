@@ -1,12 +1,18 @@
 package com.testowanie.football.web;
 
+import com.testowanie.football.dto.request.CreateArticleRequest;
+import com.testowanie.football.dto.request.UpdateArticleRequest;
 import com.testowanie.football.dto.resource.ArticleResource;
 import com.testowanie.football.model.Article;
 import com.testowanie.football.model.Comment;
 import com.testowanie.football.service.ArticleUseCases;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,42 +26,45 @@ public class ArticleController {
     private final ArticleUseCases articleUseCases;
 
     @GetMapping
-    public ResponseEntity<Page<Article>> getArticles(Pageable pageable) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Page<ArticleResource>> getArticles(@SortDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.ok(articleUseCases.getArticles(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArticleResource> getArticleById(@PathVariable long id) {
+    public ResponseEntity<ArticleResource> getArticleById(@PathVariable Long id) {
         return ResponseEntity.ok(articleUseCases.getArticle(id));
     }
 
     @PostMapping
-    public ResponseEntity<Void> createArticle(@RequestBody Article article) {
-        return ResponseEntity.created(null).build();
+    public ResponseEntity<Void> createArticle(@Valid @RequestBody CreateArticleRequest createArticleRequest) {
+        articleUseCases.createArticle(createArticleRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateArticle(@PathVariable long id, @RequestBody Article article) {
+    public ResponseEntity<Void> updateArticle(@PathVariable Long id, @Valid @RequestBody UpdateArticleRequest updateArticleRequest) {
+        articleUseCases.updateArticle(id, updateArticleRequest);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
+    public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
+        articleUseCases.deleteArticle(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/comments")
-    public ResponseEntity<Void> createComment(@PathVariable long id, @RequestBody Comment comment) {
+    public ResponseEntity<Void> createComment(@PathVariable Long id, @RequestBody Comment comment) {
         return ResponseEntity.created(null).build();
     }
 
     @DeleteMapping("/{id}/comments/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable long id, @PathVariable long commentId) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id, @PathVariable Long commentId) {
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/comments/{commentId}")
-    public ResponseEntity<Void> updateComment(@PathVariable long id, @PathVariable long commentId, @RequestBody Comment comment) {
+    public ResponseEntity<Void> updateComment(@PathVariable Long id, @PathVariable Long commentId, @RequestBody Comment comment) {
         return ResponseEntity.noContent().build();
     }
 
