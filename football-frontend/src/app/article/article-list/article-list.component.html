@@ -15,7 +15,8 @@
         </button>
     </div>
     <div class="article-list__container">
-        <div *ngIf="articles$ | async as articles; else articleListContent">
+        <ng-container
+            *ngIf="articles$ | async as articles; else loadingSpinner">
             <div class="article-list__cards">
                 <mat-card
                     class="article-list__card"
@@ -25,8 +26,10 @@
                         <img
                             mat-card-image
                             class="article-list__image"
-                            [src]="article.image"
+                            [ngSrc]="article.image"
+                            fill="true"
                             alt="Article photo"
+                            priority="true"
                         />
                         <div class="article-list__image-label">
                             {{ article.category.name }}
@@ -58,7 +61,9 @@
                 [pageIndex]="paginatorPageIndex"
                 aria-label="Select page">
             </mat-paginator>
-        </div>
-        <ng-template #articleListContent> No content here... </ng-template>
+        </ng-container>
+        <ng-template #loadingSpinner>
+            <mat-spinner> </mat-spinner>
+        </ng-template>
     </div>
 </div>

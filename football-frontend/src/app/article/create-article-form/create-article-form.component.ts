@@ -89,6 +89,7 @@ export class CreateArticleFormComponent {
 
         const a = this.activatedRoute.snapshot.paramMap.get('id');
         console.log(a);
+        // TODO
     }
 
     submitForm = () => {

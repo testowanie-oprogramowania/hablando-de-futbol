@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { ArticleResource } from '../../models/article-resource';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @Component({
     selector: 'app-article-list',
@@ -26,12 +27,12 @@ import { ArticleResource } from '../../models/article-resource';
         MatButtonModule,
         NgOptimizedImage,
         MatIconModule,
+        MatProgressSpinnerModule,
     ],
     templateUrl: './article-list.component.html',
     styleUrl: './article-list.component.scss',
 })
 export class ArticleListComponent implements OnInit {
-
     articles$!: Observable<ArticleResource[]>;
     dataLength = 0;
 
@@ -46,7 +47,6 @@ export class ArticleListComponent implements OnInit {
         private readonly router: Router,
         private readonly route: ActivatedRoute
     ) {
-
         // this.articles$ = of(
         //     Array(10).fill(
         //         new Article(
@@ -96,7 +96,7 @@ export class ArticleListComponent implements OnInit {
                 next: articles => {
                     this.dataLength = articles.length;
                 },
-                error: err => console.log(err)
+                error: err => console.log(err),
             })
         );
     }
@@ -110,6 +110,4 @@ export class ArticleListComponent implements OnInit {
     navigateToArticle(id: number) {
         this.router.navigate([`articles/${id}`]).then(r => {});
     }
-
-
 }

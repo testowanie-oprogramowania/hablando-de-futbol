@@ -21,6 +21,10 @@ export class ArticleService {
         );
     }
 
+    public getArticle(id: number): Observable<ArticleResource> {
+        return this.httpClient.get<ArticleResource>(this.articlesUrl + '/' + id);
+    }
+
     public getArticles(request: {
         page: number;
         size: number;
