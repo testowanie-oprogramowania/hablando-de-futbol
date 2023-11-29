@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@import '../../styles/variables';
 
 $sections-gap: 1.5rem;
 
@@ -8,11 +8,33 @@ $sections-gap: 1.5rem;
     justify-content: center;
 
     &__card {
+        padding: 0;
+        width: 50%;
+        overflow: hidden;
         display: flex;
+        justify-content: center;
+    }
+
+    &__card-inner-container {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
         gap: $sections-gap;
         justify-content: center;
-        width: 50%;
-        padding: 1.5rem;
+    }
+
+    &__main-image-container {
+        width: 100%;
+        height: 20rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    &__main-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 
     &__title {
@@ -28,13 +50,12 @@ $sections-gap: 1.5rem;
     &__info-header {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: $sections-gap / 4;
     }
 
     &__picture-header {
         padding: 0;
         display: flex;
-        //justify-content: center;
         align-items: center;
         height: auto;
     }

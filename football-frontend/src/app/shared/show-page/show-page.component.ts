@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
 import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -19,6 +19,7 @@ import {TextInputFieldComponent} from "../text-input-field/text-input-field.comp
         TextAreaFieldComponent,
         TextInputFieldComponent,
         FormsModule,
+        NgOptimizedImage,
     ],
     templateUrl: './show-page.component.html',
     styleUrl: './show-page.component.scss',
@@ -26,8 +27,11 @@ import {TextInputFieldComponent} from "../text-input-field/text-input-field.comp
 export class ShowPageComponent {
     @Input() isForm: boolean = false;
     @Input() onSubmitForm: () => void = () => {};
-    @Input() thumbnailImageUrl: string = '';
+
     @Input() title: string = '';
-    @Input() descriptionForImageThumbnail: string = '';
     @Input() subtitles: string[] = [];
+    @Input() mainImageUrl: string = '';
+    @Input() thumbnailImageUrl: string = '';
+    @Input() descriptionForImageThumbnail: string = '';
+
 }

@@ -14,15 +14,13 @@ export class ArticleService {
 
     constructor(private readonly httpClient: HttpClient) {}
 
-    public createArticle(articleRequest: ArticleRequest): Observable<any> {
-        return this.httpClient.post<ArticleRequest>(
-            this.articlesUrl,
-            articleRequest
-        );
+    public createArticle(articleRequest: ArticleRequest): Observable<void> {
+        return this.httpClient.post<void>(this.articlesUrl, articleRequest);
     }
 
     public getArticle(id: number): Observable<ArticleResource> {
-        return this.httpClient.get<ArticleResource>(this.articlesUrl + '/' + id);
+        const url = this.articlesUrl + '/' + id;
+        return this.httpClient.get<ArticleResource>(url);
     }
 
     public getArticles(request: {
@@ -34,5 +32,18 @@ export class ArticleService {
                 params: request,
             })
             .pipe(map(response => response.content));
+    }
+
+    public updateArticle(
+        articleId: number,
+        articleRequest: ArticleRequest
+    ): Observable<void> {
+        const url = this.articlesUrl + '/' + articleId;
+        return this.httpClient.patch<void>(url, articleRequest);
+    }
+
+    public deleteArticle(articleId: number): Observable<void> {
+        const url = this.articlesUrl + '/' + articleId;
+        return this.httpClient.delete<void>(url);
     }
 }

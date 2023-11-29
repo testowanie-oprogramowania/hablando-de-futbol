@@ -9,34 +9,44 @@
 </div>
 
 <ng-template #content>
-    <div class="show-page__header">
-        <mat-card-title class="show-page__title">
-            {{ title }}
-        </mat-card-title>
-        <div class="show-page__info-header">
-            <mat-card-header class="show-page__picture-header">
-                <img
-                    *ngIf="thumbnailImageUrl"
-                    mat-card-avatar
-                    class="show-page__thumbnail-image"
-                    [src]="thumbnailImageUrl"
-                    alt="Author's photo" />
-                <mat-card-subtitle>
-                    {{ descriptionForImageThumbnail }}
+    <div *ngIf="mainImageUrl" class="show-page__main-image-container">
+        <img
+            mat-card-image
+            class="show-page__main-image"
+            [ngSrc]="mainImageUrl"
+            fill="true"
+            alt="Article photo"
+            priority="true" />
+    </div>
+    <div class="show-page__card-inner-container">
+        <div class="show-page__header">
+            <mat-card-title class="show-page__title">
+                {{ title }}
+            </mat-card-title>
+            <div class="show-page__info-header">
+                <mat-card-header class="show-page__picture-header">
+                    <img
+                        *ngIf="thumbnailImageUrl"
+                        mat-card-avatar
+                        class="show-page__thumbnail-image"
+                        [src]="thumbnailImageUrl"
+                        alt="Author's photo" />
+                    <mat-card-subtitle>
+                        {{ descriptionForImageThumbnail }}
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-subtitle *ngFor="let subtitle of subtitles">
+                    {{ subtitle }}
                 </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-subtitle *ngFor="let subtitle of subtitles">
-                {{ subtitle }}
-            </mat-card-subtitle>
+            </div>
         </div>
 
+        <mat-card-content class="show-page__content">
+            <ng-content select="[content]"></ng-content>
+        </mat-card-content>
+        <mat-card-actions class="show-page__actions">
+            <ng-content select="[actions]"></ng-content>
+        </mat-card-actions>
     </div>
 
-
-    <mat-card-content class="show-page__content">
-        <ng-content select="[content]"></ng-content>
-    </mat-card-content>
-    <mat-card-actions class="show-page__actions">
-        <ng-content select="[actions]"></ng-content>
-    </mat-card-actions>
 </ng-template>

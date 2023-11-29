@@ -34,9 +34,9 @@ export const routes: Routes = [
     {
         path: 'articles/:id/edit',
         loadComponent: () =>
-            import('./article/create-article-form/create-article-form.component').then(
-                c => c.CreateArticleFormComponent
-            ),
+            import(
+                './article/create-article-form/create-article-form.component'
+            ).then(c => c.CreateArticleFormComponent),
     },
     {
         path: 'categories/:id',
