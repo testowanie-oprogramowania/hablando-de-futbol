@@ -5,6 +5,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Comment } from '../../models/comment';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-comment-list',
@@ -15,24 +16,33 @@ import { MatExpansionModule } from '@angular/material/expansion';
         MatPaginatorModule,
         MatIconModule,
         MatExpansionModule,
+        MatButtonModule,
     ],
     templateUrl: './comment-list.component.html',
     styleUrl: './comment-list.component.scss',
 })
 export class CommentListComponent {
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild('paginator') paginator!: MatPaginator;
     displayedColumns = ['nickname', 'content', 'thumbsUp', 'thumbsDown'];
     dataLength = 0;
 
-    private _comments = new MatTableDataSource<Comment>();
+    _comments = new MatTableDataSource<Comment>();
 
     @Input() set comments(data: Comment[]) {
         this._comments.data = data;
         this.dataLength = data.length;
-        this._comments.paginator = this.paginator;
+        // this._comments.paginator = this.paginator;
     }
 
     get comments(): MatTableDataSource<Comment> {
         return this._comments;
+    }
+
+    ngAfterViewInit() {
+        this._comments.paginator = this.paginator;
+    }
+
+    onThumbUp(id: number) {
+        console.log('thumb up', id);
     }
 }

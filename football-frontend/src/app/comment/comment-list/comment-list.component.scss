@@ -17,3 +17,11 @@
 .small {
     scale: 80%;
 }
+
+.mat-row, .mat-header-row {
+    height: 32px;
+}
+
+.mat-cell, .mat-header-cell {
+    line-height: 32px;
+}
