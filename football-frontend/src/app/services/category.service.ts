@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Category } from '../models/category';
 import { Injectable } from '@angular/core';
+import { CategoryResource } from '../models/category-resource';
+import { CategoryRequest } from '../models/category-request';
 
 @Injectable({
     providedIn: 'root',
@@ -10,23 +11,26 @@ export class CategoryService {
     private baseUrl = 'http://localhost:8080/api/v1/categories';
 
     getAllCategories() {
-        return this.httpClient.get<Category[]>(this.baseUrl);
+        return this.httpClient.get<CategoryResource[]>(this.baseUrl);
     }
 
-    deleteCategory(category: Category) {
-        return this.httpClient.delete<Category>(
-            this.baseUrl + '/' + category.id
+    deleteCategory(categoryId: number) {
+        return this.httpClient.delete<CategoryResource>(
+            this.baseUrl + '/' + categoryId
         );
     }
 
-    addCategory(category: Category) {
-        return this.httpClient.post<Category>(this.baseUrl, category);
+    addCategory(categoryRequest: CategoryRequest) {
+        return this.httpClient.post<CategoryRequest>(
+            this.baseUrl,
+            categoryRequest
+        );
     }
 
-    updateCategory(category: Category) {
-        return this.httpClient.patch<Category>(
-            this.baseUrl + '/' + category.id,
-            category
+    updateCategory(categoryId: number, categoryRequest: CategoryRequest) {
+        return this.httpClient.patch<CategoryRequest>(
+            this.baseUrl + '/' + categoryId,
+            categoryRequest
         );
     }
 }
