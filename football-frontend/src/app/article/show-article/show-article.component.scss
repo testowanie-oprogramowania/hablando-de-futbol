@@ -5,4 +5,18 @@
         align-items: center;
         gap: 1rem;
     }
+
+    &__comments {
+        margin-top: 1rem;
+    }
+}
+.comments {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.comment-section {
+    justify-content: center;
+    display: flex;
 }
