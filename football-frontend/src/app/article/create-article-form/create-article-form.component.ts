@@ -29,6 +29,7 @@ import {
 } from '../../models/article-request';
 import { EditorResource } from '../../models/editor-resource';
 import {CategoryResource} from "../../models/category-resource";
+import {ShowPageComponent} from "../../shared/show-page/show-page.component";
 
 @Component({
     selector: 'app-create-article-form',
@@ -49,6 +50,7 @@ import {CategoryResource} from "../../models/category-resource";
         TextAreaFieldComponent,
         DatePickerFieldComponent,
         SelectFieldComponent,
+        ShowPageComponent,
     ],
     templateUrl: './create-article-form.component.html',
     styleUrl: './create-article-form.component.scss',
@@ -59,11 +61,14 @@ export class CreateArticleFormComponent {
         editor: [undefined as EditorResource | undefined, Validators.required],
         content: ['', Validators.required],
         photoUrl: ['', Validators.required],
-        category: [undefined as CategoryResource | undefined, Validators.required],
+        category: [
+            undefined as CategoryResource | undefined,
+            Validators.required,
+        ],
     });
 
     categories$: Observable<Category[]>;
-    categoryFormToShow = (category: CategoryResource) => category.name;
+    categoryFormToShow = (category: Category) => category.name;
 
     editors$: Observable<EditorResource[]> = of();
     editorFormToShow = (editor: EditorResource) =>
@@ -86,7 +91,7 @@ export class CreateArticleFormComponent {
         console.log(a);
     }
 
-    submitForm() {
+    submitForm = () => {
         const articleRequest = ArticleRequest.fromForm(
             this.articleForm.value as ArticleRequestRawFormValue
         );
