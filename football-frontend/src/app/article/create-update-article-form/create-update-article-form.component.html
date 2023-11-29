@@ -15,6 +15,7 @@
             <app-select-field
                 label="Editor"
                 [control]="articleForm.controls.editor"
+                [compareObjects]="compareEditors"
                 [data$]="editors$"
                 [dataFormToShow]="editorFormToShow">
             </app-select-field>
@@ -22,7 +23,7 @@
             <app-text-area-field
                 label="Article content"
                 [control]="articleForm.controls.content"
-                [rowsNumber]="articleContentRowsNumber">
+                [rowsNumber]="articleContentTextAreaRowsNumber">
             </app-text-area-field>
 
             <app-text-input-field
@@ -33,22 +34,10 @@
             <app-select-field
                 label="Category"
                 [control]="articleForm.controls.category"
+                [compareObjects]="compareCategories"
                 [data$]="categories$"
                 [dataFormToShow]="categoryFormToShow">
             </app-select-field>
-            <div>
-                {{articleForm.controls.category.value?.id}}
-            </div>
-
-            <mat-form-field class="select-field">
-                <mat-label id="label">category</mat-label>
-                <mat-select [formControl]="articleForm.controls.category" [compareWith]="compareCategories">
-                    <mat-option [value]="undefined">-</mat-option>
-                    <mat-option *ngFor="let value of categories$ | async" [value]="value">
-                        {{ value.name }} {{ value.id }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
         </ng-container>
         <ng-container actions>
             <button

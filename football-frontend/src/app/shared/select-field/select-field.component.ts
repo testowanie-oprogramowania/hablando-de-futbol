@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {Observable, of} from "rxjs";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatOptionModule} from "@angular/material/core";
-import {MatSelectModule} from "@angular/material/select";
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
     selector: 'app-select-field',
@@ -19,21 +19,11 @@ import {MatSelectModule} from "@angular/material/select";
     templateUrl: './select-field.component.html',
     styleUrl: './select-field.component.scss',
 })
-export class SelectFieldComponent<T> implements OnInit {
+export class SelectFieldComponent<T> {
     @Input() label: string = '';
     @Input() control: FormControl = new FormControl();
     @Input() data$: Observable<T[]> = of();
-    @Input() compareObjects: (o1: T, o2: T) => boolean = (o1: T, o2: T) => false;
+    @Input() compareObjects: (o1: T, o2: T) => boolean = (o1: T, o2: T) =>
+        false;
     @Input() dataFormToShow: (type: T) => string = (type: T) => '';
-    constructor() {
-        console.log(this.control.value);
-    }
-
-    ngOnInit(): void {
-        console.log(this.control.value);
-    }
-
-    click() {
-        console.log(this.control.value);
-    }
 }

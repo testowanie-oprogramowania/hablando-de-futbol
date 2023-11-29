@@ -13,7 +13,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { Observable, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Category } from '../../models/category';
 import { MatCardModule } from '@angular/material/card';
 import { TextInputFieldComponent } from '../../shared/text-input-field/text-input-field.component';
 import { TextAreaFieldComponent } from '../../shared/text-area-field/text-area-field.component';
@@ -71,14 +70,14 @@ export class CreateUpdateArticleFormComponent {
         ],
     });
 
-    categories$: Observable<Category[]>;
-    categoryFormToShow = (category: Category) => category.name;
+    categories$: Observable<CategoryResource[]>;
+    categoryFormToShow = (category: CategoryResource) => category.name;
 
     editors$: Observable<EditorResource[]> = of();
     editorFormToShow = (editor: EditorResource) =>
         editor.name + ' ' + editor.surname;
 
-    articleContentRowsNumber = 15;
+    articleContentTextAreaRowsNumber = 15;
 
     constructor(
         private readonly articleService: ArticleService,
@@ -103,25 +102,29 @@ export class CreateUpdateArticleFormComponent {
         const articleRequest = ArticleRequest.fromForm(
             this.articleForm.value as ArticleRequestRawFormValue
         );
-        console.log(articleRequest);
+
         this.articleService.createArticle(articleRequest).subscribe({
             next: () => {
                 this.router.navigate(['/articles']).then(r => {});
             },
         });
     }
-    compareCategories(o1: CategoryResource, o2: CategoryResource): boolean {
-        return o1.id === o2.id;
-    }
 
     goBack() {
         this.router.navigate(['/articles']).then(r => {});
     }
 
+    compareCategories(o1: CategoryResource, o2: CategoryResource): boolean {
+        return o1.id === o2.id;
+    }
+
+    compareEditors(o1: EditorResource, o2: EditorResource): boolean {
+        return o1.id === o2.id;
+    }
+
     private fillFormWithArticle(articleId: number) {
         this.articleService.getArticle(articleId).subscribe({
             next: article => {
-                console.log(this.articleForm.controls.category.value);
                 this.articleForm.patchValue({
                     title: article.title,
                     editor: article.editor,
@@ -129,9 +132,6 @@ export class CreateUpdateArticleFormComponent {
                     photoUrl: article.image,
                     category: article.category,
                 });
-
-                console.log(this.articleForm.value);
-                console.log(this.articleForm.controls.category.value);
                 this.isLoading = false;
             },
         });
