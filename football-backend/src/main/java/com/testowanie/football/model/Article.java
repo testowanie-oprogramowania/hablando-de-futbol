@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.lang.NonNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -37,7 +38,8 @@ public class Article extends Auditable {
     @ManyToOne
     private Category category;
 
-    @NonNull
+    //@NonNull
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Comment> comments;
+    private Set<Comment> comments = new HashSet<>();
 }
