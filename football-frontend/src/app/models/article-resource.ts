@@ -1,6 +1,6 @@
-import { Category } from './category';
 import { Comment } from './comment';
 import { EditorResource } from './editor-resource';
+import {CategoryResource} from "./category-resource";
 
 export class ArticleResource {
     constructor(
@@ -11,7 +11,7 @@ export class ArticleResource {
         public lastModifiedDate: Date,
         public content: string,
         public image: string,
-        public category: Category,
+        public category: CategoryResource,
         public comments: Comment[],
     ) {}
 }

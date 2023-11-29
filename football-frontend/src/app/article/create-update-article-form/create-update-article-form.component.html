@@ -1,47 +1,66 @@
-<app-show-page [isForm]="true" title="Create article" [onSubmitForm]="submitForm">
-    <ng-container title>
-        <h1>Create article</h1>
-    </ng-container>
-    <ng-container content>
-        <app-text-input-field
-            label="Title"
-            [control]="articleForm.controls.title">
-        </app-text-input-field>
+<ng-container *ngIf="!isLoading; else loadingSpinner">
+    <app-show-page
+        [isForm]="true"
+        title="Create article"
+        [onSubmitForm]="submitForm">
+        <ng-container title>
+            <h1>Create article</h1>
+        </ng-container>
+        <ng-container content>
+            <app-text-input-field
+                label="Title"
+                [control]="articleForm.controls.title">
+            </app-text-input-field>
 
-        <app-select-field
-            label="Editor"
-            [control]="articleForm.controls.editor"
-            [data$]="editors$"
-            [dataFormToShow]="editorFormToShow">
-        </app-select-field>
+            <app-select-field
+                label="Editor"
+                [control]="articleForm.controls.editor"
+                [data$]="editors$"
+                [dataFormToShow]="editorFormToShow">
+            </app-select-field>
 
-        <app-text-area-field
-            label="Article content"
-            [control]="articleForm.controls.content"
-            [rowsNumber]="articleContentRowsNumber">
-        </app-text-area-field>
+            <app-text-area-field
+                label="Article content"
+                [control]="articleForm.controls.content"
+                [rowsNumber]="articleContentRowsNumber">
+            </app-text-area-field>
 
-        <app-text-input-field
-            label="Photo URL"
-            [control]="articleForm.controls.photoUrl">
-        </app-text-input-field>
+            <app-text-input-field
+                label="Photo URL"
+                [control]="articleForm.controls.photoUrl">
+            </app-text-input-field>
 
-        <app-select-field
-            label="Category"
-            [control]="articleForm.controls.category"
-            [data$]="categories$"
-            [dataFormToShow]="categoryFormToShow">
-        </app-select-field>
-    </ng-container>
-    <ng-container actions>
-        <button
-            mat-stroked-button
-            type="submit"
-            [disabled]="articleForm.invalid">
-            Create
-        </button>
-        <button mat-stroked-button type="button" (click)="goBack()">
-            Go back
-        </button>
-    </ng-container>
-</app-show-page>
+            <app-select-field
+                label="Category"
+                [control]="articleForm.controls.category"
+                [data$]="categories$"
+                [dataFormToShow]="categoryFormToShow">
+            </app-select-field>
+            <div>
+                {{articleForm.controls.category.value?.id}}
+            </div>
+
+            <mat-form-field class="select-field">
+                <mat-label id="label">category</mat-label>
+                <mat-select [formControl]="articleForm.controls.category" [compareWith]="compareCategories">
+                    <mat-option [value]="undefined">-</mat-option>
+                    <mat-option *ngFor="let value of categories$ | async" [value]="value">
+                        {{ value.name }} {{ value.id }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+        <ng-container actions>
+            <button
+                mat-stroked-button
+                type="submit"
+                [disabled]="articleForm.invalid">
+                Create
+            </button>
+            <button mat-stroked-button type="button" (click)="goBack()">
+                Go back
+            </button>
+        </ng-container>
+    </app-show-page>
+</ng-container>
+<ng-template #loadingSpinner> </ng-template>

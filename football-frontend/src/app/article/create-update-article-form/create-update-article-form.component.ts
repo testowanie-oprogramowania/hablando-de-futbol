@@ -56,6 +56,8 @@ import {ShowPageComponent} from "../../shared/show-page/show-page.component";
     styleUrl: './create-update-article-form.component.scss',
 })
 export class CreateUpdateArticleFormComponent {
+    isLoading: boolean = true;
+
     articleId: number | undefined;
 
     articleForm = this.formBuilder.group({
@@ -93,7 +95,7 @@ export class CreateUpdateArticleFormComponent {
         this.articleId = articleIdString ? Number(articleIdString) : undefined;
 
         if(this.articleId) {
-            // fillFormWithArticle(this.articleId);
+            this.fillFormWithArticle(this.articleId);
         }
     }
 
@@ -108,22 +110,30 @@ export class CreateUpdateArticleFormComponent {
             },
         });
     }
+    compareCategories(o1: CategoryResource, o2: CategoryResource): boolean {
+        return o1.id === o2.id;
+    }
 
     goBack() {
         this.router.navigate(['/articles']).then(r => {});
     }
 
     private fillFormWithArticle(articleId: number) {
-        // this.articleService.getArticle(articleId).subscribe({
-        //     next: article => {
-        //         this.articleForm.patchValue({
-        //             title: article.title,
-        //             editor: article.editor,
-        //             content: article.content,
-        //             photoUrl: article.image,
-        //             category: article.category,
-        //         });
-        //     },
-        // });
+        this.articleService.getArticle(articleId).subscribe({
+            next: article => {
+                console.log(this.articleForm.controls.category.value);
+                this.articleForm.patchValue({
+                    title: article.title,
+                    editor: article.editor,
+                    content: article.content,
+                    photoUrl: article.image,
+                    category: article.category,
+                });
+
+                console.log(this.articleForm.value);
+                console.log(this.articleForm.controls.category.value);
+                this.isLoading = false;
+            },
+        });
     }
 }

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {Observable, of} from "rxjs";
@@ -19,9 +19,21 @@ import {MatSelectModule} from "@angular/material/select";
     templateUrl: './select-field.component.html',
     styleUrl: './select-field.component.scss',
 })
-export class SelectFieldComponent<T> {
+export class SelectFieldComponent<T> implements OnInit {
     @Input() label: string = '';
     @Input() control: FormControl = new FormControl();
     @Input() data$: Observable<T[]> = of();
+    @Input() compareObjects: (o1: T, o2: T) => boolean = (o1: T, o2: T) => false;
     @Input() dataFormToShow: (type: T) => string = (type: T) => '';
+    constructor() {
+        console.log(this.control.value);
+    }
+
+    ngOnInit(): void {
+        console.log(this.control.value);
+    }
+
+    click() {
+        console.log(this.control.value);
+    }
 }
