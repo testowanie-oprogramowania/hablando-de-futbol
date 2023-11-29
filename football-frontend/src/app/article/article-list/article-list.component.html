@@ -29,8 +29,7 @@
                             [ngSrc]="article.image"
                             fill="true"
                             alt="Article photo"
-                            priority="true"
-                        />
+                            priority="true" />
                         <div class="article-list__image-label">
                             {{ article.category.name }}
                         </div>
@@ -57,8 +56,8 @@
                 class="mat-mdc-card"
                 (page)="handlePageEvent($event)"
                 [length]="paginatorLength"
-                [pageSize]="paginatorPageSize"
-                [pageIndex]="paginatorPageIndex"
+                [pageSize]="paginatorRequestParams.size"
+                [pageIndex]="paginatorRequestParams.page"
                 aria-label="Select page">
             </mat-paginator>
         </ng-container>
