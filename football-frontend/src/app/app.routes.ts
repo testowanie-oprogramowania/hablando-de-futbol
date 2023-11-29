@@ -39,24 +39,10 @@ export const routes: Routes = [
             ).then(c => c.CreateUpdateArticleFormComponent),
     },
     {
-        path: 'articles/:id',
-        loadComponent: () =>
-            import('./article/show-article/show-article.component').then(
-                c => c.ShowArticleComponent
-            ),
-    },
-    {
-        path: 'articles/:id/edit',
-        loadComponent: () =>
-            import(
-                './article/create-update-article-form/create-update-article-form.component'
-            ).then(c => c.CreateUpdateArticleFormComponent),
-    },
-    {
         path: 'categories/:id',
         loadComponent: () =>
             import('./article/article-list/article-list.component').then(
                 c => c.ArticleListComponent
             ),
-    },
+    }
 ];

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { ArticleRequest } from '../models/article-request';
 import { ArticleResource } from '../models/article-resource';
+import {PaginatorRequestParams} from "../models/paginator-request-params";
 
 @Injectable({
     providedIn: 'root',
@@ -23,13 +24,24 @@ export class ArticleService {
         return this.httpClient.get<ArticleResource>(url);
     }
 
-    public getArticles(request: {
-        page: number;
-        size: number;
-    }): Observable<ArticleResource[]> {
+    public getArticles(
+        paginatorRequestParams: PaginatorRequestParams,
+        categoryId?: number
+    ): Observable<ArticleResource[]> {
+        const request = {
+            page: paginatorRequestParams.page.toString(),
+            size: paginatorRequestParams.size.toString(),
+            category: categoryId ? categoryId.toString() : undefined,
+        };
+
+        const params = new HttpParams()
+            .set('page', paginatorRequestParams.page.toString())
+            .set('size', paginatorRequestParams.size.toString())
+            .set('category', categoryId ? categoryId.toString() : '');
+
         return this.httpClient
             .get<{ content: ArticleResource[] }>(this.articlesUrl, {
-                params: request,
+                params,
             })
             .pipe(map(response => response.content));
     }
