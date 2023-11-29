@@ -32,7 +32,7 @@ import {CategoryResource} from "../../models/category-resource";
 import {ShowPageComponent} from "../../shared/show-page/show-page.component";
 
 @Component({
-    selector: 'app-create-article-form',
+    selector: 'app-create-update-article-form',
     standalone: true,
     imports: [
         CommonModule,
@@ -52,10 +52,12 @@ import {ShowPageComponent} from "../../shared/show-page/show-page.component";
         SelectFieldComponent,
         ShowPageComponent,
     ],
-    templateUrl: './create-article-form.component.html',
-    styleUrl: './create-article-form.component.scss',
+    templateUrl: './create-update-article-form.component.html',
+    styleUrl: './create-update-article-form.component.scss',
 })
-export class CreateArticleFormComponent {
+export class CreateUpdateArticleFormComponent {
+    articleId: number | undefined;
+
     articleForm = this.formBuilder.group({
         title: ['', Validators.required],
         editor: [undefined as EditorResource | undefined, Validators.required],
@@ -87,9 +89,12 @@ export class CreateArticleFormComponent {
         this.categories$ = categoryService.getAllCategories();
         this.editors$ = editorService.getEditors({ page: 0, size: 100 });
 
-        const a = this.activatedRoute.snapshot.paramMap.get('id');
-        console.log(a);
-        // TODO
+        const articleIdString = this.activatedRoute.snapshot.paramMap.get('id');
+        this.articleId = articleIdString ? Number(articleIdString) : undefined;
+
+        if(this.articleId) {
+            // fillFormWithArticle(this.articleId);
+        }
     }
 
     submitForm = () => {
@@ -106,5 +111,19 @@ export class CreateArticleFormComponent {
 
     goBack() {
         this.router.navigate(['/articles']).then(r => {});
+    }
+
+    private fillFormWithArticle(articleId: number) {
+        // this.articleService.getArticle(articleId).subscribe({
+        //     next: article => {
+        //         this.articleForm.patchValue({
+        //             title: article.title,
+        //             editor: article.editor,
+        //             content: article.content,
+        //             photoUrl: article.image,
+        //             category: article.category,
+        //         });
+        //     },
+        // });
     }
 }

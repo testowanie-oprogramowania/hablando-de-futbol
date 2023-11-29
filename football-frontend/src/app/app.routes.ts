@@ -21,8 +21,8 @@ export const routes: Routes = [
         path: 'articles/create',
         loadComponent: () =>
             import(
-                './article/create-article-form/create-article-form.component'
-            ).then(c => c.CreateArticleFormComponent),
+                './article/create-update-article-form/create-update-article-form.component'
+            ).then(c => c.CreateUpdateArticleFormComponent),
     },
     {
         path: 'articles/:id',
@@ -35,8 +35,8 @@ export const routes: Routes = [
         path: 'articles/:id/edit',
         loadComponent: () =>
             import(
-                './article/create-article-form/create-article-form.component'
-            ).then(c => c.CreateArticleFormComponent),
+                './article/create-update-article-form/create-update-article-form.component'
+            ).then(c => c.CreateUpdateArticleFormComponent),
     },
     {
         path: 'categories/:id',
