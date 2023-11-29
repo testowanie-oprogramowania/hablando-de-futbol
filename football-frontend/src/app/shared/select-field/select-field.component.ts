@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 export class SelectFieldComponent<T> {
     @Input() label: string = '';
     @Input() control: FormControl = new FormControl();
+    @Input() hasInitialValue: boolean = false;
     @Input() data$: Observable<T[]> = of();
     @Input() compareObjects: (o1: T, o2: T) => boolean = (o1: T, o2: T) =>
         false;

@@ -14,6 +14,11 @@ export class CategoryService {
         return this.httpClient.get<CategoryResource[]>(this.baseUrl);
     }
 
+    getCategory(categoryId: number) {
+        const url = this.baseUrl + '/' + categoryId;
+        return this.httpClient.get<any>(url);
+    }
+
     deleteCategory(categoryId: number) {
         return this.httpClient.delete<CategoryResource>(
             this.baseUrl + '/' + categoryId
