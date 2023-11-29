@@ -27,8 +27,8 @@ import {
     ArticleRequestRawFormValue,
 } from '../../models/article-request';
 import { EditorResource } from '../../models/editor-resource';
-import {CategoryResource} from "../../models/category-resource";
-import {ShowPageComponent} from "../../shared/show-page/show-page.component";
+import { CategoryResource } from '../../models/category-resource';
+import { ShowPageComponent } from '../../shared/show-page/show-page.component';
 
 @Component({
     selector: 'app-create-update-article-form',
@@ -93,7 +93,7 @@ export class CreateUpdateArticleFormComponent {
         const articleIdString = this.activatedRoute.snapshot.paramMap.get('id');
         this.articleId = articleIdString ? Number(articleIdString) : undefined;
 
-        if(this.articleId) {
+        if (this.articleId) {
             this.fillFormWithArticle(this.articleId);
         }
     }
@@ -103,12 +103,23 @@ export class CreateUpdateArticleFormComponent {
             this.articleForm.value as ArticleRequestRawFormValue
         );
 
+        if (this.articleId) {
+            this.articleService
+                .updateArticle(this.articleId, articleRequest)
+                .subscribe({
+                    next: () => {
+                        this.router.navigate(['/articles']).then(r => {});
+                    },
+                });
+            return;
+        }
+
         this.articleService.createArticle(articleRequest).subscribe({
             next: () => {
                 this.router.navigate(['/articles']).then(r => {});
             },
         });
-    }
+    };
 
     goBack() {
         this.router.navigate(['/articles']).then(r => {});
