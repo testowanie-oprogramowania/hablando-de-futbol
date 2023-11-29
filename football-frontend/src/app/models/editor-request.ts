@@ -1,8 +1,7 @@
-export class Editor {
+export class EditorRequest {
     constructor(
         public name: string,
         public surname: string,
-        public photoUrl: string,
-        public id?: number
+        public photoUrl: string
     ) {}
 }

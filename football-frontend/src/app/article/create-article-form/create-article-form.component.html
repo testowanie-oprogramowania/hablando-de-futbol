@@ -1,55 +1,47 @@
-<div class="create-article-form">
-    <mat-card class="create-article-form__card">
-        <form [formGroup]="articleForm" (ngSubmit)="submitForm()">
-            <mat-card-header class="create-article-form__header">
-                <mat-card-title>
-                    <h1>Create article</h1>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <app-text-input-field
-                    label="Title"
-                    [control]="articleForm.controls.title">
-                </app-text-input-field>
+<app-show-page [isForm]="true" title="Create article" [onSubmitForm]="submitForm">
+    <ng-container title>
+        <h1>Create article</h1>
+    </ng-container>
+    <ng-container content>
+        <app-text-input-field
+            label="Title"
+            [control]="articleForm.controls.title">
+        </app-text-input-field>
 
-                <app-select-field
-                    label="Editor"
-                    [control]="articleForm.controls.editor"
-                    [data$]="editors$"
-                    [dataFormToShow]="editorFormToShow">
-                </app-select-field>
+        <app-select-field
+            label="Editor"
+            [control]="articleForm.controls.editor"
+            [data$]="editors$"
+            [dataFormToShow]="editorFormToShow">
+        </app-select-field>
 
-                <app-date-picker-field
-                    label="Publication date"
-                    [control]="articleForm.controls.publicationDate">
-                </app-date-picker-field>
+        <app-text-area-field
+            label="Article content"
+            [control]="articleForm.controls.content"
+            [rowsNumber]="articleContentRowsNumber">
+        </app-text-area-field>
 
-                <app-text-area-field
-                    label="Article content"
-                    [control]="articleForm.controls.content"
-                    [rowsNumber]="articleContentRowsNumber">
-                </app-text-area-field>
+        <app-text-input-field
+            label="Photo URL"
+            [control]="articleForm.controls.photoUrl">
+        </app-text-input-field>
 
-                <app-text-input-field
-                    label="Photo URL"
-                    [control]="articleForm.controls.photoUrl">
-                </app-text-input-field>
-
-                <app-select-field
-                    label="Category"
-                    [control]="articleForm.controls.category"
-                    [data$]="categories$"
-                    [dataFormToShow]="categoryFormToShow">
-                </app-select-field>
-            </mat-card-content>
-            <mat-card-actions class="create-article-form__actions">
-                <button
-                    mat-stroked-button
-                    type="submit"
-                    [disabled]="articleForm.invalid">
-                    Create
-                </button>
-            </mat-card-actions>
-        </form>
-    </mat-card>
-</div>
+        <app-select-field
+            label="Category"
+            [control]="articleForm.controls.category"
+            [data$]="categories$"
+            [dataFormToShow]="categoryFormToShow">
+        </app-select-field>
+    </ng-container>
+    <ng-container actions>
+        <button
+            mat-stroked-button
+            type="submit"
+            [disabled]="articleForm.invalid">
+            Create
+        </button>
+        <button mat-stroked-button type="button" (click)="goBack()">
+            Go back
+        </button>
+    </ng-container>
+</app-show-page>
