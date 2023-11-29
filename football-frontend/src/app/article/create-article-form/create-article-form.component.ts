@@ -6,7 +6,6 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
-import { Editor } from '../../models/editor';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -21,10 +20,15 @@ import { TextAreaFieldComponent } from '../../shared/text-area-field/text-area-f
 import { DatePickerFieldComponent } from '../../shared/date-picker-field/date-picker-field.component';
 import { SelectFieldComponent } from '../../shared/select-field/select-field.component';
 import { ArticleService } from '../../services/article.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CategoryService} from "../../services/category.service";
-import {EditorService} from "../../services/editor.service";
-import {ArticleRequest, ArticleRequestRawFormValue} from "../../models/article-request";
+import { ActivatedRoute, Router } from '@angular/router';
+import { CategoryService } from '../../services/category.service';
+import { EditorService } from '../../services/editor.service';
+import {
+    ArticleRequest,
+    ArticleRequestRawFormValue,
+} from '../../models/article-request';
+import { EditorResource } from '../../models/editor-resource';
+import {CategoryResource} from "../../models/category-resource";
 
 @Component({
     selector: 'app-create-article-form',
@@ -52,20 +56,18 @@ import {ArticleRequest, ArticleRequestRawFormValue} from "../../models/article-r
 export class CreateArticleFormComponent {
     articleForm = this.formBuilder.group({
         title: ['', Validators.required],
-        editor: [undefined as Editor | undefined, Validators.required],
-        publicationDate: [undefined as Date | undefined, Validators.required],
+        editor: [undefined as EditorResource | undefined, Validators.required],
         content: ['', Validators.required],
         photoUrl: ['', Validators.required],
-        category: [undefined as Category | undefined, Validators.required],
+        category: [undefined as CategoryResource | undefined, Validators.required],
     });
 
-
-
     categories$: Observable<Category[]>;
-    categoryFormToShow = (category: Category) => category.name;
+    categoryFormToShow = (category: CategoryResource) => category.name;
 
-    editors$: Observable<Editor[]> = of();
-    editorFormToShow = (editor: Editor) => editor.name + ' ' + editor.surname;
+    editors$: Observable<EditorResource[]> = of();
+    editorFormToShow = (editor: EditorResource) =>
+        editor.name + ' ' + editor.surname;
 
     articleContentRowsNumber = 15;
 
@@ -85,10 +87,6 @@ export class CreateArticleFormComponent {
     }
 
     submitForm() {
-        console.log('article form');
-        console.log(this.articleForm.value);
-        console.log('article form value');
-        console.log(this.articleForm.value as ArticleRequestRawFormValue);
         const articleRequest = ArticleRequest.fromForm(
             this.articleForm.value as ArticleRequestRawFormValue
         );

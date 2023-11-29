@@ -91,12 +91,10 @@ export class ArticleListComponent implements OnInit {
             size: this.paginatorPageSize,
         };
 
-        console.log('bbb');
         return this.articleService.getArticles(request).pipe(
             tap({
                 next: articles => {
                     this.dataLength = articles.length;
-                    console.log('aaa');
                 },
                 error: err => console.log(err)
             })

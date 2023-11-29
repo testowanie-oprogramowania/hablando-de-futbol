@@ -1,40 +1,33 @@
-import { Editor } from './editor';
 import { Category } from './category';
+import { EditorResource } from './editor-resource';
+import {CategoryResource} from "./category-resource";
 
 export class ArticleRequest {
     constructor(
         public title: string,
         public editorId: number,
-        public publicationDate: Date,
         public content: string,
         public photoUrl: string,
-        public categoryName: string,
-        public id?: number
+        public categoryName: string
     ) {}
 
     public static fromForm(
         articleRequestRawFormValue: ArticleRequestRawFormValue
     ): ArticleRequest {
-        console.log('editor: ');
-        console.log(articleRequestRawFormValue.editor);
         return new ArticleRequest(
             articleRequestRawFormValue.title,
-            articleRequestRawFormValue.editor.id!,
-            articleRequestRawFormValue.publicationDate,
+            articleRequestRawFormValue.editor.id,
             articleRequestRawFormValue.content,
             articleRequestRawFormValue.photoUrl,
-            articleRequestRawFormValue.category.name,
-            articleRequestRawFormValue.id ?? undefined
+            articleRequestRawFormValue.category.name
         );
     }
 }
 
 export interface ArticleRequestRawFormValue {
     title: string;
-    editor: Editor;
-    publicationDate: Date;
+    editor: EditorResource;
     content: string;
     photoUrl: string;
-    category: Category;
-    id?: number;
+    category: CategoryResource;
 }
