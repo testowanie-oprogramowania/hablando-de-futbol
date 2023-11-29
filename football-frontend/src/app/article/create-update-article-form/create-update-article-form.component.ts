@@ -56,6 +56,8 @@ import { ShowPageComponent } from '../../shared/show-page/show-page.component';
 })
 export class CreateUpdateArticleFormComponent {
     isLoading: boolean = true;
+    headerTitle: string = '';
+    submitButtonTitle: string = 'Submit';
 
     articleId: number | undefined;
 
@@ -94,7 +96,13 @@ export class CreateUpdateArticleFormComponent {
         this.articleId = articleIdString ? Number(articleIdString) : undefined;
 
         if (this.articleId) {
-            this.fillFormWithArticle(this.articleId);
+            this.fillPageWithArticle(this.articleId);
+            this.headerTitle = 'Edit article';
+            this.submitButtonTitle = 'Update';
+        } else {
+            this.isLoading = false;
+            this.headerTitle = 'Create article';
+            this.submitButtonTitle = 'Create';
         }
     }
 
@@ -133,7 +141,7 @@ export class CreateUpdateArticleFormComponent {
         return o1.id === o2.id;
     }
 
-    private fillFormWithArticle(articleId: number) {
+    private fillPageWithArticle(articleId: number) {
         this.articleService.getArticle(articleId).subscribe({
             next: article => {
                 this.articleForm.patchValue({
