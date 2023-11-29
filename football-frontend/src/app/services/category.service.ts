@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { Category } from '../models/category';
 import { Injectable } from '@angular/core';
 import { CategoryResource } from '../models/category-resource';
 import { CategoryRequest } from '../models/category-request';

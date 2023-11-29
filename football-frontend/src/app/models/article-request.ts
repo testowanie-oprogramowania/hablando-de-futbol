@@ -1,6 +1,5 @@
-import { Category } from './category';
 import { EditorResource } from './editor-resource';
-import {CategoryResource} from "./category-resource";
+import { CategoryResource } from './category-resource';
 
 export class ArticleRequest {
     constructor(
