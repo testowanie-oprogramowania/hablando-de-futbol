@@ -11,6 +11,8 @@ import { ArticleResource } from '../../models/article-resource';
 import { ArticleService } from '../../services/article.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { CommentListComponent } from '../../comment/comment-list/comment-list.component';
+import { Comment } from '../../models/comment';
 
 @Component({
     selector: 'app-show-article',
@@ -24,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
         TextInputFieldComponent,
         MatProgressSpinnerModule,
         MatIconModule,
+        CommentListComponent,
     ],
     providers: [DatePipe],
     templateUrl: './show-article.component.html',
@@ -32,7 +35,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class ShowArticleComponent {
     articleId: number;
     article$: Observable<ArticleResource>;
-
+    comments = Array<Comment>(20).fill(new Comment('nick', 'tresc', 5, 2));
     constructor(
         private readonly articleService: ArticleService,
         private readonly activatedRoute: ActivatedRoute,
