@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     FormBuilder,
-    FormControl,
-    FormGroup,
     FormsModule,
     ReactiveFormsModule,
     Validators,
@@ -22,9 +20,11 @@ import { TextInputFieldComponent } from '../../shared/text-input-field/text-inpu
 import { TextAreaFieldComponent } from '../../shared/text-area-field/text-area-field.component';
 import { DatePickerFieldComponent } from '../../shared/date-picker-field/date-picker-field.component';
 import { SelectFieldComponent } from '../../shared/select-field/select-field.component';
-import { Article, ArticleRawFormValue } from '../../models/article';
 import { ArticleService } from '../../services/article.service';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CategoryService} from "../../services/category.service";
+import {EditorService} from "../../services/editor.service";
+import {ArticleRequest, ArticleRequestRawFormValue} from "../../models/article-request";
 
 @Component({
     selector: 'app-create-article-form',
@@ -59,25 +59,41 @@ export class CreateArticleFormComponent {
         category: [undefined as Category | undefined, Validators.required],
     });
 
-    categories$: Observable<Category[]> = of();
+
+
+    categories$: Observable<Category[]>;
     categoryFormToShow = (category: Category) => category.name;
 
     editors$: Observable<Editor[]> = of();
-    editorFormToShow = (editor: Editor) => editor.name;
+    editorFormToShow = (editor: Editor) => editor.name + ' ' + editor.surname;
 
     articleContentRowsNumber = 15;
 
     constructor(
         private readonly articleService: ArticleService,
+        private readonly categoryService: CategoryService,
+        private readonly editorService: EditorService,
+        private readonly activatedRoute: ActivatedRoute,
         private readonly formBuilder: FormBuilder,
         private readonly router: Router
-    ) {}
+    ) {
+        this.categories$ = categoryService.getAllCategories();
+        this.editors$ = editorService.getEditors({ page: 0, size: 100 });
+
+        const a = this.activatedRoute.snapshot.paramMap.get('id');
+        console.log(a);
+    }
 
     submitForm() {
-        const article = Article.fromForm(
-            this.articleForm.value as ArticleRawFormValue
+        console.log('article form');
+        console.log(this.articleForm.value);
+        console.log('article form value');
+        console.log(this.articleForm.value as ArticleRequestRawFormValue);
+        const articleRequest = ArticleRequest.fromForm(
+            this.articleForm.value as ArticleRequestRawFormValue
         );
-        this.articleService.createArticle(article).subscribe({
+        console.log(articleRequest);
+        this.articleService.createArticle(articleRequest).subscribe({
             next: () => {
                 this.router.navigate(['/articles']).then(r => {});
             },

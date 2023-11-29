@@ -3,7 +3,7 @@
         <!--        <button mat-fab class="not-expanded-button" color="accent" aria-label="Add article" (click)="onAddArticle($event)">-->
         <!--            <mat-icon>add</mat-icon>-->
         <!--        </button>-->
-<!--        TODO W przyszlosci rozwijany przycisk-->
+        <!--        TODO W przyszlosci rozwijany przycisk-->
         <button
             mat-fab
             color="accent"
@@ -15,47 +15,50 @@
         </button>
     </div>
     <div class="article-list__container">
-        <div class="article-list__cards">
-            <mat-card
-                class="article-list__card"
-                *ngFor="let article of articles$ | async; let index = index"
-                (click)="navigateToArticle(article.id!)"
-            >
-                <div class="article-list__image-container">
-                    <img
-                        mat-card-image
-                        class="article-list__image"
-                        src="{{ article.photoUrl }}"
-                        alt="Article photo" />
-                    <div class="article-list__image-label">
-                        {{ article.category.name }}
+        <div *ngIf="articles$ | async as articles; else articleListContent">
+            <div class="article-list__cards">
+                <mat-card
+                    class="article-list__card"
+                    *ngFor="let article of articles; let index = index"
+                    (click)="navigateToArticle(article.id!)">
+                    <div class="article-list__image-container">
+                        <img
+                            mat-card-image
+                            class="article-list__image"
+                            [src]="article.image"
+                            alt="Article photo"
+                        />
+                        <div class="article-list__image-label">
+                            {{ article.category.name }}
+                        </div>
                     </div>
-                </div>
 
-                <mat-card-header>
-                    <img
-                        mat-card-avatar
-                        src="{{ article.editor.photoUrl }}"
-                        alt="Author's photo" />
-                    <mat-card-title>{{ article.title }}</mat-card-title>
-                    <mat-card-subtitle>
-                        {{ article.editor.name }}
-                        {{ article.editor.surname }}
-                    </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                    <p>{{ article.content }}</p>
-                </mat-card-content>
-            </mat-card>
+                    <mat-card-header>
+                        <img
+                            mat-card-avatar
+                            [src]="article.editor.image"
+                            alt="Author's photo" />
+                        <mat-card-title>{{ article.title }}</mat-card-title>
+                        <mat-card-subtitle>
+                            {{ article.editor.name }}
+                            {{ article.editor.surname }}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{ article.content }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <mat-paginator
+                #paginator
+                class="mat-mdc-card"
+                (page)="handlePageEvent($event)"
+                [length]="paginatorLength"
+                [pageSize]="paginatorPageSize"
+                [pageIndex]="paginatorPageIndex"
+                aria-label="Select page">
+            </mat-paginator>
         </div>
-        <mat-paginator
-            #paginator
-            class="mat-mdc-card"
-            (page)="handlePageEvent($event)"
-            [length]="paginatorLength"
-            [pageSize]="paginatorPageSize"
-            [pageIndex]="paginatorPageIndex"
-            aria-label="Select page">
-        </mat-paginator>
+        <ng-template #articleListContent> No content here... </ng-template>
     </div>
 </div>

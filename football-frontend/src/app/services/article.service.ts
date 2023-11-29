@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { Article } from '../models/article';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { ArticleRequest } from '../models/article-request';
+import { ArticleResource } from '../models/article-resource';
 
 @Injectable({
     providedIn: 'root',
@@ -11,23 +12,23 @@ import { HttpClient } from '@angular/common/http';
 export class ArticleService {
     articlesUrl = environment.apiBaseUrl + '/articles';
 
-    constructor(private readonly httpClient: HttpClient) {
-        console.log('a');
-        console.log(this.articlesUrl);
-    }
+    constructor(private readonly httpClient: HttpClient) {}
 
-    public createArticle(article: Article): Observable<any> {
-        return this.httpClient.post<Article>(this.articlesUrl, article);
+    public createArticle(articleRequest: ArticleRequest): Observable<any> {
+        return this.httpClient.post<ArticleRequest>(
+            this.articlesUrl,
+            articleRequest
+        );
     }
 
     public getArticles(request: {
         page: number;
         size: number;
-    }): Observable<Article[]> {
-        console.log('a');
-        console.log(this.articlesUrl);
+    }): Observable<ArticleResource[]> {
         return this.httpClient
-            .get<{ content: Article[] }>(this.articlesUrl, { params: request })
+            .get<{ content: ArticleResource[] }>(this.articlesUrl, {
+                params: request,
+            })
             .pipe(map(response => response.content));
     }
 }

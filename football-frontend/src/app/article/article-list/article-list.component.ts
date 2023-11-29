@@ -1,8 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { Observable, of, tap } from 'rxjs';
-import { Article } from '../../models/article';
 import {
     MatPaginator,
     MatPaginatorModule,
@@ -11,11 +10,10 @@ import {
 import { ArticleService } from '../../services/article.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { Editor } from '../../models/editor';
-import { Category } from '../../models/category';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
+import { ArticleResource } from '../../models/article-resource';
 
 @Component({
     selector: 'app-article-list',
@@ -32,8 +30,9 @@ import { CategoryService } from '../../services/category.service';
     templateUrl: './article-list.component.html',
     styleUrl: './article-list.component.scss',
 })
-export class ArticleListComponent {
-    articles$: Observable<Article[]>;
+export class ArticleListComponent implements OnInit {
+
+    articles$!: Observable<ArticleResource[]>;
     dataLength = 0;
 
     @ViewChild(MatPaginator) readonly paginator!: MatPaginator;
@@ -47,7 +46,7 @@ export class ArticleListComponent {
         private readonly router: Router,
         private readonly route: ActivatedRoute
     ) {
-        this.articles$ = this.getData();
+
         // this.articles$ = of(
         //     Array(10).fill(
         //         new Article(
@@ -68,23 +67,38 @@ export class ArticleListComponent {
         // );
     }
 
-    handlePageEvent(event: PageEvent): void {
-        const request = {
-            page: event.pageIndex,
-            size: event.pageSize,
-        };
-        this.articles$ = this.articleService.getArticles(request);
+    ngOnInit(): void {
+        this.articles$ = this.getData();
     }
 
-    private getData(): Observable<Article[]> {
+    handlePageEvent(event: PageEvent): void {
+        // this.isLoading = true;
+        // const request = {
+        //     page: event.pageIndex,
+        //     size: event.pageSize,
+        // };
+        // this.articles$ = this.articleService.getArticles(request).pipe(
+        //     tap({
+        //         complete: () => (this.isLoading = false),
+        //     })
+        // );
+        this.articles$ = this.getData();
+    }
+
+    private getData(): Observable<ArticleResource[]> {
         const request = {
             page: this.paginatorPageIndex,
             size: this.paginatorPageSize,
         };
+
+        console.log('bbb');
         return this.articleService.getArticles(request).pipe(
             tap({
-                next: articles => (this.dataLength = articles.length),
-                error: err => console.log(err),
+                next: articles => {
+                    this.dataLength = articles.length;
+                    console.log('aaa');
+                },
+                error: err => console.log(err)
             })
         );
     }
@@ -98,4 +112,6 @@ export class ArticleListComponent {
     navigateToArticle(id: number) {
         this.router.navigate([`articles/${id}`]).then(r => {});
     }
+
+
 }

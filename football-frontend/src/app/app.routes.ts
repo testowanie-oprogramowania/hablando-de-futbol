@@ -25,6 +25,20 @@ export const routes: Routes = [
             ).then(c => c.CreateArticleFormComponent),
     },
     {
+        path: 'articles/:id',
+        loadComponent: () =>
+            import('./article/show-article/show-article.component').then(
+                c => c.ShowArticleComponent
+            ),
+    },
+    {
+        path: 'articles/:id/edit',
+        loadComponent: () =>
+            import('./article/create-article-form/create-article-form.component').then(
+                c => c.CreateArticleFormComponent
+            ),
+    },
+    {
         path: 'categories/:id',
         loadComponent: () =>
             import('./article/article-list/article-list.component').then(
