@@ -2,7 +2,6 @@ import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
-import { Category } from '../../models/category';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +11,8 @@ import { CategoryDeleteDialogComponent } from '../category-delete-dialog/categor
 import { Observable, tap } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
 import { Router } from '@angular/router';
+import { CategoryResource } from '../../models/category-resource';
+import { CategoryRequest } from '../../models/category-request';
 
 @Component({
     selector: 'app-category-list',
@@ -28,7 +29,7 @@ import { Router } from '@angular/router';
     styleUrl: './category-list.component.scss',
 })
 export class CategoryListComponent {
-    categories$: Observable<Category[]>;
+    categories$: Observable<CategoryResource[]>;
 
     constructor(
         public dialog: MatDialog,
@@ -38,31 +39,33 @@ export class CategoryListComponent {
         this.categories$ = categoryService.getAllCategories();
     }
 
-    openEditDialog(category: Category) {
-        const categoryCopy = { ...category };
+    openEditDialog(category: CategoryResource) {
+        const categoryCopy = new CategoryRequest(category.name);
         const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
             data: categoryCopy,
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.categoryService.updateCategory(result).subscribe({
-                    next: () => {
-                        this.categories$ =
-                            this.categoryService.getAllCategories();
-                    },
-                });
+                this.categoryService
+                    .updateCategory(category.id, result)
+                    .subscribe({
+                        next: () => {
+                            this.categories$ =
+                                this.categoryService.getAllCategories();
+                        },
+                    });
             } else {
                 this.categories$ = this.categoryService.getAllCategories();
             }
         });
     }
 
-    openDeleteDialog(category: Category) {
+    openDeleteDialog(categoryId: number) {
         const dialogRef = this.dialog.open(CategoryDeleteDialogComponent, {});
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.categoryService.deleteCategory(category).subscribe({
+                this.categoryService.deleteCategory(categoryId).subscribe({
                     next: () => {
                         this.categories$ =
                             this.categoryService.getAllCategories();
@@ -73,9 +76,8 @@ export class CategoryListComponent {
     }
 
     openAddDialog() {
-        const newCategory: Category = {
+        const newCategory: CategoryRequest = {
             name: '',
-            articles: [],
         };
         const dialogRef = this.dialog.open(CategoryEditDialogComponent, {
             data: newCategory,
@@ -93,7 +95,7 @@ export class CategoryListComponent {
         });
     }
 
-    onCategoryClick(category: Category) {
+    onCategoryClick(category: CategoryResource) {
         this.router.navigate(['/categories', category.id]);
     }
 }

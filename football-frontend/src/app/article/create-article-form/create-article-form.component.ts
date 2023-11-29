@@ -13,7 +13,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { Observable, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Category } from '../../models/category';
 import { MatCardModule } from '@angular/material/card';
 import { TextInputFieldComponent } from '../../shared/text-input-field/text-input-field.component';
 import { TextAreaFieldComponent } from '../../shared/text-area-field/text-area-field.component';
@@ -28,8 +27,8 @@ import {
     ArticleRequestRawFormValue,
 } from '../../models/article-request';
 import { EditorResource } from '../../models/editor-resource';
-import {CategoryResource} from "../../models/category-resource";
-import {ShowPageComponent} from "../../shared/show-page/show-page.component";
+import { CategoryResource } from '../../models/category-resource';
+import { ShowPageComponent } from '../../shared/show-page/show-page.component';
 
 @Component({
     selector: 'app-create-article-form',
@@ -67,8 +66,8 @@ export class CreateArticleFormComponent {
         ],
     });
 
-    categories$: Observable<Category[]>;
-    categoryFormToShow = (category: Category) => category.name;
+    categories$: Observable<CategoryResource[]>;
+    categoryFormToShow = (category: CategoryResource) => category.name;
 
     editors$: Observable<EditorResource[]> = of();
     editorFormToShow = (editor: EditorResource) =>
@@ -102,7 +101,7 @@ export class CreateArticleFormComponent {
                 this.router.navigate(['/articles']).then(r => {});
             },
         });
-    }
+    };
 
     goBack() {
         this.router.navigate(['/articles']).then(r => {});
