@@ -35,7 +35,10 @@ import { Comment } from '../../models/comment';
 export class ShowArticleComponent {
     articleId: number;
     article$: Observable<ArticleResource>;
-    comments = Array<Comment>(20).fill(new Comment('nick', 'tresc', 5, 2));
+    // comments = Array(20)
+    //     .fill(null)
+    //     .map(() => new Comment('nick', 'tresc', 5, 2));
+
     constructor(
         private readonly articleService: ArticleService,
         private readonly activatedRoute: ActivatedRoute,
