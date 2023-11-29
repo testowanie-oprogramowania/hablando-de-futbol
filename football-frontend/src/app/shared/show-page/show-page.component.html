@@ -1,17 +1,23 @@
 <div class="show-page">
     <mat-card class="show-page__card">
-        <form [formGroup]="formGroupA" (ngSubmit)="onSubmitForm()">
-            <mat-card-header class="show-page__header">
-                <mat-card-title>
-                    <ng-content select="[title]"></ng-content>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content class="show-page__content">
-                <ng-content select="[content]"></ng-content>
-            </mat-card-content>
-            <mat-card-actions class="show-page__actions">
-                <ng-content select="[actions]"></ng-content>
-            </mat-card-actions>
-        </form>
+        <ng-container *ngIf="isForm; else content">
+            <form (ngSubmit)="onSubmitForm()">
+                <ng-container *ngTemplateOutlet="content"></ng-container>
+            </form>
+        </ng-container>
     </mat-card>
+
+    <ng-template #content>
+        <mat-card-header class="show-page__header">
+            <mat-card-title>
+                <ng-content select="[title]"></ng-content>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="show-page__content">
+            <ng-content select="[content]"></ng-content>
+        </mat-card-content>
+        <mat-card-actions class="show-page__actions">
+            <ng-content select="[actions]"></ng-content>
+        </mat-card-actions>
+    </ng-template>
 </div>
