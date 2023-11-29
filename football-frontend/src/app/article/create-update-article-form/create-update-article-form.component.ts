@@ -27,11 +27,11 @@ import {
     ArticleRequestRawFormValue,
 } from '../../models/article-request';
 import { EditorResource } from '../../models/editor-resource';
-import { CategoryResource } from '../../models/category-resource';
-import { ShowPageComponent } from '../../shared/show-page/show-page.component';
+import {CategoryResource} from "../../models/category-resource";
+import {ShowPageComponent} from "../../shared/show-page/show-page.component";
 
 @Component({
-    selector: 'app-create-article-form',
+    selector: 'app-create-update-article-form',
     standalone: true,
     imports: [
         CommonModule,
@@ -51,10 +51,14 @@ import { ShowPageComponent } from '../../shared/show-page/show-page.component';
         SelectFieldComponent,
         ShowPageComponent,
     ],
-    templateUrl: './create-article-form.component.html',
-    styleUrl: './create-article-form.component.scss',
+    templateUrl: './create-update-article-form.component.html',
+    styleUrl: './create-update-article-form.component.scss',
 })
-export class CreateArticleFormComponent {
+export class CreateUpdateArticleFormComponent {
+    isLoading: boolean = true;
+
+    articleId: number | undefined;
+
     articleForm = this.formBuilder.group({
         title: ['', Validators.required],
         editor: [undefined as EditorResource | undefined, Validators.required],
@@ -73,7 +77,7 @@ export class CreateArticleFormComponent {
     editorFormToShow = (editor: EditorResource) =>
         editor.name + ' ' + editor.surname;
 
-    articleContentRowsNumber = 15;
+    articleContentTextAreaRowsNumber = 15;
 
     constructor(
         private readonly articleService: ArticleService,
@@ -86,24 +90,50 @@ export class CreateArticleFormComponent {
         this.categories$ = categoryService.getAllCategories();
         this.editors$ = editorService.getEditors({ page: 0, size: 100 });
 
-        const a = this.activatedRoute.snapshot.paramMap.get('id');
-        console.log(a);
-        // TODO
+        const articleIdString = this.activatedRoute.snapshot.paramMap.get('id');
+        this.articleId = articleIdString ? Number(articleIdString) : undefined;
+
+        if(this.articleId) {
+            this.fillFormWithArticle(this.articleId);
+        }
     }
 
     submitForm = () => {
         const articleRequest = ArticleRequest.fromForm(
             this.articleForm.value as ArticleRequestRawFormValue
         );
-        console.log(articleRequest);
+
         this.articleService.createArticle(articleRequest).subscribe({
             next: () => {
                 this.router.navigate(['/articles']).then(r => {});
             },
         });
-    };
+    }
 
     goBack() {
         this.router.navigate(['/articles']).then(r => {});
+    }
+
+    compareCategories(o1: CategoryResource, o2: CategoryResource): boolean {
+        return o1.id === o2.id;
+    }
+
+    compareEditors(o1: EditorResource, o2: EditorResource): boolean {
+        return o1.id === o2.id;
+    }
+
+    private fillFormWithArticle(articleId: number) {
+        this.articleService.getArticle(articleId).subscribe({
+            next: article => {
+                this.articleForm.patchValue({
+                    title: article.title,
+                    editor: article.editor,
+                    content: article.content,
+                    photoUrl: article.image,
+                    category: article.category,
+                });
+                this.isLoading = false;
+            },
+        });
     }
 }
