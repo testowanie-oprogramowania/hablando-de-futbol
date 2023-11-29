@@ -1,16 +1,23 @@
-<app-show-page [isForm]="false">
-    <ng-container title>
-        <h1>a</h1>
-    </ng-container>
-    <ng-container content>
+<ng-container *ngIf="article$ | async as article; else loadingSpinner">
+    <app-show-page
+        [isForm]="false"
+        [title]="article.title"
+        [thumbnailImageUrl]="article.image"
+        [descriptionForImageThumbnail]="article.editor.name + ' ' + article.editor.surname"
 
-        <div>
-            content
-        </div>
-    </ng-container>
-    <ng-container actions>
-        <div>
-            buttons
-        </div>
-    </ng-container>
-</app-show-page>
+        [subtitles]="['Created: ' + article.createdDate + '', 'Last modified: ' + article.lastModifiedDate]">
+        <ng-container title>
+            <h1>{{ article.title }}</h1>
+        </ng-container>
+        <ng-container content>
+            <div>{{ article.content }}</div>
+        </ng-container>
+        <ng-container actions>
+            <div>Comments</div>
+        </ng-container>
+    </app-show-page>
+</ng-container>
+
+<ng-template #loadingSpinner>
+    <mat-spinner> </mat-spinner>
+</ng-template>

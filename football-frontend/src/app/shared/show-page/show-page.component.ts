@@ -26,4 +26,8 @@ import {TextInputFieldComponent} from "../text-input-field/text-input-field.comp
 export class ShowPageComponent {
     @Input() isForm: boolean = false;
     @Input() onSubmitForm: () => void = () => {};
+    @Input() thumbnailImageUrl: string = '';
+    @Input() title: string = '';
+    @Input() descriptionForImageThumbnail: string = '';
+    @Input() subtitles: string[] = [];
 }

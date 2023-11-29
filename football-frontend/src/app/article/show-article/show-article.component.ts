@@ -9,6 +9,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {ArticleResource} from "../../models/article-resource";
 import {ArticleService} from "../../services/article.service";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @Component({
     selector: 'app-show-article',
@@ -20,15 +21,21 @@ import {ArticleService} from "../../services/article.service";
         ShowPageComponent,
         TextAreaFieldComponent,
         TextInputFieldComponent,
+        MatProgressSpinnerModule,
     ],
     templateUrl: './show-article.component.html',
     styleUrl: './show-article.component.scss',
 })
 export class ShowArticleComponent {
     articleId: number;
-    article$: Observable<ArticleResource>
-    constructor(private readonly articleService: ArticleService, private readonly activatedRoute: ActivatedRoute) {
-        this.articleId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    article$: Observable<ArticleResource>;
+    constructor(
+        private readonly articleService: ArticleService,
+        private readonly activatedRoute: ActivatedRoute
+    ) {
+        this.articleId = Number(
+            this.activatedRoute.snapshot.paramMap.get('id')
+        );
         this.article$ = articleService.getArticle(this.articleId);
     }
 }

@@ -1,5 +1,7 @@
 @import "../../styles/variables";
 
+$sections-gap: 1.5rem;
+
 .show-page {
     margin: $article-padding;
     display: flex;
@@ -7,19 +9,48 @@
 
     &__card {
         display: flex;
+        gap: $sections-gap;
         justify-content: center;
         width: 50%;
-        padding: 1rem;
+        padding: 1.5rem;
+    }
+
+    &__title {
+        font-size: 1.75rem;
     }
 
     &__header {
-        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: $sections-gap;
+    }
+
+    &__info-header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    &__picture-header {
+        padding: 0;
+        display: flex;
+        //justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+
+    &__thumbnail-image {
+        margin: 0;
+    }
+
+    &__content {
+        padding: 0;
     }
 
     &__actions {
         display: flex;
         align-items: center;
-        padding: 0 1rem;
-        gap: 1rem;
+        padding: 0;
+        gap: $sections-gap;
     }
 }
