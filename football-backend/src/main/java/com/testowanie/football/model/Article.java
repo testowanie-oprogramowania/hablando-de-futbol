@@ -37,7 +37,7 @@ public class Article extends Auditable {
     @ManyToOne
     private Category category;
 
-    @NonNull
+    //@NonNull
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments;
 }

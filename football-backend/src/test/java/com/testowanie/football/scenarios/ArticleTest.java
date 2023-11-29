@@ -2,6 +2,8 @@ package com.testowanie.football.scenarios;
 
 import com.testowanie.football.dto.request.UpdateArticleRequest;
 import com.testowanie.football.model.Article;
+import com.testowanie.football.model.Category;
+import com.testowanie.football.model.Editor;
 import com.testowanie.football.repository.ArticleRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -41,6 +43,7 @@ public class ArticleTest {
     String newTitle = "The man the myth the legend";
 
     private Article article;
+    private Long exampleId=1L;
     private ResultActions resultActions;
     private UpdateArticleRequest updateCategoryRequest;
 
@@ -57,6 +60,9 @@ public class ArticleTest {
         article = Article.builder()
                 .title(originalTitle)
                 .content(articleContent)
+                .editor(new Editor(exampleId,"Zbyszek","JSON", null))
+                .content("chuj")
+                .category(new Category(exampleId, "dupa romana", null))
                 .build();
     }
 
