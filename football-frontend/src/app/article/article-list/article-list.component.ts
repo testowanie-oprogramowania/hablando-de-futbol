@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { ArticleResource } from '../../models/article-resource';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PaginatorRequestParams } from '../../models/paginator-request-params';
+import {PaginatorRequestParams} from "../../models/paginator-request-params";
 
 @Component({
     selector: 'app-article-list',
