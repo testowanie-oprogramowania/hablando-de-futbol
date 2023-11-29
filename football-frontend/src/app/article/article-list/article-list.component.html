@@ -1,19 +1,23 @@
 <div class="article-list">
-    <div class="article-list__buttons">
-        <!--        <button mat-fab class="not-expanded-button" color="accent" aria-label="Add article" (click)="onAddArticle($event)">-->
-        <!--            <mat-icon>add</mat-icon>-->
-        <!--        </button>-->
-        <!--        TODO W przyszlosci rozwijany przycisk-->
-        <button
-            mat-fab
-            color="accent"
-            class="expanded-button"
-            aria-label="Add article"
-            (click)="onAddArticle($event)">
-            <mat-icon>add</mat-icon>
-            Add article
-        </button>
+    <div class="article-list__headers">
+        <h1>{{headerTitle}}</h1>
+        <div class="article-list__buttons">
+            <!--        <button mat-fab class="not-expanded-button" color="accent" aria-label="Add article" (click)="onAddArticle($event)">-->
+            <!--            <mat-icon>add</mat-icon>-->
+            <!--        </button>-->
+            <!--        TODO W przyszlosci rozwijany przycisk-->
+            <button
+                mat-fab
+                color="accent"
+                class="expanded-button"
+                aria-label="Add article"
+                (click)="onAddArticle($event)">
+                <mat-icon>add</mat-icon>
+                Add article
+            </button>
+        </div>
     </div>
+
     <div class="article-list__container">
         <ng-container
             *ngIf="articles$ | async as articles; else loadingSpinner">

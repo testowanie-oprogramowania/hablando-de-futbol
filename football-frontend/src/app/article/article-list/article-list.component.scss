@@ -3,8 +3,15 @@
 .article-list {
     margin: $article-padding;
 
-    &__buttons {
+    &__headers {
         padding: 15px 0 35px 15px;
+        display: flex;
+        flex-direction: column;
+        //gap: 1rem;
+    }
+
+    &__buttons {
+
     }
 
     &__cards {
