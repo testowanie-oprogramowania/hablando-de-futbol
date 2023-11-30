@@ -5,8 +5,8 @@ import { map } from 'rxjs/operators';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { ArticleRequest } from '../models/article-request';
 import { ArticleResource } from '../models/article-resource';
-import {PaginatorRequestParams} from "../models/paginator-request-params";
-import {CommentRequest} from "../models/comment-request";
+import { PaginatorRequestParams } from "../models/paginator-request-params";
+import { CommentRequest } from "../models/comment-request";
 
 @Injectable({
     providedIn: 'root',
