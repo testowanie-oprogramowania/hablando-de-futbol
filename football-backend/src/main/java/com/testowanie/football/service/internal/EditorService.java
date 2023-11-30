@@ -3,6 +3,7 @@ package com.testowanie.football.service.internal;
 import com.testowanie.football.dto.request.CreateEditorRequest;
 import com.testowanie.football.dto.request.UpdateEditorRequest;
 import com.testowanie.football.dto.resource.EditorResource;
+import com.testowanie.football.exception.EntityNotFoundException;
 import com.testowanie.football.mapper.EditorMapper;
 import com.testowanie.football.model.Editor;
 import com.testowanie.football.repository.EditorRepository;
@@ -31,7 +32,7 @@ class EditorService implements EditorUseCases {
     public EditorResource getEditorById(Long id) {
         return editorRepository.findById(id)
                 .map(editorMapper::toEditorResource)
-                .orElseThrow(() -> new IllegalArgumentException(EDITOR_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(EDITOR_NOT_FOUND));
     }
 
     @Override
@@ -45,7 +46,7 @@ class EditorService implements EditorUseCases {
     @Transactional
     public void updateEditor(Long id, UpdateEditorRequest updateEditorRequest) {
         Editor editor = editorRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(EDITOR_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(EDITOR_NOT_FOUND));
         editorMapper.updateEditorFromUpdateEditorRequest(updateEditorRequest, editor);
         editorRepository.save(editor);
     }
@@ -54,7 +55,7 @@ class EditorService implements EditorUseCases {
     @Transactional
     public void deleteEditor(Long id) {
         Editor editor = editorRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(EDITOR_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(EDITOR_NOT_FOUND));
         editorRepository.delete(editor);
     }
 }
