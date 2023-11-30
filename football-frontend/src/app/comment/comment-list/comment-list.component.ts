@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { ArticleService } from '../../services/article.service';
-import {CreateCommentComponent} from "../create-comment/create-comment.component";
+import { CreateCommentComponent } from '../create-comment/create-comment.component';
 
 @Component({
     selector: 'app-comment-list',
@@ -29,14 +29,12 @@ export class CommentListComponent {
     displayedColumns = ['nickname', 'content', 'thumbsUp', 'thumbsDown'];
     dataLength = 0;
     _comments = new MatTableDataSource<Comment>();
-    isLikedByUser!: boolean;
-    isDislikedByUser!: boolean;
     constructor(private readonly articleService: ArticleService) {}
     @Input() set comments(data: Comment[]) {
         this._comments.data = data;
         this.dataLength = data.length;
     }
-    @Input() articleId?: number;
+    @Input() articleId!: number;
 
     get comments(): MatTableDataSource<Comment> {
         return this._comments;
@@ -46,27 +44,39 @@ export class CommentListComponent {
         this._comments.paginator = this.paginator;
     }
 
-    onThumbUp(commentId: number) {
-        if (this.isLikedByUser) {
+    onThumbUp(comment: Comment) {
+        if (comment.isLikedByUser) {
             this.articleService
-                .removeLikeFromTheComment(this._articleId, commentId)
+                .removeLikeFromTheComment(this.articleId, comment.id)
                 .subscribe();
+            comment.isLikedByUser = false;
+            comment.thumbsUp--;
+            this._comments.data = [...this._comments.data];
             return;
         }
         this.articleService
-            .addLikeToTheComment(this._articleId, commentId)
+            .addLikeToTheComment(this.articleId, comment.id)
             .subscribe();
+        comment.isLikedByUser = true;
+        comment.thumbsUp++;
+        this._comments.data = [...this._comments.data];
     }
 
-    onThumbDown(id: number) {
-        if (this.isDislikedByUser) {
+    onThumbDown(comment: Comment) {
+        if (comment.isDislikedByUser) {
             this.articleService
-                .removeDislikeFromTheComment(this._articleId, id)
+                .removeDislikeFromTheComment(this.articleId, comment.id)
                 .subscribe();
+            comment.isDislikedByUser = false;
+            comment.thumbsDown--;
+            this._comments.data = [...this._comments.data];
             return;
         }
         this.articleService
-            .addDislikeToTheComment(this._articleId, id)
+            .addDislikeToTheComment(this.articleId, comment.id)
             .subscribe();
+        comment.isDislikedByUser = true;
+        comment.thumbsDown++;
+        this._comments.data = [...this._comments.data];
     }
 }
