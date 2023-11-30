@@ -28,7 +28,7 @@
                 <mat-icon class="green">thumb_up</mat-icon>
             </th>
             <td mat-cell *matCellDef="let comment" class="mat-cell">
-                <button mat-icon-button color="accent" (click)="onThumbUp(comment)" aria-label="Example icon button with a menu icon">
+                <button mat-icon-button (click)="onThumbUp(comment)" aria-label="Example icon button with a menu icon">
                     <mat-icon class="small" [ngClass]="{'green': comment.isLikedByUser, 'grey': !comment.isLikedByUser}">thumb_up</mat-icon>
                 </button>
                 {{ comment.thumbsUp }}
@@ -40,10 +40,21 @@
                 <mat-icon class="red">thumb_down</mat-icon>
             </th>
             <td mat-cell *matCellDef="let comment" class="mat-cell">
-                <button mat-icon-button color="accent" (click)="onThumbDown(comment)" aria-label="Example icon button with a menu icon">
+                <button mat-icon-button (click)="onThumbDown(comment)" aria-label="Example icon button with a menu icon">
                     <mat-icon class="small" [ngClass]="{'red': comment.isDislikedByUser, 'grey': !comment.isDislikedByUser}">thumb_down</mat-icon>
                 </button>
                 {{ comment.thumbsDown }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-icon class="red">delete</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let comment" class="mat-cell">
+                <button mat-icon-button (click)="onDelete(comment)">
+                    <mat-icon class="small red">delete</mat-icon>
+                </button>
             </td>
         </ng-container>
 

@@ -54,7 +54,10 @@ export class ArticleService {
         return this.httpClient.delete<void>(url);
     }
 
-    public createComment(articleId: number, commentRequest: CommentRequest): Observable<void> {
+    public createComment(
+        articleId: number,
+        commentRequest: CommentRequest
+    ): Observable<void> {
         const url = this.articlesUrl + '/' + articleId + '/comments';
         return this.httpClient.post<void>(url, commentRequest);
     }
@@ -113,5 +116,14 @@ export class ArticleService {
             commentId +
             '/dislike/remove';
         return this.httpClient.post<void>(url, {});
+    }
+
+    public deleteComment(
+        articleId: number,
+        commentId: number
+    ): Observable<void> {
+        const url =
+            this.articlesUrl + '/' + articleId + '/comments/' + commentId;
+        return this.httpClient.delete<void>(url);
     }
 }
