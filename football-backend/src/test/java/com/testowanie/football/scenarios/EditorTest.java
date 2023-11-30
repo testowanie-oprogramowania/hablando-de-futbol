@@ -1,11 +1,7 @@
 package com.testowanie.football.scenarios;
 
 import com.testowanie.football.dto.request.UpdateEditorRequest;
-import com.testowanie.football.model.Article;
-import com.testowanie.football.model.Category;
 import com.testowanie.football.model.Editor;
-import com.testowanie.football.repository.ArticleRepository;
-import com.testowanie.football.repository.CategoryRepository;
 import com.testowanie.football.repository.EditorRepository;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -20,8 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
