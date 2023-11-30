@@ -1,7 +1,6 @@
 package com.testowanie.football.scenarios;
 
 import com.testowanie.football.dto.request.UpdateCategoryRequest;
-import com.testowanie.football.model.Article;
 import com.testowanie.football.model.Category;
 import com.testowanie.football.model.Editor;
 import com.testowanie.football.repository.ArticleRepository;
@@ -12,7 +11,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,27 +38,18 @@ public class CategoryTest {
     private MockMvc mockMvc;
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private ArticleRepository articleRepository;
-    @Autowired
-    private EditorRepository editorRepository;
 
     private String categoryName = "La Liga";
-    private Long exampleId=1L;
     private String getCategoryName2 = "Champions League";
     private final String CATEGORY_ENDPOINT="/api/v1/categories";
 
     private Category category;
-    private Editor editor;
     private UpdateCategoryRequest updateCategoryRequest;
     private ResultActions resultActions;
 
     @Before
     public void setUp() {
-        //editorRepository.deleteAll();
-        //editor = editorRepository.save(new Editor(exampleId,"Zbyszek","JSON", null));
         categoryRepository.deleteAll();
-        //articleRepository.deleteAll();
     }
 
     // post category
@@ -80,17 +69,18 @@ public class CategoryTest {
         resultActions = mockMvc.perform(post(CATEGORY_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content));
+        category = categoryRepository.findByName(categoryName).orElse(null);
     }
 
     @When("I list all categories")
     public void iListAllCategories() throws Exception {
-        resultActions = mockMvc.perform(get(CATEGORY_ENDPOINT+"/1"));
+        resultActions = mockMvc.perform(get(CATEGORY_ENDPOINT));
     }
 
     @Then("I see new category")
     public void iSeeNewCategory() throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(category.getName()));
+                .andExpect(jsonPath("$[0].name").value(category.getName()));
     }
 
     // Get existing category
@@ -113,8 +103,8 @@ public class CategoryTest {
     public void iGetDetailsOfRequestedCategory() throws Exception {
         resultActions.andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.id").exists(),
-                        jsonPath("$.name").value(category.getName()));
+                        jsonPath("$.category.id").exists(),
+                        jsonPath("$.category.name").value(category.getName()));
     }
 
     // Update exist category
@@ -130,7 +120,7 @@ public class CategoryTest {
     @When("I update category")
     public void iUpdateCategory() throws Exception {
         final var content = objectMapper.writeValueAsString(updateCategoryRequest);
-        resultActions = mockMvc.perform(put(CATEGORY_ENDPOINT+"/{id}", category.getId())
+        resultActions = mockMvc.perform(patch(CATEGORY_ENDPOINT+"/{id}", category.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content));
         category = categoryRepository.findById(category.getId()).orElse(null);
@@ -154,5 +144,13 @@ public class CategoryTest {
     public void iDontSeeTheCategoryAnymore() throws Exception {
         mockMvc.perform(get(CATEGORY_ENDPOINT+"/{id}", category.getId()))
                 .andExpect(status().isNotFound());
+    }
+
+    @Given("I have category data prepared")
+    public void iHaveCategoryDataPrepared() {
+        category = Category.builder()
+                .name(categoryName)
+                .articles(new HashSet<>())
+                .build();
     }
 }
