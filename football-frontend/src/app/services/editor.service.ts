@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EditorResource } from '../models/editor-resource';
 import { EditorRequest } from '../models/editor-request';
+import { PaginatorRequestParams } from '../models/paginator-request-params';
 
 @Injectable({
     providedIn: 'root',
@@ -18,13 +19,16 @@ export class EditorService {
         return this.httpClient.post<EditorRequest>(this.editorsUrl, editor);
     }
 
-    public getEditors(request: {
-        page: number;
-        size: number;
-    }): Observable<EditorResource[]> {
+    public getEditors(
+        paginatorRequestParams: PaginatorRequestParams
+    ): Observable<EditorResource[]> {
+        const params = new HttpParams()
+            .set('page', paginatorRequestParams.page.toString())
+            .set('size', paginatorRequestParams.size.toString());
+
         return this.httpClient
             .get<{ content: EditorResource[] }>(this.editorsUrl, {
-                params: request,
+                params,
             })
             .pipe(map(response => response.content));
     }

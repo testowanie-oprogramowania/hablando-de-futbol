@@ -5,8 +5,8 @@ import { map } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ArticleRequest } from '../models/article-request';
 import { ArticleResource } from '../models/article-resource';
-import { PaginatorRequestParams } from "../models/paginator-request-params";
-import { CommentRequest } from "../models/comment-request";
+import { PaginatorRequestParams } from '../models/paginator-request-params';
+import { CommentRequest } from '../models/comment-request';
 
 @Injectable({
     providedIn: 'root',
@@ -29,12 +29,6 @@ export class ArticleService {
         paginatorRequestParams: PaginatorRequestParams,
         categoryId?: number
     ): Observable<ArticleResource[]> {
-        const request = {
-            page: paginatorRequestParams.page.toString(),
-            size: paginatorRequestParams.size.toString(),
-            category: categoryId ? categoryId.toString() : undefined,
-        };
-
         const params = new HttpParams()
             .set('page', paginatorRequestParams.page.toString())
             .set('size', paginatorRequestParams.size.toString())

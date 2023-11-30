@@ -24,7 +24,7 @@
             <div class="article-list__cards">
                 <mat-card
                     class="article-list__card"
-                    *ngFor="let article of articles; let index = index"
+                    *ngFor="let article of articles"
                     (click)="navigateToArticle(article.id!)">
                     <div class="article-list__image-container">
                         <img
@@ -56,7 +56,6 @@
                 </mat-card>
             </div>
             <mat-paginator
-                #paginator
                 class="mat-mdc-card"
                 (page)="handlePageEvent($event)"
                 [length]="paginatorLength"
@@ -65,8 +64,9 @@
                 aria-label="Select page">
             </mat-paginator>
         </ng-container>
-        <ng-template #loadingSpinner>
-            <mat-spinner> </mat-spinner>
-        </ng-template>
     </div>
 </div>
+
+<ng-template #loadingSpinner>
+    <mat-spinner> </mat-spinner>
+</ng-template>

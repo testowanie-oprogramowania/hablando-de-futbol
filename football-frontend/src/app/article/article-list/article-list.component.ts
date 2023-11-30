@@ -42,7 +42,7 @@ export class ArticleListComponent implements OnInit {
     @ViewChild(MatPaginator) readonly paginator!: MatPaginator;
     paginatorRequestParams: PaginatorRequestParams = new PaginatorRequestParams(
         0,
-        6
+        8
     );
     paginatorLength = 10;
     headerTitle: string = '';
@@ -64,7 +64,6 @@ export class ArticleListComponent implements OnInit {
         this.activatedRoute.params.subscribe((params: Params) => {
             this.categoryId = params['id'] ? Number(params['id']) : undefined;
             this.articles$ = this.getData();
-            // con
             this.setHeaderTitle();
         });
     }
