@@ -44,5 +44,12 @@ export const routes: Routes = [
             import('./article/article-list/article-list.component').then(
                 c => c.ArticleListComponent
             ),
+    },
+    {
+        path: 'editors',
+        loadComponent: () =>
+            import('./editor/editor-list/editor-list.component').then(
+                c => c.EditorListComponent
+            ),
     }
 ];
