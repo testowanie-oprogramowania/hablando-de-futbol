@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { EditorResource } from '../models/editor-resource';
 import { EditorRequest } from '../models/editor-request';
 import { PaginatorRequestParams } from '../models/paginator-request-params';
+import {ArticleResource} from "../models/article-resource";
+import {ArticleRequest} from "../models/article-request";
 
 @Injectable({
     providedIn: 'root',
@@ -15,8 +17,13 @@ export class EditorService {
 
     constructor(private readonly httpClient: HttpClient) {}
 
-    public createArticle(editor: EditorRequest): Observable<any> {
+    public createEditor(editor: EditorRequest): Observable<any> {
         return this.httpClient.post<EditorRequest>(this.editorsUrl, editor);
+    }
+
+    public getEditor(id: number): Observable<EditorResource> {
+        const url = this.editorsUrl + '/' + id;
+        return this.httpClient.get<EditorResource>(url);
     }
 
     public getEditors(
@@ -31,5 +38,18 @@ export class EditorService {
                 params,
             })
             .pipe(map(response => response.content));
+    }
+
+    public updateEditor(
+        editorId: number,
+        editorRequest: EditorRequest
+    ): Observable<void> {
+        const url = this.editorsUrl + '/' + editorId;
+        return this.httpClient.patch<void>(url, editorRequest);
+    }
+
+    public deleteEditor(editorId: number): Observable<void> {
+        const url = this.editorsUrl + '/' + editorId;
+        return this.httpClient.delete<void>(url);
     }
 }
