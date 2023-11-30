@@ -6,8 +6,6 @@ import { map } from 'rxjs/operators';
 import { EditorResource } from '../models/editor-resource';
 import { EditorRequest } from '../models/editor-request';
 import { PaginatorRequestParams } from '../models/paginator-request-params';
-import {ArticleResource} from "../models/article-resource";
-import {ArticleRequest} from "../models/article-request";
 
 @Injectable({
     providedIn: 'root',

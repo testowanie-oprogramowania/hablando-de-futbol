@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ArticleListComponent } from './article/article-list/article-list.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
