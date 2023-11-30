@@ -5,7 +5,8 @@ import { map } from 'rxjs/operators';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { ArticleRequest } from '../models/article-request';
 import { ArticleResource } from '../models/article-resource';
-import {PaginatorRequestParams} from "../models/paginator-request-params";
+import { PaginatorRequestParams } from "../models/paginator-request-params";
+import { CommentRequest } from "../models/comment-request";
 
 @Injectable({
     providedIn: 'root',
@@ -57,5 +58,10 @@ export class ArticleService {
     public deleteArticle(articleId: number): Observable<void> {
         const url = this.articlesUrl + '/' + articleId;
         return this.httpClient.delete<void>(url);
+    }
+
+    public createComment(articleId: number, commentRequest: CommentRequest): Observable<void> {
+        const url = this.articlesUrl + '/' + articleId + '/comments';
+        return this.httpClient.post<void>(url, commentRequest);
     }
 }

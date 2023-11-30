@@ -1,0 +1,20 @@
+<ng-container *ngIf="articleId">
+    <div class="create-comment">
+        <h4>Add comment</h4>
+        <app-text-input-field
+            label="Nickname"
+            [control]="commentForm.controls.nickname">
+        </app-text-input-field>
+        <app-text-input-field
+            label="Comment"
+            [control]="commentForm.controls.content">
+        </app-text-input-field>
+        <div class="create-comment__buttons">
+            <button mat-raised-button
+                    class="btn btn-primary"
+                    (click)="onSubmit()">
+                Add comment
+            </button>
+        </div>
+    </div>
+</ng-container>

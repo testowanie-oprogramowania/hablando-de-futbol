@@ -1,42 +1,49 @@
-<ng-container *ngIf="article$ | async as article; else loadingSpinner">
-    <app-show-page
-        [isForm]="false"
-        [title]="article.title"
-        [subtitles]="[
-            'Created: ' + transformDate(article.createdDate) + '',
-            'Last modified: ' + transformDate(article.lastModifiedDate)
-        ]"
-        [mainImageUrl]="article.image"
-        [thumbnailImageUrl]="article.image"
-        [descriptionForImageThumbnail]="
-            article.editor.name + ' ' + article.editor.surname
-        ">
-        <ng-container title>
-            <h1>{{ article.title }}</h1>
-        </ng-container>
-        <ng-container content>
-            <div>{{ article.content }}</div>
-        </ng-container>
-        <ng-container actions>
-            <div class="show-article__operations">
-                <button
-                    mat-mini-fab
-                    color="primary"
-                    aria-label="Edit article"
-                    (click)="onEditArticle()">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button
-                    mat-mini-fab
-                    color="warn"
-                    aria-label="Delete article"
-                    (click)="onDeleteArticle()">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </div>
-        </ng-container>
-    </app-show-page>
-    <div class="comment-section"><app-comment-list [comments]="article.comments" class="comments"></app-comment-list></div>
+<ng-container *ngIf="article$ | async as article">
+    <ng-container *ngIf="articleId !== undefined; else loadingSpinner">
+        <app-show-page
+            [isForm]="false"
+            [title]="article.title"
+            [subtitles]="[
+                'Created: ' + transformDate(article.createdDate) + '',
+                'Last modified: ' + transformDate(article.lastModifiedDate)
+            ]"
+            [mainImageUrl]="article.image"
+            [thumbnailImageUrl]="article.image"
+            [descriptionForImageThumbnail]="
+                article.editor.name + ' ' + article.editor.surname
+            ">
+            <ng-container title>
+                <h1>{{ article.title }}</h1>
+            </ng-container>
+            <ng-container content>
+                <div>{{ article.content }}</div>
+            </ng-container>
+            <ng-container actions>
+                <div class="show-article__operations">
+                    <button
+                        mat-mini-fab
+                        color="primary"
+                        aria-label="Edit article"
+                        (click)="onEditArticle()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                        mat-mini-fab
+                        color="warn"
+                        aria-label="Delete article"
+                        (click)="onDeleteArticle()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </ng-container>
+        </app-show-page>
+        <div class="comment-section">
+            <app-comment-list
+                [articleId]="articleId!"
+                [comments]="article.comments"
+                class="comments"></app-comment-list>
+        </div>
+    </ng-container>
 </ng-container>
 
 <ng-template #loadingSpinner>
