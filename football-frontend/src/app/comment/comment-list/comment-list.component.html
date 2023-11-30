@@ -24,7 +24,7 @@
         </ng-container>
 
         <ng-container matColumnDef="thumbsUp">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
                 <mat-icon class="green">thumb_up</mat-icon>
             </th>
             <td mat-cell *matCellDef="let comment" class="mat-cell">
@@ -36,7 +36,7 @@
         </ng-container>
 
         <ng-container matColumnDef="thumbsDown">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
                 <mat-icon class="red">thumb_down</mat-icon>
             </th>
             <td mat-cell *matCellDef="let comment" class="mat-cell">
@@ -48,12 +48,12 @@
         </ng-container>
 
         <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell">
                 <mat-icon class="red">delete</mat-icon>
             </th>
             <td mat-cell *matCellDef="let comment" class="mat-cell">
-                <button mat-icon-button (click)="onDelete(comment)">
-                    <mat-icon class="small red">delete</mat-icon>
+                <button mat-mini-fab class="red-mini-fab small" (click)="onDelete(comment)">
+                    <mat-icon>delete</mat-icon>
                 </button>
             </td>
         </ng-container>
