@@ -2,6 +2,7 @@
     <mat-expansion-panel-header>
         <mat-panel-title> Comments </mat-panel-title>
     </mat-expansion-panel-header>
+    <app-create-comment [articleId]="articleId"></app-create-comment>
 
     <table mat-table [dataSource]="_comments" class="mat-elevation-z4">
         <ng-container matColumnDef="nickname">

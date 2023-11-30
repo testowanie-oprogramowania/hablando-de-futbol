@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -6,6 +6,7 @@ import { Comment } from '../../models/comment';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
+import {CreateCommentComponent} from "../create-comment/create-comment.component";
 
 @Component({
     selector: 'app-comment-list',
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
         MatIconModule,
         MatExpansionModule,
         MatButtonModule,
+        CreateCommentComponent,
     ],
     templateUrl: './comment-list.component.html',
     styleUrl: './comment-list.component.scss',
@@ -31,8 +33,8 @@ export class CommentListComponent {
     @Input() set comments(data: Comment[]) {
         this._comments.data = data;
         this.dataLength = data.length;
-        // this._comments.paginator = this.paginator;
     }
+    @Input() articleId?: number;
 
     get comments(): MatTableDataSource<Comment> {
         return this._comments;

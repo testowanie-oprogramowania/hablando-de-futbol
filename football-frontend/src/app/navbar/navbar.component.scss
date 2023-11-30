@@ -55,6 +55,7 @@ $navbar-height: 65px;
         }
         .navbar-header {
             font-family: 'Kdam Thmor Pro', sans-serif;
+            cursor: pointer;
         }
 
         .navbar-strip {
@@ -69,6 +70,7 @@ $navbar-height: 65px;
         .navbar-image {
             height: 100%;
             width: auto;
+            cursor: pointer;
         }
     }
 
