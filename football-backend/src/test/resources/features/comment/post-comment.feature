@@ -5,3 +5,4 @@ Feature: Commenting on articles
     Given I have a comment
     When I create a new comment
     Then The comment gets added to the article
+

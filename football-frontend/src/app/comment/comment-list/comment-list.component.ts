@@ -8,6 +8,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { ArticleService } from '../../services/article.service';
 import { CreateCommentComponent } from '../create-comment/create-comment.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CommentDeleteDialogComponent } from '../comment-delete-dialog/comment-delete-dialog.component';
 
 @Component({
     selector: 'app-comment-list',
@@ -26,10 +28,19 @@ import { CreateCommentComponent } from '../create-comment/create-comment.compone
 })
 export class CommentListComponent {
     @ViewChild('paginator') paginator!: MatPaginator;
-    displayedColumns = ['nickname', 'content', 'thumbsUp', 'thumbsDown'];
+    displayedColumns = [
+        'nickname',
+        'content',
+        'thumbsUp',
+        'thumbsDown',
+        'delete',
+    ];
     dataLength = 0;
     _comments = new MatTableDataSource<Comment>();
-    constructor(private readonly articleService: ArticleService) {}
+    constructor(
+        public dialog: MatDialog,
+        private readonly articleService: ArticleService
+    ) {}
     @Input() set comments(data: Comment[]) {
         this._comments.data = data;
         this.dataLength = data.length;
@@ -78,5 +89,22 @@ export class CommentListComponent {
         comment.isDislikedByUser = true;
         comment.thumbsDown++;
         this._comments.data = [...this._comments.data];
+    }
+
+    onDelete(comment: Comment) {
+        const dialogRef = this.dialog.open(CommentDeleteDialogComponent, {});
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.articleService
+                    .deleteComment(this.articleId, comment.id)
+                    .subscribe({
+                        next: () => {
+                            this._comments.data = this._comments.data.filter(
+                                c => c.id !== comment.id
+                            );
+                        },
+                    });
+            }
+        });
     }
 }

@@ -1,11 +1,15 @@
 .nickname-column {
     width: 20%;
+    font-weight: 700;
 }
 
 .content-column {
-    width: 60%;
+    width: 70%;
 }
-
+.red-mini-fab {
+    background-color: red;
+    color: white;
+}
 .red {
     color: red;
 }
@@ -28,4 +32,6 @@
 
 .mat-cell, .mat-header-cell {
     line-height: 32px;
+    text-align: center;
 }
+
