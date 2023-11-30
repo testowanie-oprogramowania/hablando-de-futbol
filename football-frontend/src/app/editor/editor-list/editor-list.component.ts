@@ -71,9 +71,19 @@ export class EditorListComponent implements OnInit {
         );
     }
 
-    onEditEditor(id: number) {}
+    onEditEditor(id: number) {
+        this.router.navigate(['editors/' + id + '/edit']).then();
+    }
 
-    onDeleteEditor(id: number) {}
+    onDeleteEditor(id: number) {
+        this.editorService.deleteEditor(id).subscribe({
+            next: () => {
+                this.ngOnInit();
+            },
+        });
+    }
 
-    onAddEditor() {}
+    onCreateEditor() {
+        this.router.navigate(['editors/create']).then();
+    }
 }

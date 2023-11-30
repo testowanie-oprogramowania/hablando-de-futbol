@@ -29,6 +29,7 @@ import {
 import { EditorResource } from '../../models/editor-resource';
 import { CategoryResource } from '../../models/category-resource';
 import { ShowPageComponent } from '../../shared/show-page/show-page.component';
+import { PaginatorRequestParams } from '../../models/paginator-request-params';
 
 @Component({
     selector: 'app-create-update-article-form',
@@ -90,7 +91,9 @@ export class CreateUpdateArticleFormComponent {
         private readonly router: Router
     ) {
         this.categories$ = categoryService.getAllCategories();
-        this.editors$ = editorService.getEditors({ page: 0, size: 100 });
+        this.editors$ = editorService.getEditors(
+            new PaginatorRequestParams(0, 100)
+        );
 
         const articleIdString = this.activatedRoute.snapshot.paramMap.get('id');
         this.articleId = articleIdString ? Number(articleIdString) : undefined;
@@ -116,7 +119,7 @@ export class CreateUpdateArticleFormComponent {
                 .updateArticle(this.articleId, articleRequest)
                 .subscribe({
                     next: () => {
-                        this.router.navigate(['/articles']).then(r => {});
+                        this.goBack();
                     },
                 });
             return;
@@ -124,7 +127,7 @@ export class CreateUpdateArticleFormComponent {
 
         this.articleService.createArticle(articleRequest).subscribe({
             next: () => {
-                this.router.navigate(['/articles']).then(r => {});
+                this.goBack();
             },
         });
     };

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ArticleListComponent } from './article/article-list/article-list.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -51,5 +50,19 @@ export const routes: Routes = [
             import('./editor/editor-list/editor-list.component').then(
                 c => c.EditorListComponent
             ),
-    }
+    },
+    {
+        path: 'editors/create',
+        loadComponent: () =>
+            import(
+                './editor/create-update-editor/create-update-editor.component'
+                ).then(c => c.CreateUpdateEditorComponent),
+    },
+    {
+        path: 'editors/:id/edit',
+        loadComponent: () =>
+            import(
+                './editor/create-update-editor/create-update-editor.component'
+            ).then(c => c.CreateUpdateEditorComponent),
+    },
 ];
