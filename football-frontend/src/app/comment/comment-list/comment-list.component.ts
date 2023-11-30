@@ -28,6 +28,8 @@ export class CommentListComponent {
     dataLength = 0;
     _comments = new MatTableDataSource<Comment>();
     _articleId!: number;
+    isLikedByUser!: boolean;
+    isDislikedByUser!: boolean;
     constructor(private readonly articleService: ArticleService) {}
     @Input() set comments(data: Comment[]) {
         this._comments.data = data;
@@ -47,10 +49,26 @@ export class CommentListComponent {
     }
 
     onThumbUp(commentId: number) {
-        this.articleService.addLikeToTheComment(this._articleId, commentId);
+        if (this.isLikedByUser) {
+            this.articleService
+                .removeLikeFromTheComment(this._articleId, commentId)
+                .subscribe();
+            return;
+        }
+        this.articleService
+            .addLikeToTheComment(this._articleId, commentId)
+            .subscribe();
     }
 
     onThumbDown(id: number) {
-        this.articleService.addDislikeToTheComment(this._articleId, id);
+        if (this.isDislikedByUser) {
+            this.articleService
+                .removeDislikeFromTheComment(this._articleId, id)
+                .subscribe();
+            return;
+        }
+        this.articleService
+            .addDislikeToTheComment(this._articleId, id)
+            .subscribe();
     }
 }

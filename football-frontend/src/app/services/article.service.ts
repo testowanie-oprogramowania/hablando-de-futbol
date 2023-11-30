@@ -70,7 +70,6 @@ export class ArticleService {
             '/comments/' +
             commentId +
             '/like/add';
-        console.log(url);
         return this.httpClient.post<void>(url, {});
     }
 
@@ -85,7 +84,34 @@ export class ArticleService {
             '/comments/' +
             commentId +
             '/dislike/add';
-        console.log(url);
+        return this.httpClient.post<void>(url, {});
+    }
+
+    public removeLikeFromTheComment(
+        articleId: number,
+        commentId: number
+    ): Observable<void> {
+        const url =
+            this.articlesUrl +
+            '/' +
+            articleId +
+            '/comments/' +
+            commentId +
+            '/like/remove';
+        return this.httpClient.post<void>(url, {});
+    }
+
+    public removeDislikeFromTheComment(
+        articleId: number,
+        commentId: number
+    ): Observable<void> {
+        const url =
+            this.articlesUrl +
+            '/' +
+            articleId +
+            '/comments/' +
+            commentId +
+            '/dislike/remove';
         return this.httpClient.post<void>(url, {});
     }
 }

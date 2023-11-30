@@ -28,7 +28,7 @@
             </th>
             <td mat-cell *matCellDef="let comment" class="green mat-cell">
                 <button mat-icon-button color="accent" (click)="onThumbUp(comment.id)" aria-label="Example icon button with a menu icon">
-                    <mat-icon class="green small">thumb_up</mat-icon>
+                    <mat-icon class="small" [ngClass]="{'green': isLikedByUser, 'grey': !isLikedByUser}">thumb_up</mat-icon>
                 </button>
                 {{ comment.thumbsUp }}
             </td>
