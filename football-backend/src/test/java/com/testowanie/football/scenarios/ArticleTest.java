@@ -1,5 +1,6 @@
 package com.testowanie.football.scenarios;
 
+import com.testowanie.football.dto.request.CreateArticleRequest;
 import com.testowanie.football.dto.request.UpdateArticleRequest;
 import com.testowanie.football.model.Article;
 import com.testowanie.football.model.Category;
@@ -7,12 +8,12 @@ import com.testowanie.football.model.Editor;
 import com.testowanie.football.repository.ArticleRepository;
 import com.testowanie.football.repository.CategoryRepository;
 import com.testowanie.football.repository.EditorRepository;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
-import io.cucumber.java.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,11 +25,10 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashSet;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,7 +36,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("local")
 public class ArticleTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
-
+    private final String ARTICLES_ENDPOINT = "/api/v1/articles";
+    private final Long exampleId = 1L;
+    String originalTitle = "Glik is the best";
+    String articleContent = "Glik is the GOAT (Greatest of all time)";
+    String newTitle = "The man the myth the legend";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -45,60 +49,58 @@ public class ArticleTest {
     private EditorRepository editorRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-
-    String originalTitle = "Glik is the best";
-    String articleContent = "Glik is the GOAT (Greatest of all time)";
-    String newTitle = "The man the myth the legend";
-
-
-
     private Article article;
     private Category category;
     private Editor editor;
-    private Long exampleId=1L;
     private ResultActions resultActions;
     private UpdateArticleRequest updateArticleRequest;
-
-    private final String ARTICLES_ENDPOINT="/api/v1/articles";
 
     @Before
     public void setUp() {
         editorRepository.deleteAll();
-        editor = editorRepository.save(new Editor(exampleId,"Zbyszek","JSON", null));
         categoryRepository.deleteAll();
-        category = categoryRepository.save(new Category(exampleId, "La Liga", new HashSet<Article>()));
         articleRepository.deleteAll();
     }
 
     // Feature: post article
     @Given("I have article text prepared")
     public void iHaveAnArticleTextPrepared() {
+        editor = editorRepository.save(new Editor(exampleId, "Zbyszek", "JSON", "123"));
+        category = categoryRepository.save(new Category(exampleId, "La Liga", new HashSet<Article>()));
         article = Article.builder()
                 .title(originalTitle)
                 .content(articleContent)
                 .editor(editor)
-                .content("hwdp")
+                .content("test")
                 .category(category)
                 .build();
-        articleRepository.save(article);
     }
 
     @When("I create an article")
     public void iCreateAnArticle() throws Exception {
-        var articleAttributes = objectMapper.writeValueAsString(article);
-
+        CreateArticleRequest createArticleRequest = CreateArticleRequest
+                .builder()
+                .title(originalTitle)
+                .content(articleContent)
+                .editorId(editor.getId())
+                .photoUrl("test")
+                .categoryName(category.getName())
+                .build();
+        var articleAttributes = objectMapper.writeValueAsString(createArticleRequest);
         resultActions = mockMvc.perform(post(ARTICLES_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(articleAttributes));
+                .content(articleAttributes)).andExpect(status().isCreated());
+
     }
 
     @When("I list all articles")
     public void iListAllArticles() throws Exception {
-        resultActions = mockMvc.perform(get(ARTICLES_ENDPOINT+"/1"));
+        resultActions = mockMvc.perform(get(ARTICLES_ENDPOINT + "/1"));
     }
 
     @Then("I see new article")
     public void iSeeNewArticle() throws Exception {
+        article = articleRepository.findById(1L).orElse(null);
         resultActions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value(article.getTitle()))
                 .andExpect(jsonPath("$.content").value(article.getContent()));
@@ -108,8 +110,10 @@ public class ArticleTest {
 
     @When("I request an article by its id")
     public void iRequestAnArticleByItsId() throws Exception {
-        resultActions = mockMvc.perform(get(ARTICLES_ENDPOINT+"/{id}",article.getId()))
+        article = articleRepository.findById(1L).orElse(null);
+        resultActions = mockMvc.perform(get(ARTICLES_ENDPOINT + "/{id}", article.getId()))
                 .andExpect(status().isOk());
+        article = articleRepository.findById(article.getId()).orElse(null);
     }
 
     @Then("I get details of requested article")
@@ -125,19 +129,20 @@ public class ArticleTest {
 
     @And("I have an update for the article")
     public void iHaveAnUpdateForTheArticle() {
-         updateArticleRequest = UpdateArticleRequest
-                 .builder()
-                 .title(newTitle)
-                 .content(articleContent)
-                 .editorId(editor.getId())
-                 .categoryName(category.getName())
-                 .build();
+        updateArticleRequest = UpdateArticleRequest
+                .builder()
+                .title(newTitle)
+                .content(articleContent)
+                .editorId(editor.getId())
+                .categoryName(category.getName())
+                .build();
     }
 
     @When("I update the article")
     public void iUpdateTheArticle() throws Exception {
+        article = articleRepository.findById(1L).orElse(null);
         var updatedInfo = objectMapper.writeValueAsString(updateArticleRequest);
-        resultActions = mockMvc.perform(patch(ARTICLES_ENDPOINT+"/{id}", article.getId())
+        resultActions = mockMvc.perform(patch(ARTICLES_ENDPOINT + "/{id}", article.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updatedInfo));
         article = articleRepository.findById(article.getId()).orElse(null);
@@ -153,13 +158,14 @@ public class ArticleTest {
 
     @When("I delete the article")
     public void iDeleteTheArticle() throws Exception {
-        resultActions = mockMvc.perform(delete(ARTICLES_ENDPOINT+"/{id}", article.getId()))
+        article = articleRepository.findById(1L).orElse(null);
+        resultActions = mockMvc.perform(delete(ARTICLES_ENDPOINT + "/{id}", article.getId()))
                 .andExpect(status().isNoContent());
     }
 
     @Then("I dont see the article anymore")
     public void iDontSeeTheArticleAnymore() throws Exception {
-        mockMvc.perform(get(ARTICLES_ENDPOINT+"/{id}", article.getId()))
+        mockMvc.perform(get(ARTICLES_ENDPOINT + "/{id}", article.getId()))
                 .andExpect(status().isNotFound());
     }
 }
