@@ -7,5 +7,5 @@ import { enableProdMode } from '@angular/core';
 bootstrapApplication(AppComponent, appConfig).catch(err => console.error(err));
 
 if (environment.production) {
-  enableProdMode();
+    enableProdMode();
 }

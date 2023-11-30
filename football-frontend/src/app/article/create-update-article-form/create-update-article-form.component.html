@@ -1,0 +1,54 @@
+<ng-container *ngIf="!isLoading; else loadingSpinner">
+    <app-show-page
+        [isForm]="true"
+        title="{{headerTitle}}"
+        [onSubmitForm]="submitForm">
+        <ng-container content>
+            <app-text-input-field
+                label="Title"
+                [control]="articleForm.controls.title">
+            </app-text-input-field>
+
+            <app-select-field
+                label="Editor"
+                [control]="articleForm.controls.editor"
+                [hasInitialValue]="articleId !== undefined"
+                [compareObjects]="compareEditors"
+                [data$]="editors$"
+                [dataFormToShow]="editorFormToShow">
+            </app-select-field>
+
+            <app-text-area-field
+                label="Article content"
+                [control]="articleForm.controls.content"
+                [rowsNumber]="articleContentTextAreaRowsNumber">
+            </app-text-area-field>
+
+            <app-text-input-field
+                label="Photo URL"
+                [control]="articleForm.controls.photoUrl">
+            </app-text-input-field>
+
+            <app-select-field
+                label="Category"
+                [control]="articleForm.controls.category"
+                [hasInitialValue]="articleId !== undefined"
+                [compareObjects]="compareCategories"
+                [data$]="categories$"
+                [dataFormToShow]="categoryFormToShow">
+            </app-select-field>
+        </ng-container>
+        <ng-container actions>
+            <button
+                mat-stroked-button
+                type="submit"
+                [disabled]="articleForm.invalid">
+                {{submitButtonTitle}}
+            </button>
+            <button mat-stroked-button type="button" (click)="goBack()">
+                Go back
+            </button>
+        </ng-container>
+    </app-show-page>
+</ng-container>
+<ng-template #loadingSpinner> </ng-template>

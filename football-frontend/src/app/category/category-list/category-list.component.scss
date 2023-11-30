@@ -1,40 +1,48 @@
-$font-color: #dcdcdc;
+@import "../../styles/colors";
+
+$font-color: $light-silver;
 .mat-list-item {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
 }
 
 .category-name {
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  flex-grow: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu-button {
-  margin-left: auto;
-  padding: 0;
+    margin-left: auto;
+    padding: 0;
 }
-
-
 
 .expansion-panel {
-  color: $font-color;
-  font-family: 'Bebas Neue', sans-serif;
-  background-color: #4b4b4b;
-  width: 199px;
-  text-overflow: ellipsis;
-}
+    color: $font-color;
+    font-family: 'Bebas Neue', sans-serif;
+    background-color: $dark-charcoal;
+    width: 199px;
+    text-overflow: ellipsis;
+    font-size: 16px;
 
-.expansion-panel-header {
-  color: $font-color;
-  font-family: 'Bebas Neue', sans-serif;
-  background-color: #4b4b4b;
+    .expansion-panel-header {
+        color: $font-color;
+        font-family: 'Bebas Neue', sans-serif;
+        background-color: $dark-charcoal;
+        ::ng-deep span {
+          font-size: 1rem;
+          color: $font-color;
+        }
+    }
 }

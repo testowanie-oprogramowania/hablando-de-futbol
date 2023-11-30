@@ -1,0 +1,12 @@
+<ng-container *ngIf="!hasInitialValue || control.value">
+    <mat-form-field class="select-field">
+        <mat-label id="label">{{ label }}</mat-label>
+        <mat-select [formControl]="control" [compareWith]="compareObjects">
+            <mat-option [value]="undefined">-</mat-option>
+            <mat-option *ngFor="let value of data$ | async" [value]="value">
+                {{ dataFormToShow(value) }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-container>
+

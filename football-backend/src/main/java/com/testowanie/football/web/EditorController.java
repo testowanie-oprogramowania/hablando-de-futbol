@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/editors")
 public class EditorController {
 
-    private EditorUseCases editorUseCases;
+    private final EditorUseCases editorUseCases;
 
     @GetMapping
     public ResponseEntity<Page<EditorResource>> getEditors(@SortDefault(sort = "surname", direction = Sort.Direction.ASC) Pageable pageable) {
@@ -33,13 +33,13 @@ public class EditorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createEditor(@Valid @RequestBody CreateEditorRequest createEditorRequest) {
+    public ResponseEntity<Void> createEditor(@RequestBody @Valid CreateEditorRequest createEditorRequest) {
         editorUseCases.createEditor(createEditorRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateEditor(@PathVariable Long id, @Valid @RequestBody UpdateEditorRequest updateEditorRequest) {
+    public ResponseEntity<Void> updateEditor(@PathVariable Long id, @RequestBody @Valid UpdateEditorRequest updateEditorRequest) {
         editorUseCases.updateEditor(id, updateEditorRequest);
         return ResponseEntity.noContent().build();
     }

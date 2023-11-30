@@ -1,38 +1,72 @@
 <div class="article-list">
-    <div class="article-list__container">
-        <mat-card
-            class="article-list__card"
-            *ngFor="let article of articles$ | async as articles">
-            <div class="article-list__image-container">
-                <img mat-card-image class="article-list__image" src="{{ article.photoUrl }}" />
-                <div class="article-list__image-label">{{article.category.name}}</div>
-            </div>
+    <div class="article-list__headers">
+        <h1>{{headerTitle}}</h1>
+        <div class="article-list__buttons">
+            <!--        <button mat-fab class="not-expanded-button" color="accent" aria-label="Add article" (click)="onAddArticle($event)">-->
+            <!--            <mat-icon>add</mat-icon>-->
+            <!--        </button>-->
+            <!--        TODO W przyszlosci rozwijany przycisk-->
+            <button
+                mat-fab
+                color="accent"
+                class="expanded-button"
+                aria-label="Add article"
+                (click)="onAddArticle($event)">
+                <mat-icon>add</mat-icon>
+                Add article
+            </button>
+        </div>
+    </div>
 
-            <mat-card-header>
-                <img
-                    mat-card-avatar
-                    src="{{ article.editor.photoUrl }}"
-                    alt="Zdjęcie autora" />
-                <mat-card-title>{{ article.title }}</mat-card-title>
-                <mat-card-subtitle>{{article.editor.name}} {{article.editor.surname}}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <p>{{ article.content }}</p>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="onReadArticle(article.id!)">
-                    Czytaj dalej
-                </button>
-            </mat-card-actions>
-        </mat-card>
-        <mat-paginator
-            #paginator
-            class="mat-mdc-card"
-            (page)="handlePageEvent($event)"
-            [length]="paginatorLength"
-            [pageSize]="paginatorPageSize"
-            [pageIndex]="paginatorPageIndex"
-            aria-label="Select page">
-        </mat-paginator>
+    <div class="article-list__container">
+        <ng-container
+            *ngIf="articles$ | async as articles; else loadingSpinner">
+            <div class="article-list__cards">
+                <mat-card
+                    class="article-list__card"
+                    *ngFor="let article of articles"
+                    (click)="navigateToArticle(article.id!)">
+                    <div class="article-list__image-container">
+                        <img
+                            mat-card-image
+                            class="article-list__image"
+                            [ngSrc]="article.image"
+                            fill="true"
+                            alt="Article photo"
+                            priority="true" />
+                        <div class="article-list__image-label">
+                            {{ article.category.name }}
+                        </div>
+                    </div>
+
+                    <mat-card-header>
+                        <img
+                            mat-card-avatar
+                            [src]="article.editor.image"
+                            alt="Author's photo" />
+                        <mat-card-title>{{ article.title }}</mat-card-title>
+                        <mat-card-subtitle>
+                            {{ article.editor.name }}
+                            {{ article.editor.surname }}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{ article.content }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <mat-paginator
+                class="mat-mdc-card"
+                (page)="handlePageEvent($event)"
+                [length]="paginatorLength"
+                [pageSize]="paginatorRequestParams.size"
+                [pageIndex]="paginatorRequestParams.page"
+                aria-label="Select page">
+            </mat-paginator>
+        </ng-container>
     </div>
 </div>
+
+<ng-template #loadingSpinner>
+    <mat-spinner> </mat-spinner>
+</ng-template>

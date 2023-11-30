@@ -26,10 +26,12 @@ public class Comment {
 
     @NonNull
     @Column(nullable = false)
-    private Integer thumbsUp;
+    @Builder.Default
+    private Integer thumbsUp = 0;
 
     @NonNull
     @Column(nullable = false)
-    private Integer thumbsDown;
+    @Builder.Default
+    private Integer thumbsDown = 0;
 
 }

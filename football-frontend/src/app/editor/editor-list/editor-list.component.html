@@ -1,0 +1,65 @@
+<app-show-page [isForm]="false" title="Editors" class="editor-list">
+    <ng-container content class="editor-list__content">
+        <ng-container *ngIf="editors$ | async as editors; else loadingSpinner">
+            <div class="editor-list__cards">
+                <mat-card
+                    class="editor-list__card"
+                    *ngFor="let editor of editors">
+                    <mat-card-header class="editor-list__header">
+                        <img
+                            mat-card-avatar
+                            [src]="editor.image"
+                            class="editor-list__thumbnail-image"
+                            alt="Author's photo" />
+                        <mat-card-title>{{
+                            editor.name + ' ' + editor.surname
+                        }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-actions class="editor-list__operations">
+                        <button
+                            mat-mini-fab
+                            color="primary"
+                            aria-label="Edit editor"
+                            (click)="onEditEditor(editor.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button
+                            mat-mini-fab
+                            color="warn"
+                            aria-label="Delete editor"
+                            (click)="onDeleteEditor(editor.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </ng-container>
+
+        <div class="editor-list__editor"></div>
+    </ng-container>
+    <ng-container actions>
+        <div class="editor-list__actions">
+            <div class="editor-list__operations">
+                <button
+                    mat-mini-fab
+                    color="primary"
+                    aria-label="Add editor"
+                    (click)="onCreateEditor()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <mat-paginator
+                class="mat-mdc-card"
+                (page)="handlePageEvent($event)"
+                [length]="paginatorLength"
+                [pageSize]="paginatorRequestParams.size"
+                [pageIndex]="paginatorRequestParams.page"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </ng-container>
+</app-show-page>
+
+<ng-template #loadingSpinner>
+    <mat-spinner> </mat-spinner>
+</ng-template>
