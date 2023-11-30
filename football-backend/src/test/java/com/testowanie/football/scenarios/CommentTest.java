@@ -65,14 +65,14 @@ public class CommentTest {
                 .name("Kategoria1")
                 .articles(Set.of())
                 .build();
-        categoryRepository.save(category);
+        category = categoryRepository.save(category);
 
         editor = Editor.builder()
                 .name("Gonzalo")
                 .surname("Higuain")
                 .photoUrl("example")
                 .build();
-        editorRepository.save(editor);
+        editor = editorRepository.save(editor);
 
         article = Article.builder()
                 .title("Artykul")
