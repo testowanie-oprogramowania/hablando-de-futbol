@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,8 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @NonNull
+    //@NonNull
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
-    private Set<Article> articles;
+    private Set<Article> articles = new HashSet<>();
 }

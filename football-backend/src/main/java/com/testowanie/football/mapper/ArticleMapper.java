@@ -60,7 +60,7 @@ public class ArticleMapper {
         article.setTitle(updateArticleRequest.title());
         article.setEditor(editor);
         article.setContent(updateArticleRequest.content());
-        article.setPhotoUrl(updateArticleRequest.photoUrl());
+        //article.setPhotoUrl(updateArticleRequest.photoUrl());
         article.setCategory(category);
     }
 
