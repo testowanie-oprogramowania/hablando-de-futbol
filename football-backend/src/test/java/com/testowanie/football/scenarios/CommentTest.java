@@ -8,7 +8,6 @@ import com.testowanie.football.model.Editor;
 import com.testowanie.football.repository.ArticleRepository;
 import com.testowanie.football.repository.CategoryRepository;
 import com.testowanie.football.repository.EditorRepository;
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -81,11 +80,10 @@ public class CommentTest {
                 .category(category)
                 .build();
 
-        articleRepository.save(article);
+        article = articleRepository.save(article);
 
     }
 
-    @After
     public void cleanUp() {
         articleRepository.deleteAll();
         categoryRepository.deleteAll();
