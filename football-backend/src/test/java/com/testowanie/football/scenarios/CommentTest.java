@@ -1,205 +1,212 @@
-//package com.testowanie.football.scenarios;
-//
-//import com.testowanie.football.dto.request.UpdateArticleRequest;
-//import com.testowanie.football.model.Article;
-//import com.testowanie.football.model.Category;
-//import com.testowanie.football.model.Comment;
-//import com.testowanie.football.model.Editor;
-//import com.testowanie.football.repository.ArticleRepository;
-//import io.cucumber.java.Before;
-//import io.cucumber.java.en.And;
-//import io.cucumber.java.en.Given;
-//import io.cucumber.java.en.Then;
-//import io.cucumber.java.en.When;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.context.ActiveProfiles;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.ResultActions;
-//import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-//
-//import java.util.Objects;
-//
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//@ActiveProfiles("test")
-//public class CommentTest {
-//
-//    private final ObjectMapper objectMapper = new ObjectMapper();
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @Autowired
-//    private ArticleRepository articleRepository;
-//
-//    private String originalTitle = "CR7 is the GOAT";
-//    private String commentContent = "Siuuuu";
-//    private Integer likes = 2137;
-//    private String nickname = "Kardo93442";
-//    private final String ARTICLES_ENDPOINT="/articles/";
-//    private final String COMMENTS_ENDPOINT="/comments";
-//
-//    private Long exampleId=1L;
-//
-//    private Long articleId;
-//    private Long commentId;
-//    private Article article;
-//    private Comment comment;
-//
-//
-//    private ResultActions resultActions;
-//    private UpdateArticleRequest updateArticleRequest;
-//
-//    @Before
-//    public void setUp() {
-//        articleRepository.deleteAll();
-//        article = Article.builder()
-//                .title(originalTitle)
-//                .editor(new Editor(exampleId,"Zbyszek","JSON", null))
-//                .content("chuj")
-//                .category(new Category(exampleId, "dupa romana", null))
-//                .build();
-//        articleId = article.getId();
-//        articleRepository.save(article);
-//
-//    }
-//
-//    // post comment
-//    @Given("I have a comment for the article")
-//    public void iHaveACommentForTheArticle() {
-//        setUp();
-//        comment = Comment.builder()
-//                .content(commentContent)
-//                .thumbsUp(likes)
-//                .nickname(nickname)
-//                .build();
-//    }
-//
-//    @When("I post a comment")
-//    public void iPostAComment() throws Exception {
-//        var content = objectMapper.writeValueAsString(comment);
-//        resultActions = mockMvc.perform(post(ARTICLES_ENDPOINT+"/{id}/"+COMMENTS_ENDPOINT, articleId)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(content));
-//    }
-//
-//    @Then("I see it in the comment section")
-//    public void iSeeItInTheCommentSection() throws Exception {
-//        resultActions.andExpect(status().isCreated());
-//    }
-//
-//    // delete comment
-//
-//    @And("I deleted a comment")
-//    public void iDeletedAComment() throws Exception {
-//        commentId = articleRepository.findById(articleId).get()
-//                .getComments().stream().findAny().get().getId();
-//
-//        resultActions = mockMvc.perform(delete(ARTICLES_ENDPOINT+"/{id}/"+COMMENTS_ENDPOINT+"/{commentId}",
-//                articleId, commentId));
-//    }
-//
-//    @Then("I dont see the comment")
-//    public void iDontSeeTheComment() throws Exception {
-//        resultActions.andExpect(status().isNoContent());
-//        var commentExists = articleRepository.findById(articleId).get()
-//                .getComments().stream()
-//                .anyMatch(com -> Objects.equals(com.getId(), commentId));
-//        assertFalse(commentExists);
-//    }
-//
-//    // like comment
-//    @When("I like a comment")
-//    public void iLikeAComment() {
-//        var currLikes = comment.getThumbsUp();
-//        comment.setThumbsUp(currLikes+1);
-//
-//        // updateArticleRequest = UpdateArticleRequest.builder()
-//    }
-//
-//    @Then("I see number of likes up by 1")
-//    public void iSeeNumberOfLikesUpBy1() {
-//        // pass
-//    }
-//
-//    @When("I dislike a comment")
-//    public void iDislikeAComment() {
-//        var currDislikes = comment.getThumbsDown();
-//        comment.setThumbsDown(currDislikes+1);
-//
-//        // updateArticleRequest = UpdateArticleRequest.builder()
-//    }
-//
-//
-//    @Then("I see number of dislikes up by 1")
-//    public void iSeeNumberOfDisLikesUpBy1() {
-//        // pass
-//    }
-//
-//    @When("I change my mind from like to dislike")
-//    public void iChangeMyMindFromLikeToDislike() {
-//        var currLikes = comment.getThumbsUp();
-//        comment.setThumbsUp(currLikes-1);
-//
-//        var currDislikes = comment.getThumbsDown();
-//        comment.setThumbsDown(currDislikes+1);
-//
-//        // updateArticleRequest = UpdateArticleRequest.builder()
-//    }
-//
-//    @Then("I see likes down and dislikes up by 1")
-//    public void iSeeLikesDownAndDislikeUpBy1() {
-//
-//    }
-//
-//    @When("I change my mind from dislike to like")
-//    public void iChangeMyMindFromDisLikeToLike() {
-//        var currDisLikes = comment.getThumbsDown();
-//        comment.setThumbsUp(currDisLikes-1);
-//
-//        var currLikes = comment.getThumbsUp();
-//        comment.setThumbsDown(currLikes+1);
-//
-//        // updateArticleRequest = UpdateArticleRequest.builder()
-//    }
-//
-//    @Then("I see dislikes down and likes up by 1")
-//    public void iSeeDislikesDownAndLikesUpBy1() {
-//
-//    }
-//
-//    @When("I don want like anymore")
-//    public void iDontWantLikeAnymore() {
-//        var currLikes = comment.getThumbsUp();
-//        comment.setThumbsDown(currLikes-1);
-//
-//        //
-//    }
-//
-//    @Then("I see likes down by 1")
-//    public void iSeeLikesDownBy1() {
-//        //
-//    }
-//
-//    @When("I don want dislike anymore")
-//    public void iDontWantDisLikeAnymore() {
-//        var currDisLikes = comment.getThumbsUp();
-//        comment.setThumbsDown(currDisLikes-1);
-//
-//        //
-//    }
-//    @Then("I see dislikes down by 1")
-//    public void iSeeDisLikesDownBy1() {
-//        //
-//    }
-//
-//
-//}
+package com.testowanie.football.scenarios;
+
+import com.testowanie.football.dto.request.UpdateArticleRequest;
+import com.testowanie.football.model.Article;
+import com.testowanie.football.model.Category;
+import com.testowanie.football.model.Comment;
+import com.testowanie.football.model.Editor;
+import com.testowanie.football.repository.ArticleRepository;
+import com.testowanie.football.repository.CategoryRepository;
+import com.testowanie.football.repository.EditorRepository;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+public class CommentTest {
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final String ARTICLES_ENDPOINT = "/api/v1/articles";
+    private final String COMMENTS_ENDPOINT = "/comments";
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private ArticleRepository articleRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private EditorRepository editorRepository;
+
+    private Article article;
+    private Comment comment;
+    private Editor editor;
+    private Category category;
+    private Integer likes;
+    private Integer dislikes;
+
+
+    private ResultActions resultActions;
+    private UpdateArticleRequest updateArticleRequest;
+
+    @Before
+    public void setUp() {
+        cleanUp();
+        category = Category.builder()
+                .name("Kategoria1")
+                .articles(Set.of())
+                .build();
+        categoryRepository.save(category);
+
+        editor = Editor.builder()
+                .name("Gonzalo")
+                .surname("Higuain")
+                .photoUrl("example")
+                .build();
+        editorRepository.save(editor);
+
+        article = Article.builder()
+                .title("Artykul")
+                .editor(editor)
+                .content("tests")
+                .category(category)
+                .build();
+
+        articleRepository.save(article);
+
+    }
+
+    @After
+    public void cleanUp() {
+        articleRepository.deleteAll();
+        categoryRepository.deleteAll();
+        editorRepository.deleteAll();
+    }
+
+    @Given("I have an article")
+    public void iHaveAnArticle() {
+        articleRepository.findById(article.getId()).orElseThrow();
+    }
+
+    // post comment
+    @Given("I have a comment")
+    public void iHaveAComment() {
+        comment = Comment.builder()
+                .nickname("nickname")
+                .content("content")
+                .thumbsUp(0)
+                .thumbsDown(0)
+                .build();
+    }
+
+    @When("I create a new comment")
+    public void iCreateANewComment() throws Exception {
+        var content = objectMapper.writeValueAsString(comment);
+        resultActions = mockMvc.perform(post(ARTICLES_ENDPOINT + "/{id}" + COMMENTS_ENDPOINT, article.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content));
+    }
+
+    @Then("The comment gets added to the article")
+    public void iSeeItInTheCommentSection() throws Exception {
+        resultActions.andExpect(status().isCreated());
+    }
+
+    @When("I delete the comment")
+    @Transactional
+    public void iDeleteMyComment() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        resultActions = mockMvc.perform(delete(ARTICLES_ENDPOINT + "/{id}" + COMMENTS_ENDPOINT + "/{commentId}", article.getId(), comment.getId()));
+    }
+
+    @Then("The comment gets deleted from the article")
+    public void theCommentGetsDeletedFromTheArticle() throws Exception {
+        resultActions.andExpect(status().isNoContent());
+    }
+
+    @Given("I have an article with a comment")
+    public void iHaveAnArticleWithAComment() throws Exception {
+        iHaveAComment();
+        iCreateANewComment();
+    }
+
+    @When("I dislike a comment")
+    @Transactional
+    public void iDislikeAComment() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        resultActions = mockMvc.perform(post(ARTICLES_ENDPOINT + "/{id}" + COMMENTS_ENDPOINT + "/{commentId}/dislike/add", article.getId(), comment.getId()));
+    }
+
+    @Then("The comment gets one more dislike")
+    @Transactional
+    public void theCommentGetsOneMoreDislike() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        assertEquals(1, comment.getThumbsDown());
+        resultActions.andExpect(status().isNoContent());
+    }
+
+    @When("I like a comment")
+    @Transactional
+    public void iLikeAComment() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        resultActions = mockMvc.perform(post(ARTICLES_ENDPOINT + "/{id}" + COMMENTS_ENDPOINT + "/{commentId}/like/add", article.getId(), comment.getId()));
+    }
+
+    @Then("The comment gets one more like")
+    @Transactional
+    public void theCommentGetsOneMoreLike() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        assertEquals(1, comment.getThumbsUp());
+        resultActions.andExpect(status().isNoContent());
+    }
+
+    @When("I undo leaving a like to a comment")
+    @Transactional
+    public void iUndoLikeAComment() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        likes = comment.getThumbsUp();
+        resultActions = mockMvc.perform(post(ARTICLES_ENDPOINT + "/{id}" + COMMENTS_ENDPOINT + "/{commentId}/like/remove", article.getId(), comment.getId()));
+    }
+
+    @Then("The comment gets one less like")
+    @Transactional
+    public void theCommentGetsOneLessLike() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        assertEquals(likes - 1, comment.getThumbsUp());
+        resultActions.andExpect(status().isNoContent());
+    }
+
+    @When("I undo leaving a dislike to a comment")
+    @Transactional
+    public void iUndoDislikeAComment() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        dislikes = comment.getThumbsDown();
+        resultActions = mockMvc.perform(post(ARTICLES_ENDPOINT + "/{id}" + COMMENTS_ENDPOINT + "/{commentId}/dislike/remove", article.getId(), comment.getId()));
+    }
+
+    @Then("The comment gets one less dislike")
+    @Transactional
+    public void theCommentGetsOneLessDislike() throws Exception {
+        article = articleRepository.findById(article.getId()).orElseThrow();
+        comment = article.getComments().stream().findFirst().orElseThrow();
+        assertEquals(dislikes - 1, comment.getThumbsDown());
+        resultActions.andExpect(status().isNoContent());
+    }
+}
