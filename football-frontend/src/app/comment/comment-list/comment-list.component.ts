@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { ArticleService } from '../../services/article.service';
+import {CreateCommentComponent} from "../create-comment/create-comment.component";
 
 @Component({
     selector: 'app-comment-list',
@@ -18,6 +19,7 @@ import { ArticleService } from '../../services/article.service';
         MatIconModule,
         MatExpansionModule,
         MatButtonModule,
+        CreateCommentComponent,
     ],
     templateUrl: './comment-list.component.html',
     styleUrl: './comment-list.component.scss',
@@ -27,7 +29,6 @@ export class CommentListComponent {
     displayedColumns = ['nickname', 'content', 'thumbsUp', 'thumbsDown'];
     dataLength = 0;
     _comments = new MatTableDataSource<Comment>();
-    _articleId!: number;
     isLikedByUser!: boolean;
     isDislikedByUser!: boolean;
     constructor(private readonly articleService: ArticleService) {}
@@ -35,10 +36,7 @@ export class CommentListComponent {
         this._comments.data = data;
         this.dataLength = data.length;
     }
-
-    @Input() set articleId(id: number) {
-        this._articleId = id;
-    }
+    @Input() articleId?: number;
 
     get comments(): MatTableDataSource<Comment> {
         return this._comments;

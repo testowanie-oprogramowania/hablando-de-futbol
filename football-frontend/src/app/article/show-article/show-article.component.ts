@@ -12,7 +12,7 @@ import { ArticleService } from '../../services/article.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { CommentListComponent } from '../../comment/comment-list/comment-list.component';
-import { Comment } from '../../models/comment';
+import { CreateCommentComponent } from '../../comment/create-comment/create-comment.component';
 
 @Component({
     selector: 'app-show-article',
@@ -27,13 +27,14 @@ import { Comment } from '../../models/comment';
         MatProgressSpinnerModule,
         MatIconModule,
         CommentListComponent,
+        CreateCommentComponent,
     ],
     providers: [DatePipe],
     templateUrl: './show-article.component.html',
     styleUrl: './show-article.component.scss',
 })
 export class ShowArticleComponent {
-    articleId: number;
+    articleId?: number;
     article$: Observable<ArticleResource>;
 
     constructor(
@@ -53,7 +54,7 @@ export class ShowArticleComponent {
     }
 
     onDeleteArticle() {
-        this.articleService.deleteArticle(this.articleId).subscribe({
+        this.articleService.deleteArticle(this.articleId!).subscribe({
             complete: () => {
                 this.router.navigate(['/articles']).then();
             },
