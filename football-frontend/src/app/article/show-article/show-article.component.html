@@ -36,7 +36,7 @@
             </div>
         </ng-container>
     </app-show-page>
-    <div class="comment-section"><app-comment-list [comments]="article.comments" class="comments"></app-comment-list></div>
+    <div class="comment-section"><app-comment-list [comments]="article.comments" [articleId]="article.id" class="comments"></app-comment-list></div>
 </ng-container>
 
 <ng-template #loadingSpinner>

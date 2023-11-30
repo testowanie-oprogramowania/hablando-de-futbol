@@ -6,6 +6,7 @@ import { Comment } from '../../models/comment';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
     selector: 'app-comment-list',
@@ -25,13 +26,16 @@ export class CommentListComponent {
     @ViewChild('paginator') paginator!: MatPaginator;
     displayedColumns = ['nickname', 'content', 'thumbsUp', 'thumbsDown'];
     dataLength = 0;
-
     _comments = new MatTableDataSource<Comment>();
-
+    _articleId!: number;
+    constructor(private readonly articleService: ArticleService) {}
     @Input() set comments(data: Comment[]) {
         this._comments.data = data;
         this.dataLength = data.length;
-        // this._comments.paginator = this.paginator;
+    }
+
+    @Input() set articleId(id: number) {
+        this._articleId = id;
     }
 
     get comments(): MatTableDataSource<Comment> {
@@ -42,7 +46,11 @@ export class CommentListComponent {
         this._comments.paginator = this.paginator;
     }
 
-    onThumbUp(id: number) {
-        console.log('thumb up', id);
+    onThumbUp(commentId: number) {
+        this.articleService.addLikeToTheComment(this._articleId, commentId);
+    }
+
+    onThumbDown(id: number) {
+        this.articleService.addDislikeToTheComment(this._articleId, id);
     }
 }
