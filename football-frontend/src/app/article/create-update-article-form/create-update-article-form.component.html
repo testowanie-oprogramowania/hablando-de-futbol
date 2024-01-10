@@ -1,12 +1,13 @@
 <ng-container *ngIf="!isLoading; else loadingSpinner">
     <app-show-page
         [isForm]="true"
-        title="{{headerTitle}}"
+        title="{{ headerTitle }}"
         [onSubmitForm]="submitForm">
         <ng-container content>
             <app-text-input-field
                 label="Title"
-                [control]="articleForm.controls.title">
+                [control]="articleForm.controls.title"
+                dataTestId="titleInput">
             </app-text-input-field>
 
             <app-select-field
@@ -15,18 +16,21 @@
                 [hasInitialValue]="articleId !== undefined"
                 [compareObjects]="compareEditors"
                 [data$]="editors$"
-                [dataFormToShow]="editorFormToShow">
+                [dataFormToShow]="editorFormToShow"
+                dataTestId="editorSelect">
             </app-select-field>
 
             <app-text-area-field
                 label="Article content"
                 [control]="articleForm.controls.content"
-                [rowsNumber]="articleContentTextAreaRowsNumber">
+                [rowsNumber]="articleContentTextAreaRowsNumber"
+                dataTestId="articleContentTextArea">
             </app-text-area-field>
 
             <app-text-input-field
                 label="Photo URL"
-                [control]="articleForm.controls.photoUrl">
+                [control]="articleForm.controls.photoUrl"
+                dataTestId="photoUrlInput">
             </app-text-input-field>
 
             <app-select-field
@@ -35,17 +39,24 @@
                 [hasInitialValue]="articleId !== undefined"
                 [compareObjects]="compareCategories"
                 [data$]="categories$"
-                [dataFormToShow]="categoryFormToShow">
+                [dataFormToShow]="categoryFormToShow"
+                dataTestId="categorySelect">
             </app-select-field>
         </ng-container>
         <ng-container actions>
             <button
                 mat-stroked-button
                 type="submit"
-                [disabled]="articleForm.invalid">
-                {{submitButtonTitle}}
+                [disabled]="articleForm.invalid"
+                data-testid="articleSaveButton"
+                aria-label="Create article">
+                {{ submitButtonTitle }}
             </button>
-            <button mat-stroked-button type="button" (click)="goBack()">
+            <button
+                mat-stroked-button
+                type="button"
+                (click)="goBack()"
+                aria-label="Go back">
                 Go back
             </button>
         </ng-container>

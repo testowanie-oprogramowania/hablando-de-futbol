@@ -24,6 +24,7 @@ export class SelectFieldComponent<T> {
     @Input() control: FormControl = new FormControl();
     @Input() hasInitialValue: boolean = false;
     @Input() data$: Observable<T[]> = of();
+    @Input() dataTestId: string = '';
     @Input() compareObjects: (o1: T, o2: T) => boolean = (o1: T, o2: T) =>
         false;
     @Input() dataFormToShow: (type: T) => string = (type: T) => '';

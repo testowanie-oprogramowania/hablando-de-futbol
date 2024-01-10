@@ -20,4 +20,5 @@ export class TextAreaFieldComponent {
     @Input() label: string = '';
     @Input() control: FormControl = new FormControl();
     @Input() rowsNumber: number = 0;
+    @Input() dataTestId: string = '';
 }

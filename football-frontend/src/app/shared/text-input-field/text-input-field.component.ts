@@ -19,4 +19,5 @@ import {AbstractControl, FormControl, ReactiveFormsModule} from "@angular/forms"
 export class TextInputFieldComponent {
     @Input() label: string = '';
     @Input() control: FormControl = new FormControl();
+    @Input() dataTestId: string = '';
 }

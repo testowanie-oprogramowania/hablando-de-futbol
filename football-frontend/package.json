@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "e2e": "ng e2e",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -36,9 +39,11 @@
     "@angular-eslint/template-parser": "17.1.0",
     "@angular/cli": "^17.0.1",
     "@angular/compiler-cli": "^17.0.0",
+    "@cypress/schematic": "^2.5.1",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "6.11.0",
     "@typescript-eslint/parser": "6.11.0",
+    "cypress": "latest",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
@@ -48,6 +53,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "mocha": "^10.2.0",
     "prettier": "^3.1.0",
     "prettier-eslint": "^16.1.2",
     "typescript": "~5.2.2"
