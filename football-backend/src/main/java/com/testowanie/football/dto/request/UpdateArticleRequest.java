@@ -15,7 +15,7 @@ public record UpdateArticleRequest(
         @NotBlank @Size(min = 3, max = 255) String title,
         @NotNull @Positive Long editorId,
         @NotBlank @Size(max = 10000) String content,
-        //@NotBlank @Size(max = 255) String photoUrl,
+        @NotBlank @Size(max = 255) String photoUrl,
         @NotBlank @Size(min = 3, max = 200) String categoryName
 ) {
 }

@@ -2,5 +2,10 @@
     <mat-label>
         <span> {{ label }} </span>
     </mat-label>
-    <textarea matInput type="text" [rows]="rowsNumber" [formControl]="control"></textarea>
+    <textarea
+        matInput
+        type="text"
+        [rows]="rowsNumber"
+        [formControl]="control"
+        [attr.data-testid]="dataTestId"></textarea>
 </mat-form-field>
