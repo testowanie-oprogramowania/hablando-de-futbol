@@ -8,7 +8,7 @@
                 'Last modified: ' + transformDate(article.lastModifiedDate)
             ]"
             [mainImageUrl]="article.image"
-            [thumbnailImageUrl]="article.image"
+            [thumbnailImageUrl]="article.editor.image"
             [descriptionForImageThumbnail]="
                 article.editor.name + ' ' + article.editor.surname
             ">
