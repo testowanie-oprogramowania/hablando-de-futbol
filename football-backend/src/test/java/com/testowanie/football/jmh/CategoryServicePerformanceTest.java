@@ -77,7 +77,7 @@ public class CategoryServicePerformanceTest {
     @Benchmark
     @Warmup(iterations = 0)
     public void getCategoryByIdBenchmark() {
-        categoryUseCases.findCategoryById(1L);
+        categoryUseCases.findCategoryById(category.getId());
     }
 
     @Benchmark

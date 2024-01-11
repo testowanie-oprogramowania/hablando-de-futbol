@@ -7,6 +7,8 @@ import com.testowanie.football.mapper.ArticleMapper;
 import com.testowanie.football.model.Article;
 import com.testowanie.football.model.Category;
 import com.testowanie.football.model.Editor;
+import com.testowanie.football.repository.CategoryRepository;
+import com.testowanie.football.repository.EditorRepository;
 import org.junit.Test;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
@@ -26,7 +28,8 @@ public class ArticleMapperPerformanceTest {
     private CreateArticleRequest articleRequest;
     private UpdateArticleRequest updateArticleRequest;
 
-
+    private CategoryRepository categoryRepository;
+    private EditorRepository editorRepository;
     private Editor editor;
     private Category category;
 
@@ -44,14 +47,16 @@ public class ArticleMapperPerformanceTest {
         this.context = new SpringApplication(FootballApplication.class).run();
 
         mapper = this.context.getBean(ArticleMapper.class);
+        editorRepository = this.context.getBean(EditorRepository.class);
+        categoryRepository = this.context.getBean(CategoryRepository.class);
 
-        category = Category.builder().id(1L).name("abc").build();
-        editor = Editor.builder()
+        category = categoryRepository.saveAndFlush(Category.builder().id(1L).name("abc").build());
+        editor = editorRepository.saveAndFlush(Editor.builder()
                 .id(1L)
                 .name("name")
                 .surname("surname")
                 .photoUrl("photoUrl")
-                .build();
+                .build());
     }
 
     @TearDown
