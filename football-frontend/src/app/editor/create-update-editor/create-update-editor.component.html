@@ -1,30 +1,38 @@
 <ng-container *ngIf="!isLoading; else loadingSpinner">
     <app-show-page
         [isForm]="true"
-        title="{{headerTitle}}"
+        title="{{ headerTitle }}"
         [onSubmitForm]="submitForm">
         <ng-container content>
             <app-text-input-field
                 label="Name"
-                [control]="editorForm.controls.name">
+                [control]="editorForm.controls.name"
+                dataTestId="editorNameInput">
             </app-text-input-field>
             <app-text-input-field
                 label="Surname"
-                [control]="editorForm.controls.surname">
+                [control]="editorForm.controls.surname"
+                dataTestId="editorSurnameInput">
             </app-text-input-field>
             <app-text-input-field
                 label="Photo URL"
-                [control]="editorForm.controls.photoUrl">
+                [control]="editorForm.controls.photoUrl"
+                dataTestId="editorPhotoUrlInput">
             </app-text-input-field>
         </ng-container>
         <ng-container actions>
             <button
                 mat-stroked-button
                 type="submit"
-                [disabled]="editorForm.invalid">
-                {{submitButtonTitle}}
+                [disabled]="editorForm.invalid"
+                data-testid="saveEditorButton">
+                {{ submitButtonTitle }}
             </button>
-            <button mat-stroked-button type="button" (click)="goBack()">
+            <button
+                mat-stroked-button
+                type="button"
+                data-testid="editorGoBackButton"
+                (click)="goBack()">
                 Go back
             </button>
         </ng-container>

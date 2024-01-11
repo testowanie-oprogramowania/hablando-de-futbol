@@ -20,6 +20,9 @@
                             mat-mini-fab
                             color="primary"
                             aria-label="Edit editor"
+                            [attr.data-testid]="
+                                'editEditorButton' + editor.name + editor.surname
+                            "
                             (click)="onEditEditor(editor.id)">
                             <mat-icon>edit</mat-icon>
                         </button>
@@ -27,6 +30,9 @@
                             mat-mini-fab
                             color="warn"
                             aria-label="Delete editor"
+                            [attr.data-testid]="
+                                'deleteEditorButton' + editor.name + editor.surname
+                            "
                             (click)="onDeleteEditor(editor.id)">
                             <mat-icon>delete</mat-icon>
                         </button>
@@ -44,6 +50,7 @@
                     mat-mini-fab
                     color="primary"
                     aria-label="Add editor"
+                    data-testid="createEditorButton"
                     (click)="onCreateEditor()">
                     <mat-icon>add</mat-icon>
                 </button>
