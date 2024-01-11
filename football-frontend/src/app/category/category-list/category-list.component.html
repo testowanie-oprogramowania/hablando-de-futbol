@@ -1,16 +1,41 @@
 <mat-expansion-panel class="expansion-panel">
-  <mat-expansion-panel-header class="expansion-panel-header"> Categories </mat-expansion-panel-header>
-  <mat-list>
-    <mat-list-item *ngFor="let category of categories$ | async" class="mat-list-item">
-      <span class="category-name" (click)="onCategoryClick(category)">{{ category.name }}</span>
-      <button mat-icon-button class="menu-button" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openEditDialog(category)">Edit</button>
-        <button mat-menu-item (click)="openDeleteDialog(category.id)">Delete</button>
-      </mat-menu>
-    </mat-list-item>
-    <mat-list-item>
-      <button mat-button class="mat-icon-button" (click)="openAddDialog()">Add Category</button>
-    </mat-list-item>
-  </mat-list>
+    <mat-expansion-panel-header
+        class="expansion-panel-header"
+        data-testid="categoryExpansionPanel">
+        Categories
+    </mat-expansion-panel-header>
+    <mat-list data-testid="categoryList">
+        <mat-list-item
+            *ngFor="let category of categories$ | async"
+            class="mat-list-item">
+            <span class="category-name" (click)="onCategoryClick(category)">
+                {{ category.name }}
+            </span>
+            <button
+                mat-icon-button
+                class="menu-button"
+                [matMenuTriggerFor]="menu"
+                [attr.data-testid]="'categoryMoreButton' + category.name"
+            >
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openEditDialog(category)">
+                    Edit
+                </button>
+                <button mat-menu-item (click)="openDeleteDialog(category.id)">
+                    Delete
+                </button>
+            </mat-menu>
+        </mat-list-item>
+        <mat-list-item>
+            <button
+                mat-button
+                class="mat-icon-button"
+                data-testid="addCategoryButton"
+                (click)="openAddDialog()">
+                Add Category
+            </button>
+        </mat-list-item>
+    </mat-list>
 </mat-expansion-panel>
