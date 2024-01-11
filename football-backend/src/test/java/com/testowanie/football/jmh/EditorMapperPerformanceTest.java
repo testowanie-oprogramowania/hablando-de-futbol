@@ -68,7 +68,7 @@ public class EditorMapperPerformanceTest {
                 .photoUrl("photoUrl")
                 .build();
 
-        mapper.createEditorRequestToEditor(editorRequest);
+        mapper.fromCreateEditorRequest(editorRequest);
     }
 
     @Benchmark

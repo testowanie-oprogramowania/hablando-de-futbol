@@ -38,7 +38,7 @@ class EditorService implements EditorUseCases {
     @Override
     @Transactional
     public void createEditor(CreateEditorRequest createEditorRequest) {
-        Editor editor = editorMapper.createEditorRequestToEditor(createEditorRequest);
+        Editor editor = editorMapper.fromCreateEditorRequest(createEditorRequest);
         editorRepository.save(editor);
     }
 

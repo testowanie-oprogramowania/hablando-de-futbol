@@ -17,7 +17,7 @@ public class EditorMapper {
                 .build();
     }
 
-    public Editor createEditorRequestToEditor(CreateEditorRequest createEditorRequest) {
+    public Editor fromCreateEditorRequest(CreateEditorRequest createEditorRequest) {
         return Editor.builder()
                 .name(createEditorRequest.name())
                 .surname(createEditorRequest.surname())
