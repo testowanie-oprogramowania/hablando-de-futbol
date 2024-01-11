@@ -8,22 +8,24 @@
         <mat-list-item
             *ngFor="let category of categories$ | async"
             class="mat-list-item">
-            <span class="category-name" (click)="onCategoryClick(category)">
+            <span
+                class="category-name"
+                (click)="onCategoryClick(category)"
+                [attr.data-testid]="'categoryName' + category.name">
                 {{ category.name }}
             </span>
             <button
                 mat-icon-button
                 class="menu-button"
                 [matMenuTriggerFor]="menu"
-                [attr.data-testid]="'categoryMoreButton' + category.name"
-            >
+                [attr.data-testid]="'categoryMoreButton' + category.name">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openEditDialog(category)">
+                <button mat-menu-item (click)="openEditDialog(category)" data-testid="editCategoryButton">
                     Edit
                 </button>
-                <button mat-menu-item (click)="openDeleteDialog(category.id)">
+                <button mat-menu-item (click)="openDeleteDialog(category.id)" data-testid="deleteCategoryButton">
                     Delete
                 </button>
             </mat-menu>

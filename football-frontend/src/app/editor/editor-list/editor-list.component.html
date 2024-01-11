@@ -4,14 +4,15 @@
             <div class="editor-list__cards">
                 <mat-card
                     class="editor-list__card"
-                    *ngFor="let editor of editors">
+                    *ngFor="let editor of editors"
+                    data-testid="editorCard">
                     <mat-card-header class="editor-list__header">
                         <img
                             mat-card-avatar
                             [src]="editor.image"
                             class="editor-list__thumbnail-image"
                             alt="Author's photo" />
-                        <mat-card-title>{{
+                        <mat-card-title data-testid="editorName">{{
                             editor.name + ' ' + editor.surname
                         }}</mat-card-title>
                     </mat-card-header>
@@ -21,7 +22,9 @@
                             color="primary"
                             aria-label="Edit editor"
                             [attr.data-testid]="
-                                'editEditorButton' + editor.name + editor.surname
+                                'editEditorButton' +
+                                editor.name +
+                                editor.surname
                             "
                             (click)="onEditEditor(editor.id)">
                             <mat-icon>edit</mat-icon>
@@ -31,7 +34,9 @@
                             color="warn"
                             aria-label="Delete editor"
                             [attr.data-testid]="
-                                'deleteEditorButton' + editor.name + editor.surname
+                                'deleteEditorButton' +
+                                editor.name +
+                                editor.surname
                             "
                             (click)="onDeleteEditor(editor.id)">
                             <mat-icon>delete</mat-icon>
