@@ -8,13 +8,15 @@
         [opened]="(isHandset$ | async) === false">
         <mat-toolbar class="navbar-text">Menu</mat-toolbar>
         <mat-nav-list>
-            <a mat-list-item [ngClass]="'navbar-text'" routerLink="">
-                Home
-            </a>
+            <a mat-list-item [ngClass]="'navbar-text'" routerLink=""> Home </a>
             <a class="navbar-text navbar-panel">
                 <app-category-list></app-category-list>
             </a>
-            <a mat-list-item [ngClass]="'navbar-text'" routerLink="editors">
+            <a
+                mat-list-item
+                [ngClass]="'navbar-text'"
+                routerLink="editors"
+                data-testid="editorList">
                 Editors
             </a>
         </mat-nav-list>

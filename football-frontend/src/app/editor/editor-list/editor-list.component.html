@@ -4,14 +4,17 @@
             <div class="editor-list__cards">
                 <mat-card
                     class="editor-list__card"
-                    *ngFor="let editor of editors">
-                    <mat-card-header class="editor-list__header">
+                    *ngFor="let editor of editors"
+                    data-testid="editorCard">
+                    <mat-card-header
+                        class="editor-list__header"
+                        data-testid="editorCard">
                         <img
                             mat-card-avatar
                             [src]="editor.image"
                             class="editor-list__thumbnail-image"
                             alt="Author's photo" />
-                        <mat-card-title>{{
+                        <mat-card-title data-testid="editorName">{{
                             editor.name + ' ' + editor.surname
                         }}</mat-card-title>
                     </mat-card-header>
@@ -20,14 +23,16 @@
                             mat-mini-fab
                             color="primary"
                             aria-label="Edit editor"
-                            (click)="onEditEditor(editor.id)">
+                            (click)="onEditEditor(editor.id)"
+                            data-testid="editEditor">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <button
                             mat-mini-fab
                             color="warn"
                             aria-label="Delete editor"
-                            (click)="onDeleteEditor(editor.id)">
+                            (click)="onDeleteEditor(editor.id)"
+                            data-testid="deleteEditor">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-card-actions>
@@ -44,7 +49,8 @@
                     mat-mini-fab
                     color="primary"
                     aria-label="Add editor"
-                    (click)="onCreateEditor()">
+                    (click)="onCreateEditor()"
+                    data-testid="createEditor">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

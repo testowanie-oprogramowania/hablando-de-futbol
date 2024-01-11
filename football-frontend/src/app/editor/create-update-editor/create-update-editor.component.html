@@ -6,25 +6,30 @@
         <ng-container content>
             <app-text-input-field
                 label="Name"
-                [control]="editorForm.controls.name">
+                [control]="editorForm.controls.name"
+                data-testid="editorNameInput">
             </app-text-input-field>
             <app-text-input-field
                 label="Surname"
-                [control]="editorForm.controls.surname">
+                [control]="editorForm.controls.surname"
+                data-testid="editorSurnameInput">
             </app-text-input-field>
             <app-text-input-field
                 label="Photo URL"
-                [control]="editorForm.controls.photoUrl">
+                [control]="editorForm.controls.photoUrl"
+                data-testid="editorPhotoInput">
             </app-text-input-field>
         </ng-container>
         <ng-container actions>
             <button
                 mat-stroked-button
                 type="submit"
-                [disabled]="editorForm.invalid">
+                [disabled]="editorForm.invalid"
+                data-testid="submitEditor">
                 {{submitButtonTitle}}
             </button>
-            <button mat-stroked-button type="button" (click)="goBack()">
+            <button mat-stroked-button type="button" (click)="goBack()"
+                data-testid="goBack">
                 Go back
             </button>
         </ng-container>
