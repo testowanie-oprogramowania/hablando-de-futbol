@@ -146,14 +146,12 @@ describe('Article', () => {
         cy.get('.article-list__cards').contains(article.title).click();
         cy.wait(1000);
 
-        cy.get('.show-page__main-image')
-            .should('have.attr', 'src')
-            .should('include', article.photoUrl);
+        cy.get(`img[src="${article.photoUrl}"`).should('exist');
         cy.contains(article.title).should('exist');
         cy.contains(article.content).should('exist');
     });
 
-    it('Should edit article title', () => {
+    it('Should edit article\'s title', () => {
         cy.visit('/articles');
         cy.get('.article-list__cards').contains(article.title).click();
         cy.wait(1000);
@@ -170,7 +168,7 @@ describe('Article', () => {
         cy.get('.article-list__cards').contains(article.title).should('exist');
     });
 
-    it('Should edit article content', () => {
+    it('Should edit article\'s content', () => {
         cy.visit('/articles');
         cy.get('.article-list__cards').contains(article.title).click();
         cy.wait(1000);
@@ -187,7 +185,7 @@ describe('Article', () => {
         cy.get('.article-list__cards').contains(article.title).should('exist');
     });
 
-    it('Should edit article photo', () => {
+    it('Should edit article\'s photo', () => {
         cy.visit('/articles');
         cy.get('.article-list__cards').contains(article.title).click();
         cy.wait(1000);
@@ -205,9 +203,7 @@ describe('Article', () => {
         cy.get('.article-list__cards').contains(article.title).click();
         cy.wait(1000);
 
-        cy.get('.show-page__main-image')
-            .should('have.attr', 'src')
-            .should('include', article.photoUrl);
+        cy.get(`img[src="${article.photoUrl}"`).should('exist');
     });
 
     it('Delete article', () => {

@@ -27,7 +27,7 @@ describe('Category', () => {
             .should('exist');
     });
 
-    it('Should edit category', () => {
+    it('Should edit category\'s name', () => {
         cy.visit('/');
         cy.wait(1000);
 
