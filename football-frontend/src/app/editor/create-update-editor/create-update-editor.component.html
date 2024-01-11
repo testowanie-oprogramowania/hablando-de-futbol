@@ -1,23 +1,23 @@
 <ng-container *ngIf="!isLoading; else loadingSpinner">
     <app-show-page
         [isForm]="true"
-        title="{{headerTitle}}"
+        title="{{ headerTitle }}"
         [onSubmitForm]="submitForm">
         <ng-container content>
             <app-text-input-field
                 label="Name"
                 [control]="editorForm.controls.name"
-                data-testid="editorNameInput">
+                dataTestId="editorNameInput">
             </app-text-input-field>
             <app-text-input-field
                 label="Surname"
                 [control]="editorForm.controls.surname"
-                data-testid="editorSurnameInput">
+                dataTestId="editorSurnameInput">
             </app-text-input-field>
             <app-text-input-field
                 label="Photo URL"
                 [control]="editorForm.controls.photoUrl"
-                data-testid="editorPhotoInput">
+                dataTestId="editorPhotoUrlInput">
             </app-text-input-field>
         </ng-container>
         <ng-container actions>
@@ -25,11 +25,14 @@
                 mat-stroked-button
                 type="submit"
                 [disabled]="editorForm.invalid"
-                data-testid="submitEditor">
-                {{submitButtonTitle}}
+                data-testid="saveEditorButton">
+                {{ submitButtonTitle }}
             </button>
-            <button mat-stroked-button type="button" (click)="goBack()"
-                data-testid="goBack">
+            <button
+                mat-stroked-button
+                type="button"
+                data-testid="editorGoBackButton"
+                (click)="goBack()">
                 Go back
             </button>
         </ng-container>
