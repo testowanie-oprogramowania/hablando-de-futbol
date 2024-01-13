@@ -118,3 +118,4 @@ You can start Docker just by using `make` command.
 <div align="center">
     <img src="screenshots/edit-editor.png" alt="Edit editor page">
 </div>
+
