@@ -56,66 +56,66 @@ You can start Docker just by using `make` command.
 ### Home page - article list page
 
 <div align="center">
-    <img src="screenshots/article-list.png" alt="Home page - article list page">
+    <img src="ss/article-list.png" alt="Home page - article list page">
 </div>
 
 ### Article details page
 
 <div align="center">
-    <img src="screenshots/show-article.png" alt="Article details page">
+    <img src="ss/show-article.png" alt="Article details page">
 </div>
 
 ### Comments in article details page
 
 <div align="center">
-    <img src="screenshots/comments.png" alt="Comments in article details page">
+    <img src="ss/comments.png" alt="Comments in article details page">
 </div>
 
 ### Create article page
 
 <div align="center">
-    <img src="screenshots/create-article.png" alt="Create article page">
+    <img src="ss/create-article.png" alt="Create article page">
 </div>
 
 ### Edit article page
 
 <div align="center">
-    <img src="screenshots/edit-article.png" alt="Edit article page">
+    <img src="ss/edit-article.png" alt="Edit article page">
 </div>
 
 ### Category list in sidebar
 
 <div align="center">
-    <img src="screenshots/category-list.png" alt="Category list in sidebar">
+    <img src="ss/category-list.png" alt="Category list in sidebar">
 </div>
 
 ### Edit catagory dialog
 
 <div align="center">
-    <img src="screenshots/edit-category.png" alt="Edit catagory dialog">
+    <img src="ss/edit-category.png" alt="Edit catagory dialog">
 </div>
 
 ### Article list page showing articles for a particular category
 
 <div align="center">
-    <img src="screenshots/article-category-list.png" alt="Article list page showing articles for a particular category">
+    <img src="ss/article-category-list.png" alt="Article list page showing articles for a particular category">
 </div>
 
 ### Editor list page
 
 <div align="center">
-    <img src="screenshots/editor-list.png" alt="Editor list page">
+    <img src="ss/editor-list.png" alt="Editor list page">
 </div>
 
 ### Create editor page
 
 <div align="center">
-    <img src="screenshots/create-editor.png" alt="Create editor page">
+    <img src="ss/create-editor.png" alt="Create editor page">
 </div>
 
 ### Edit editor page
 
 <div align="center">
-    <img src="screenshots/edit-editor.png" alt="Edit editor page">
+    <img src="ss/edit-editor.png" alt="Edit editor page">
 </div>
 
