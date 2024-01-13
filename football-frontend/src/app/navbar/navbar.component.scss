@@ -16,12 +16,6 @@ $navbar-height: 65px;
             background: inherit;
             background-color: $dark-charcoal;
             @extend %navbar-border;
-
-            .mat-primary {
-                position: sticky;
-                top: 0;
-                z-index: 1;
-            }
         }
 
         .navbar-text {
@@ -44,11 +38,11 @@ $navbar-height: 65px;
 
     .mat-sidenav-content {
         .mat-toolbar {
-            position: fixed;
+            position: sticky;
             top: 0;
             width: 100%;
             height: $navbar-height;
-            z-index: 1030;
+            z-index: 100;
 
             padding: 0;
             @extend %navbar-border;
@@ -72,10 +66,6 @@ $navbar-height: 65px;
             width: auto;
             cursor: pointer;
         }
-    }
-
-    &__content {
-        padding-top: $navbar-height;
     }
 }
 
