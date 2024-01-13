@@ -104,7 +104,7 @@ You can start Docker just by using `make` command.
 * Editor list page,
 
 <div align="center">
-    <img src="screenshots/edit-list.png" alt="Editor list page">
+    <img src="screenshots/editor-list.png" alt="Editor list page">
 </div>
 
 * Create editor page,
